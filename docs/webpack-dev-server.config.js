@@ -36,7 +36,7 @@ var config = {
     devtool: 'eval',
     hot: true,
     inline: true,
-    port: 3000
+    port: 3001
   },
   devtool: 'eval',
   //Output file config

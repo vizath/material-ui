@@ -4,7 +4,7 @@
 
 <AppBar
   title="Title"
-  iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+  iconElementLeft={<IconButton><NavigationMenu /></IconButton>}
   iconElementRight={<FlatButton label="Save" />} />
 
 <AppBar

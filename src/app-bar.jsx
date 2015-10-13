@@ -30,7 +30,6 @@ const AppBar = React.createClass({
   propTypes: {
     onLeftIconButtonTouchTap: React.PropTypes.func,
     onRightIconButtonTouchTap: React.PropTypes.func,
-    showMenuIconButton: React.PropTypes.bool,
     style: React.PropTypes.object,
     iconClassNameLeft: React.PropTypes.string,
     iconClassNameRight: React.PropTypes.string,
@@ -44,7 +43,7 @@ const AppBar = React.createClass({
   getInitialState () {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
-    };    
+    };
   },
 
   //to update theme inside state whenever a new theme is passed down
@@ -56,7 +55,6 @@ const AppBar = React.createClass({
 
   getDefaultProps() {
     return {
-      showMenuIconButton: true,
       title: '',
       zDepth: 1,
     };
@@ -152,35 +150,22 @@ const AppBar = React.createClass({
         <div style={this.mergeAndPrefix(styles.mainElement)}>{title}</div>;
     }
 
-    if (props.showMenuIconButton) {
+    if (props.iconElementLeft) {
       let iconElementLeft = props.iconElementLeft;
 
-      if (iconElementLeft) {
-        switch (iconElementLeft.type.displayName) {
-          case 'IconButton':
-            iconElementLeft = React.cloneElement(iconElementLeft, {
-              iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
-            });
-            break;
-        }
-
-        menuElementLeft = (
-          <div style={styles.iconButton.style}>
-            {iconElementLeft}
-          </div>
-        );
-      } else {
-        let child = (props.iconClassNameLeft) ? '' : <NavigationMenu style={this.mergeAndPrefix(styles.iconButton.iconStyle)}/>;
-        menuElementLeft = (
-          <IconButton
-            style={this.mergeAndPrefix(styles.iconButton.style)}
-            iconStyle={this.mergeAndPrefix(styles.iconButton.iconStyle)}
-            iconClassName={props.iconClassNameLeft}
-            onTouchTap={this._onLeftIconButtonTouchTap}>
-              {child}
-          </IconButton>
-        );
+      switch (iconElementLeft.type.displayName) {
+        case 'IconButton':
+          iconElementLeft = React.cloneElement(iconElementLeft, {
+            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+          });
+          break;
       }
+
+      menuElementLeft = (
+        <div style={styles.iconButton.style}>
+          {iconElementLeft}
+        </div>
+      );
     }
 
     if (props.iconElementRight) {

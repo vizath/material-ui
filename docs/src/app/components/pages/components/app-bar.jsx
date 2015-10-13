@@ -2,6 +2,7 @@ let React = require('react');
 let { AppBar, DropDownMenu } = require('material-ui');
 let IconButton = require('icon-button');
 let NavigationClose = require('svg-icons/navigation/close');
+let NavigationMenu = require('svg-icons/navigation/menu');
 let FlatButton = require('flat-button');
 let ComponentDoc = require('../../component-doc');
 let CodeExample = require('../../code-example/code-example');
@@ -66,13 +67,6 @@ class AppBarPage extends React.Component {
             desc: 'Override the inline-styles of the app bars\'s root element.'
           },
           {
-            name: 'showMenuIconButton',
-            type: 'boolean',
-            header: 'default: true',
-            desc: 'Determines whether or not to display the Menu icon next to ' +
-                  'the title. Setting this prop to false will hide the icon.'
-          },
-          {
             name: 'title',
             type: 'node',
             header: 'optional',
@@ -120,7 +114,7 @@ class AppBarPage extends React.Component {
           <br />
           <AppBar
             title="Title"
-            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+            iconElementLeft={<IconButton><NavigationMenu /></IconButton>}
             iconElementRight={<FlatButton label="Save" />} />
           <br />
           <AppBar
