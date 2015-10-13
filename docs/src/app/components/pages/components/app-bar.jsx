@@ -1,9 +1,12 @@
 let React = require('react');
 let { AppBar, DropDownMenu } = require('material-ui');
 let IconButton = require('icon-button');
-let NavigationClose = require('svg-icons/navigation/close');
+let NavigationArrowBack = require('svg-icons/navigation/arrow-back');
 let NavigationMenu = require('svg-icons/navigation/menu');
 let NavigationExpandMore = require('svg-icons/navigation/expand-more');
+let NavigationArrowDropDown = require('svg-icons/navigation/arrow-drop-down');
+let ActionFavorite = require('svg-icons/action/favorite');
+let ActionSearch = require('svg-icons/action/search');
 let FlatButton = require('flat-button');
 let ComponentDoc = require('../../component-doc');
 let CodeExample = require('../../code-example/code-example');
@@ -27,17 +30,17 @@ class AppBarPage extends React.Component {
         name: 'Props',
         infoArray: [
           {
-            name: 'iconElementLeft',
+            name: 'navIcon',
             type: 'element',
             header: 'optional',
             desc: 'The custom element to be displayed on the left side of the ' +
                   'app bar such as an SvgIcon.'
           },
           {
-            name: 'iconElementRight',
+            name: 'moreIcon',
             type: 'element',
             header: 'optional',
-            desc: 'Similiar to the iconElementLeft prop except that this element ' +
+            desc: 'Similiar to the navIcon prop except that this element ' +
                   'is displayed on the right of the app bar.'
           },
           {
@@ -96,17 +99,30 @@ class AppBarPage extends React.Component {
         <CodeExample code={Code}>
           <AppBar
             title="Title"
-            iconElementRight={<IconButton><NavigationExpandMore /></IconButton>} />
+            moreIcon={<IconButton><NavigationExpandMore /></IconButton>} />
           <br />
           <AppBar
             title="Title"
-            iconElementLeft={<IconButton><NavigationMenu /></IconButton>}
-            iconElementRight={<FlatButton label="Save" />} />
+            navIcon={<IconButton><NavigationMenu /></IconButton>}
+            actionIcons={[<FlatButton key="button" label="Save" />]} />
           <br />
           <AppBar
             title="Title"
-            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-            iconElementRight={
+            navIcon={<IconButton><NavigationArrowBack /></IconButton>}
+            filterIcon={
+              <IconMenu iconButtonElement={
+                <IconButton><NavigationArrowDropDown /></IconButton>
+              }>
+                <MenuItem primaryText="Inbox" />
+                <MenuItem primaryText="Sent" />
+                <MenuItem primaryText="Trash" />
+              </IconMenu>
+            }
+            actionIcons={[
+              <IconButton key="expand"><ActionSearch /></IconButton>,
+              <IconButton key="close"><ActionFavorite /></IconButton>,
+            ]}
+            moreIcon={
               <IconMenu iconButtonElement={
                 <IconButton><MoreVertIcon /></IconButton>
               }>
@@ -114,7 +130,8 @@ class AppBarPage extends React.Component {
                 <MenuItem primaryText="Help" />
                 <MenuItem primaryText="Sign out" />
               </IconMenu>
-          } />
+            }
+          />
         </CodeExample>
       </ComponentDoc>
     );

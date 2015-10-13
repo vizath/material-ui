@@ -31,8 +31,10 @@ const AppBar = React.createClass({
     onLeftIconButtonTouchTap: React.PropTypes.func,
     onRightIconButtonTouchTap: React.PropTypes.func,
     style: React.PropTypes.object,
-    iconElementLeft: React.PropTypes.element,
-    iconElementRight: React.PropTypes.element,
+    navIcon: React.PropTypes.element,
+    filterIcon: React.PropTypes.element,
+    moreIcon: React.PropTypes.element,
+    actionIcons: React.PropTypes.array,
     iconStyleRight: React.PropTypes.object,
     title: React.PropTypes.node,
     zDepth: React.PropTypes.number,
@@ -84,6 +86,7 @@ const AppBar = React.createClass({
         fontWeight: Typography.fontWeightNormal,
         color: themeVariables.textColor,
         lineHeight: themeVariables.height + 'px',
+        display: 'inline',
       },
       mainElement: {
         boxFlex: 1,
@@ -112,8 +115,10 @@ const AppBar = React.createClass({
 
   render() {
     let props = this.props;
-    let menuElementLeft;
-    let menuElementRight;
+    let navIconElement;
+    let filterIconElement;
+    let rightIconElements;
+    let rightIcons = [];
     let styles = this.getStyles();
     let title = props.title;
     let iconRightStyle = this.mergeAndPrefix(styles.iconButton.style, {
@@ -122,53 +127,95 @@ const AppBar = React.createClass({
     }, props.iconStyleRight);
     let titleElement;
 
-    if (title) {
-      // If the title is a string, wrap in an h1 tag.
-      // If not, just use it as a node.
-      titleElement = typeof title === 'string' || title instanceof String ?
-        <h1 style={this.mergeAndPrefix(styles.title, styles.mainElement)}>{title}</h1> :
-        <div style={this.mergeAndPrefix(styles.mainElement)}>{title}</div>;
-    }
+    if (props.navIcon) {
+      let navIcon = props.navIcon;
 
-    if (props.iconElementLeft) {
-      let iconElementLeft = props.iconElementLeft;
-
-      switch (iconElementLeft.type.displayName) {
-        case 'IconButton':
-          iconElementLeft = React.cloneElement(iconElementLeft, {
-            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
-          });
-          break;
+      if (navIcon.type.displayName === 'IconButton') {
+        navIcon = React.cloneElement(navIcon, {
+          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+        });
       }
 
-      menuElementLeft = (
+      navIconElement = (
         <div style={styles.iconButton.style}>
-          {iconElementLeft}
+          {navIcon}
         </div>
       );
     }
 
-    if (props.iconElementRight) {
-      let iconElementRight = props.iconElementRight;
+    // Title Wrapper
+    if (title) {
+      // If the title is a string, wrap in an h1 tag.
+      // If not, just use it as a node.
+      if (typeof title === 'string' || title instanceof String) {
+        title = <h1 style={this.mergeAndPrefix(styles.title)}>{title}</h1>;
+      }
+    }
 
-      switch (iconElementRight.type.displayName) {
-        case 'IconMenu':
-        case 'IconButton':
-          iconElementRight = React.cloneElement(iconElementRight, {
-            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
-          });
-          break;
+    // Filter Icon
+    if (props.filterIcon) {
+      let filterIcon = props.filterIcon;
 
-        case 'FlatButton':
-          iconElementRight = React.cloneElement(iconElementRight, {
-            style: this.mergeStyles(styles.flatButton, iconElementRight.props.style),
-          });
-          break;
+      if (filterIcon.type.displayName === 'IconButton' || filterIcon.type.displayName === 'IconMenu') {
+        filterIcon = React.cloneElement(filterIcon, {
+          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+        });
       }
 
-      menuElementRight = (
+      filterIconElement = (
+        <div style={this.mergeAndPrefix({ display: 'inline-block', verticalAlign: 'sub' })}>
+          {filterIcon}
+        </div>
+      );
+    }
+
+    // Builded title (text and filter icon)
+    titleElement = (
+      <div style={this.mergeAndPrefix(styles.mainElement)}>
+        {title}
+        {filterIconElement}
+      </div>
+    );
+
+    // Action Icons
+    if (props.actionIcons) {
+      let actionIcons = props.actionIcons;
+
+      actionIcons = actionIcons.map(function(icon) {
+        if (icon.type.displayName === 'IconButton') {
+          icon = React.cloneElement(icon, {
+            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+          });
+        }
+        else if (icon.type.displayName === 'FlatButton') {
+          icon = React.cloneElement(icon, {
+            style: this.mergeStyles(styles.flatButton, icon.props.style),
+          });
+        }
+        return icon;
+      }.bind(this));
+
+      rightIcons = rightIcons.concat(actionIcons);
+    }
+
+    // More Icon
+    if (props.moreIcon) {
+      let moreIcon = props.moreIcon;
+
+      if (moreIcon.type.displayName === 'IconButton' || moreIcon.type.displayName === 'IconMenu') {
+        moreIcon = React.cloneElement(moreIcon, {
+          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+        });
+      }
+
+      rightIcons.push(moreIcon);
+    }
+
+    // Right-most Icon container
+    if (rightIcons.length > 0) {
+      rightIconElements = (
         <div style={iconRightStyle}>
-          {iconElementRight}
+          {rightIcons}
         </div>
       );
     }
@@ -179,9 +226,9 @@ const AppBar = React.createClass({
         className={props.className}
         style={this.mergeAndPrefix(styles.root, props.style)}
         zDepth={props.zDepth}>
-          {menuElementLeft}
+          {navIconElement}
           {titleElement}
-          {menuElementRight}
+          {rightIconElements}
           {props.children}
       </Paper>
     );
