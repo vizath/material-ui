@@ -3,6 +3,7 @@ let { AppBar, DropDownMenu } = require('material-ui');
 let IconButton = require('icon-button');
 let NavigationClose = require('svg-icons/navigation/close');
 let NavigationMenu = require('svg-icons/navigation/menu');
+let NavigationExpandMore = require('svg-icons/navigation/expand-more');
 let FlatButton = require('flat-button');
 let ComponentDoc = require('../../component-doc');
 let CodeExample = require('../../code-example/code-example');
@@ -25,21 +26,6 @@ class AppBarPage extends React.Component {
       {
         name: 'Props',
         infoArray: [
-          {
-            name: 'iconClassNameLeft',
-            type: 'string',
-            header: 'optional',
-            desc: 'The classname of the icon on the left of the app bar. If you ' +
-                  'are using a stylesheet for your icons, enter the class name ' +
-                  'for the icon to be used here.'
-          },
-          {
-            name: 'iconClassNameRight',
-            type: 'string',
-            header: 'optional',
-            desc: 'Similiar to the iconClassNameLeft prop except that it applies ' +
-                  'to the icon displayed on the right of the app bar.'
-          },
           {
             name: 'iconElementLeft',
             type: 'element',
@@ -110,7 +96,7 @@ class AppBarPage extends React.Component {
         <CodeExample code={Code}>
           <AppBar
             title="Title"
-            iconClassNameRight="muidocs-icon-navigation-expand-more" />
+            iconElementRight={<IconButton><NavigationExpandMore /></IconButton>} />
           <br />
           <AppBar
             title="Title"

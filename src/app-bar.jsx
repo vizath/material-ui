@@ -31,8 +31,6 @@ const AppBar = React.createClass({
     onLeftIconButtonTouchTap: React.PropTypes.func,
     onRightIconButtonTouchTap: React.PropTypes.func,
     style: React.PropTypes.object,
-    iconClassNameLeft: React.PropTypes.string,
-    iconClassNameRight: React.PropTypes.string,
     iconElementLeft: React.PropTypes.element,
     iconElementRight: React.PropTypes.element,
     iconStyleRight: React.PropTypes.object,
@@ -58,24 +56,6 @@ const AppBar = React.createClass({
       title: '',
       zDepth: 1,
     };
-  },
-
-  componentDidMount() {
-    if (process.env.NODE_ENV !== 'production') {
-      if (this.props.iconElementLeft && this.props.iconClassNameLeft) {
-        console.warn(
-          'Properties iconClassNameLeft and iconElementLeft cannot be simultaneously ' +
-          'defined. Please use one or the other.'
-        );
-      }
-
-      if (this.props.iconElementRight && this.props.iconClassNameRight) {
-        console.warn(
-          'Properties iconClassNameRight and iconElementRight cannot be simultaneously ' +
-          'defined. Please use one or the other.'
-        );
-      }
-    }
   },
 
   getStyles() {
@@ -190,15 +170,6 @@ const AppBar = React.createClass({
         <div style={iconRightStyle}>
           {iconElementRight}
         </div>
-      );
-    } else if (props.iconClassNameRight) {
-      menuElementRight = (
-        <IconButton
-          style={iconRightStyle}
-          iconStyle={this.mergeAndPrefix(styles.iconButton.iconStyle)}
-          iconClassName={props.iconClassNameRight}
-          onTouchTap={this._onRightIconButtonTouchTap}>
-        </IconButton>
       );
     }
 

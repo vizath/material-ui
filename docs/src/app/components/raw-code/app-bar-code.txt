@@ -1,6 +1,6 @@
 <AppBar
   title="Title"
-  iconClassNameRight="muidocs-icon-navigation-expand-more" />
+  iconElementRight={<IconButton><NavigationExpandMore /></IconButton>} />
 
 <AppBar
   title="Title"
