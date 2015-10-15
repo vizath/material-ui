@@ -132,7 +132,7 @@ const AppBar = React.createClass({
 
       if (navIcon.type.displayName === 'IconButton') {
         navIcon = React.cloneElement(navIcon, {
-          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, navIcon.props.iconStyle),
         });
       }
 
@@ -158,7 +158,7 @@ const AppBar = React.createClass({
 
       if (filterIcon.type.displayName === 'IconButton' || filterIcon.type.displayName === 'IconMenu') {
         filterIcon = React.cloneElement(filterIcon, {
-          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, filterIcon.props.iconStyle),
         });
       }
 
@@ -184,12 +184,12 @@ const AppBar = React.createClass({
       actionIcons = actionIcons.map(function(icon) {
         if (icon.type.displayName === 'IconButton') {
           icon = React.cloneElement(icon, {
-            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, icon.props.iconStyle),
           });
         }
         else if (icon.type.displayName === 'FlatButton') {
           icon = React.cloneElement(icon, {
-            style: this.mergeStyles(styles.flatButton, icon.props.style),
+            style: this.mergeAndPrefix(styles.flatButton, icon.props.style),
           });
         }
         return icon;
@@ -204,7 +204,7 @@ const AppBar = React.createClass({
 
       if (moreIcon.type.displayName === 'IconButton' || moreIcon.type.displayName === 'IconMenu') {
         moreIcon = React.cloneElement(moreIcon, {
-          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle),
+          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, moreIcon.props.iconStyle),
         });
       }
 
