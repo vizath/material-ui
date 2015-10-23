@@ -37,6 +37,7 @@ const AppBar = React.createClass({
     actionIcons: React.PropTypes.array,
     iconStyleRight: React.PropTypes.object,
     title: React.PropTypes.node,
+    titleStyle: React.PropTypes.object,
     zDepth: React.PropTypes.number,
   },
 
@@ -148,7 +149,7 @@ const AppBar = React.createClass({
       // If the title is a string, wrap in an h1 tag.
       // If not, just use it as a node.
       if (typeof title === 'string' || title instanceof String) {
-        title = <h1 style={this.mergeAndPrefix(styles.title)}>{title}</h1>;
+        title = <h1 style={this.mergeAndPrefix(styles.title, props.titleStyle)}>{title}</h1>;
       }
     }
 

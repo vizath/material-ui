@@ -62,6 +62,12 @@ class AppBarPage extends React.Component {
             desc: 'The title to display on the app bar. Could be number, string, element or an array containing these types.'
           },
           {
+            name: 'titleStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'The style to add to the title'
+          },
+          {
             name: 'zDepth',
             type: 'number',
             header: 'default: 1',
