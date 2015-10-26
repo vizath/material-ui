@@ -15,7 +15,7 @@ const IconMenu = require('menus/icon-menu');
 const MenuItem = require('menus/menu-item');
 const MoreVertIcon = require('svg-icons/navigation/more-vert');
 
-class AppBarPage extends React.Component {
+export default class AppBarPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -34,47 +34,47 @@ class AppBarPage extends React.Component {
             type: 'element',
             header: 'optional',
             desc: 'The custom element to be displayed on the left side of the ' +
-                  'app bar such as an SvgIcon.'
+                  'app bar such as an SvgIcon.',
           },
           {
             name: 'moreIcon',
             type: 'element',
             header: 'optional',
             desc: 'Similiar to the navIcon prop except that this element ' +
-                  'is displayed on the right of the app bar.'
+                  'is displayed on the right of the app bar.',
           },
           {
             name: 'iconStyleRight',
             type: 'string',
             header: 'optional',
-            desc: 'Override the inline-styles of the element displayed on the right side of the app bar.'
+            desc: 'Override the inline-styles of the element displayed on the right side of the app bar.',
           },
           {
             name: 'style',
             type: 'object',
             header: 'optional',
-            desc: 'Override the inline-styles of the app bars\'s root element.'
+            desc: 'Override the inline-styles of the app bars\'s root element.',
           },
           {
             name: 'title',
             type: 'node',
             header: 'optional',
-            desc: 'The title to display on the app bar. Could be number, string, element or an array containing these types.'
+            desc: 'The title to display on the app bar. Could be number, string, element or an array containing these types.',
           },
           {
             name: 'titleStyle',
             type: 'object',
             header: 'optional',
-            desc: 'The style to add to the title'
+            desc: 'The style to add to the title',
           },
           {
             name: 'zDepth',
             type: 'number',
             header: 'default: 1',
             desc: 'The zDepth of the app bar. The shadow of the app bar is also ' +
-                  'dependent on this property.'
-          }
-        ]
+                  'dependent on this property.',
+          },
+        ],
       },
       {
         name: 'Events',
@@ -83,16 +83,16 @@ class AppBarPage extends React.Component {
             name: 'onLeftIconButtonTouchTap',
             header: 'AppBar.onLeftIconButtonTouchTap(e)',
             desc: 'Callback function for when the left icon is selected via ' +
-                  'a touch tap.'
+                  'a touch tap.',
           },
           {
             name: 'onRightIconButtonTouchTap',
             header: 'AppBar.onRightIconButtonTouchTap(e)',
             desc: 'Callback function for when the right icon is selected via ' +
-                  'a touch tap.'
-          }
-        ]
-      }
+                  'a touch tap.',
+          },
+        ],
+      },
     ];
   }
 
@@ -144,5 +144,3 @@ class AppBarPage extends React.Component {
   }
 
 }
-
-module.exports = AppBarPage;
