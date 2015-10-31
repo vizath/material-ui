@@ -64,7 +64,7 @@ let ProgressPage = React.createClass({
 // "images/chexee-128.jpg",
 // "images/jsa-128.jpg",
 // "images/chexee-128.jpg",
-    var data = [
+    const data = [
       {
         picture: <Avatar src="images/ok-128.jpg" />,
         name: "Brendan Lim",
@@ -95,8 +95,8 @@ let ProgressPage = React.createClass({
       },
     ];
 
-    var grey = Utils.ColorManipulator.fade(Styles.Colors.darkBlack, 0.4);
-    var headers = [
+    const grey = Utils.ColorManipulator.fade(Styles.Colors.darkBlack, 0.4);
+    const headers = [
       { text: '', key: 'picture', size: 40 },
       { text: 'Name', key: 'name', style:{ paddingLeft:16 } },
       { text: 'Group', key: 'group', size:'50%', style:{ paddingLeft:16, color:grey } },
