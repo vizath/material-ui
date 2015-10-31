@@ -45,6 +45,7 @@ import Sliders from './components/pages/components/sliders';
 import Snackbar from './components/pages/components/snackbar';
 import Switches from './components/pages/components/switches';
 import Table from './components/pages/components/table';
+import TableList from './components/pages/components/table-list';
 import Tabs from './components/pages/components/tabs';
 import TextFields from './components/pages/components/text-fields';
 import TimePicker from './components/pages/components/time-picker';
@@ -104,6 +105,7 @@ const AppRoutes = (
       <Route path="switches" component={Switches} />
       <Route path="snackbar" component={Snackbar} />
       <Route path="table" component={Table} />
+      <Route path="table-list" component={TableList} />
       <Route path="tabs" component={Tabs} />
       <Route path="text-fields" component={TextFields} />
       <Route path="time-picker" component={TimePicker} />

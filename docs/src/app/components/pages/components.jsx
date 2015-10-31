@@ -30,6 +30,7 @@ export default class Components extends React.Component {
       {route: '/components/switches', text: 'Switches'},
       {route: '/components/snackbar', text: 'Snackbar'},
       {route: '/components/table', text: 'Table'},
+      {route: '/components/table-list', text: 'Table Lists'},
       {route: '/components/tabs', text: 'Tabs'},
       {route: '/components/text-fields', text: 'Text Fields'},
       {route: '/components/time-picker', text: 'Time Picker'},
