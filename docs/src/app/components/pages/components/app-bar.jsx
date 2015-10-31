@@ -105,7 +105,7 @@ export default class AppBarPage extends React.Component {
         <CodeExample code={Code}>
           <AppBar
             title="Title"
-            moreIcon={<IconButton><NavigationExpandMore /></IconButton>} />
+            moreIcon={<IconButton key="more"><NavigationExpandMore /></IconButton>} />
           <br />
           <AppBar
             title="Title"
@@ -129,7 +129,7 @@ export default class AppBarPage extends React.Component {
               <IconButton key="close"><ActionFavorite /></IconButton>,
             ]}
             moreIcon={
-              <IconMenu iconButtonElement={
+              <IconMenu key="more" iconButtonElement={
                 <IconButton><MoreVertIcon /></IconButton>
               }>
                 <MenuItem primaryText="Refresh" />
