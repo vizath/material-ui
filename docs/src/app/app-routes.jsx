@@ -41,6 +41,7 @@ const Sliders = require('./components/pages/components/sliders');
 const Snackbar = require('./components/pages/components/snackbar');
 const Switches = require('./components/pages/components/switches');
 const Table = require('./components/pages/components/table');
+const TableList = require('./components/pages/components/table-list');
 const Tabs = require('./components/pages/components/tabs');
 const TextFields = require('./components/pages/components/text-fields');
 const TimePicker = require('./components/pages/components/time-picker');
@@ -96,6 +97,7 @@ const AppRoutes = (
       <Route path="switches" component={Switches} />
       <Route path="snackbar" component={Snackbar} />
       <Route path="table" component={Table} />
+      <Route path="table-list" component={TableList} />
       <Route path="tabs" component={Tabs} />
       <Route path="text-fields" component={TextFields} />
       <Route path="time-picker" component={TimePicker} />

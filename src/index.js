@@ -58,6 +58,7 @@ module.exports = {
   TableFooter: require('./table/table-footer'),
   TableHeader: require('./table/table-header'),
   TableHeaderColumn: require('./table/table-header-column'),
+  TableList: require('./table-list'),
   TableRow: require('./table/table-row'),
   TableRowColumn: require('./table/table-row-column'),
   Toggle: require('./toggle'),
