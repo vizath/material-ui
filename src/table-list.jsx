@@ -208,7 +208,7 @@ const TableList = React.createClass({
       }.bind(this));
 
       return (
-        <TableItem key={'data' + i}>
+        <TableItem key={'data' + i} onTouchTap={this._onItemClick.bind(this, d)}>
           <div style={rowStyle}>
             {cells}
           </div>
@@ -245,6 +245,10 @@ const TableList = React.createClass({
 
   _onHeaderClick(header) {
     this.props.onHeaderClick(header);
+  },
+
+  _onItemClick(item) {
+    this.props.onItemClick(item);
   },
 
 });
