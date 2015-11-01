@@ -114,6 +114,7 @@ let ProgressPage = React.createClass({
             data={data}
             headers={headers}
             onHeaderClick={this._onHeaderClick}
+            onItemClick={this._onItemClick}
             />
 
         </CodeExample>
@@ -123,6 +124,9 @@ let ProgressPage = React.createClass({
 
   _onHeaderClick(header) {
     console.log('Header clicked:', header);
+  },
+  _onItemClick(item) {
+    console.log('Item clicked:', item);
   },
 
 });
