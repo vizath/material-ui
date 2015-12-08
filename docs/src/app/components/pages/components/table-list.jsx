@@ -11,6 +11,11 @@ let MoreVertIcon = require('svg-icons/navigation/more-vert');
 
 let ProgressPage = React.createClass({
 
+  _stopMenuPropagation: function(e) {
+    // Stop the event from bubbling up to the list-item
+    e.stopPropagation();
+  },
+
   render() {
 
     let componentInfo = [
@@ -51,19 +56,26 @@ let ProgressPage = React.createClass({
       },
     ];
 
+    const menuHandlers = {
+      onKeyboardFocus: this._stopMenuPropagation,
+      onTouchTap: this._stopMenuPropagation,
+      onMouseDown: this._stopMenuPropagation,
+      onMouseUp: this._stopMenuPropagation,
+    };
+
     const menu = (
-      <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
-        <MenuItem primaryText="Refresh" />
-        <MenuItem primaryText="Send feedback" />
-        <MenuItem primaryText="Settings" />
-        <MenuItem primaryText="Help" />
-        <MenuItem primaryText="Sign out" />
+      <IconMenu
+        targetOrigin={{vertical:'top', horizontal:'right'}}
+        anchorOrigin={{vertical:'center', horizontal:'middle'}}
+        iconButtonElement={<IconButton {...menuHandlers}><MoreVertIcon /></IconButton>}>
+        <MenuItem {...menuHandlers} primaryText="Refresh" />
+        <MenuItem {...menuHandlers} primaryText="Send feedback" />
+        <MenuItem {...menuHandlers} primaryText="Settings" />
+        <MenuItem {...menuHandlers} primaryText="Help" />
+        <MenuItem {...menuHandlers} primaryText="Sign out" />
       </IconMenu>
     );
-// "images/raquelromanp-128.jpg",
-// "images/chexee-128.jpg",
-// "images/jsa-128.jpg",
-// "images/chexee-128.jpg",
+
     const data = [
       {
         picture: <Avatar src="images/ok-128.jpg" />,
@@ -96,11 +108,13 @@ let ProgressPage = React.createClass({
     ];
 
     const grey = Utils.ColorManipulator.fade(Styles.Colors.darkBlack, 0.4);
+
+    // Add paddingTop and paddingBottom to center for IE
     const headers = [
       { text: '', key: 'picture', size: 40 },
-      { text: 'Name', key: 'name', style:{ paddingLeft:16 } },
-      { text: 'Group', key: 'group', size:'50%', style:{ paddingLeft:16, color:grey } },
-      { text: 'Last Modified', key: 'date', size:'50%', style:{ paddingLeft:16, color:grey } },
+      { text: 'Name', key: 'name', style:{ paddingTop:10, paddingBottom:10, paddingLeft:16 } },
+      { text: 'Group', key: 'group', style:{ paddingTop:10, paddingBottom:10, paddingLeft:16, color:grey } },
+      { text: 'Last Modified', key: 'date', style:{ paddingTop:10, paddingBottom:10, paddingLeft:16, color:grey } },
       { text: '', key: 'options', size:48+16, style:{ paddingLeft:16 } },
     ];
 

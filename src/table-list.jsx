@@ -1,6 +1,5 @@
 const React = require('react');
 const StylePropable = require('./mixins/style-propable');
-const PropTypes = require('./utils/prop-types');
 const Transitions = require('./styles/transitions');
 const DefaultRawTheme = require('./styles/raw-themes/light-raw-theme');
 const ColorManipulator = require('./utils/color-manipulator');
@@ -14,6 +13,18 @@ const TableItem = React.createClass({
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
+  },
+
+  propTypes: {
+    children: React.PropTypes.node,
+    innerDivStyle: React.PropTypes.object,
+    onKeyboardFocus: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
+    onNestedListToggle: React.PropTypes.func,
+    onTouchStart: React.PropTypes.func,
+    onTouchTap: React.PropTypes.func,
+    style: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -64,20 +75,20 @@ const TableItem = React.createClass({
 
     return (
       <EnhancedButton
-          {...other}
-          linkButton={true}
-          containerElement="div"
-          onKeyboardFocus={this._handleKeyboardFocus}
-          onMouseLeave={this._handleMouseLeave}
-          onMouseEnter={this._handleMouseEnter}
-          onTouchStart={this._handleTouchStart}
-          onTouchTap={onTouchTap}
-          ref="enhancedButton"
-          style={this.mergeStyles(styles.root, style)}>
-          <div style={this.prepareStyles(styles.innerDiv, innerDivStyle)}>
-            {children}
-          </div>
-        </EnhancedButton>
+        {...other}
+        linkButton={true}
+        containerElement="div"
+        onKeyboardFocus={this._handleKeyboardFocus}
+        onMouseLeave={this._handleMouseLeave}
+        onMouseEnter={this._handleMouseEnter}
+        onTouchStart={this._handleTouchStart}
+        onTouchTap={onTouchTap}
+        ref="enhancedButton"
+        style={this.mergeStyles(styles.root, style)}>
+        <div style={this.prepareStyles(styles.innerDiv, innerDivStyle)}>
+          {children}
+        </div>
+      </EnhancedButton>
     );
   },
 
@@ -115,10 +126,19 @@ const TableCell = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
+  propTypes: {
+    children: React.PropTypes.node,
+    style: React.PropTypes.object,
+    width: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number,
+    ]),
+  },
+
   render() {
-    const mergedStyles = this.mergeAndPrefix(this.props.style, {
-      width: this.props.width || '100%',
-    });
+    const mergedStyles = this.mergeAndPrefix({
+      flex: this.props.width ? null : 1,
+    }, this.props.style);
 
     return (
       <div style={mergedStyles}>
@@ -141,13 +161,13 @@ const TableList = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.context.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -155,16 +175,17 @@ const TableList = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.context.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
 
   propTypes: {
-    circle: React.PropTypes.bool,
-    rounded: React.PropTypes.bool,
-    transitionEnabled: React.PropTypes.bool,
-    zDepth: PropTypes.zDepth,
+    data: React.PropTypes.array,
+    headers: React.PropTypes.array,
+    onHeaderClick: React.PropTypes.func,
+    onItemClick: React.PropTypes.func,
+    style: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -190,16 +211,16 @@ const TableList = React.createClass({
       },
     };
     const rowStyle = {
-      display: 'flex',
+      display: '-webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex',
       justifyContent: 'space-around',
       flexFlow: 'row nowrap',
       alignItems: 'center',
     };
 
     const rows = data.map(function(d, i) {
-      const cells = headers.map(function(header) {
+      const cells = headers.map(function(header, j) {
         return (
-          <TableCell width={header.size}>
+          <TableCell width={header.size} key={'header' + i + j}>
             <div style={header.style}>
               {d[header.key]}
             </div>
@@ -219,12 +240,16 @@ const TableList = React.createClass({
     // props or theme ?
     const grey = ColorManipulator.fade(Colors.darkBlack, 0.4);
 
-    const rowHeaders = headers.map(function(header) {
+    const rowHeaders = headers.map(function(header, i) {
       const hover = header.text ?
-        <TableItem onTouchTap={this._onHeaderClick.bind(this, header)} style={{ color:grey }}>{header.text}</TableItem> :
-        <div style={{ width:header.size }} />;
+        <TableItem
+          onTouchTap={this._onHeaderClick.bind(this, header)}
+          style={{color:grey}}>
+          {header.text}
+        </TableItem> :
+        <div style={{width:header.size}} />;
       return (
-        <TableCell width={header.size}>
+        <TableCell width={header.size} key={'header' + i}>
           {hover}
         </TableCell>
       );
@@ -232,7 +257,7 @@ const TableList = React.createClass({
 
     return (
       <div {...other} style={this.prepareStyles(styles.root, style)}>
-        <div style={{ paddingLeft:16, paddingRight:16 }}>
+        <div style={{paddingLeft:16, paddingRight:16}}>
           <div style={rowStyle}>
             {rowHeaders}
           </div>
