@@ -1,8 +1,6 @@
 const React = require('react');
 const StylePropable = require('./mixins/style-propable');
 const Typography = require('./styles/typography');
-const IconButton = require('./icon-button');
-const NavigationMenu = require('./svg-icons/navigation/menu');
 const DefaultRawTheme = require('./styles/raw-themes/light-raw-theme');
 const ThemeManager = require('./styles/theme-manager');
 const Paper = require('./paper');
@@ -21,26 +19,29 @@ const AppBar = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
   propTypes: {
+    actionIcons: React.PropTypes.array,
+    children: React.PropTypes.node,
+    className: React.PropTypes.string,
+    filterIcon: React.PropTypes.element,
+    iconStyleRight: React.PropTypes.object,
+    moreIcon: React.PropTypes.element,
+    navIcon: React.PropTypes.element,
     onLeftIconButtonTouchTap: React.PropTypes.func,
     onRightIconButtonTouchTap: React.PropTypes.func,
     style: React.PropTypes.object,
-    navIcon: React.PropTypes.element,
-    filterIcon: React.PropTypes.element,
-    moreIcon: React.PropTypes.element,
-    actionIcons: React.PropTypes.array,
     title: React.PropTypes.node,
     titleStyle: React.PropTypes.object,
     zDepth: React.PropTypes.number,
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -48,7 +49,7 @@ const AppBar = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -172,7 +173,7 @@ const AppBar = React.createClass({
       }
 
       filterIconElement = (
-        <div style={this.mergeAndPrefix({ display: 'inline-block', verticalAlign: 'sub' })}>
+        <div style={this.mergeAndPrefix({display: 'inline-block', verticalAlign: 'sub'})}>
           {filterIcon}
         </div>
       );

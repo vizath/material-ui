@@ -1,9 +1,9 @@
-const React = require('react');
-const StylePropable = require('../mixins/style-propable');
-const FontIcon = require('../font-icon');
-const Toggle = require('../toggle');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import StylePropable from '../mixins/style-propable';
+import FontIcon from '../font-icon';
+import Toggle from '../toggle';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const Types = {
   LINK: 'LINK',
@@ -21,21 +21,26 @@ const MenuItem = React.createClass({
   },
 
   propTypes: {
-    index: React.PropTypes.number.isRequired,
+    active: React.PropTypes.bool,
+    attribute: React.PropTypes.string,
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
+    data: React.PropTypes.string,
+    disabled: React.PropTypes.bool,
+    icon: React.PropTypes.node,
     iconClassName: React.PropTypes.string,
     iconRightClassName: React.PropTypes.string,
-    iconStyle: React.PropTypes.object,
     iconRightStyle: React.PropTypes.object,
-    attribute: React.PropTypes.string,
+    iconStyle: React.PropTypes.object,
+    index: React.PropTypes.number.isRequired,
     number: React.PropTypes.string,
-    data: React.PropTypes.string,
-    toggle: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    onTouchTap: React.PropTypes.func,
+    onMouseEnter: React.PropTypes.func,
+    onMouseLeave: React.PropTypes.func,
     onToggle: React.PropTypes.func,
+    onTouchTap: React.PropTypes.func,
     selected: React.PropTypes.bool,
-    active: React.PropTypes.bool,
+    style: React.PropTypes.object,
+    toggle: React.PropTypes.bool,
   },
 
   //for passing default theme context to children
@@ -43,13 +48,13 @@ const MenuItem = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -57,7 +62,7 @@ const MenuItem = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -86,10 +91,10 @@ const MenuItem = React.createClass({
     const isRtl = this.context.muiTheme.isRtl;
 
     const right = isRtl ? 'left' : 'right';
-    const left  = isRtl ? 'right' : 'left';
+    const left = isRtl ? 'right' : 'left';
 
-    const marginRight = isRtl ? 'marginLeft': 'marginRight';
-    const paddingLeft = isRtl ? 'paddingRight': 'paddingLeft';
+    const marginRight = isRtl ? 'marginLeft' : 'marginRight';
+    const paddingLeft = isRtl ? 'paddingRight' : 'paddingLeft';
 
     let styles = {
       root: {
@@ -157,11 +162,26 @@ const MenuItem = React.createClass({
     let toggleElement;
     let styles = this.getStyles();
 
-    if (this.props.iconClassName) icon = <FontIcon style={this.mergeStyles(styles.icon, this.props.iconStyle, this.props.selected && styles.rootWhenSelected)} className={this.props.iconClassName} />;
-    if (this.props.iconRightClassName) iconRight = <FontIcon style={this.mergeStyles(styles.iconRight, this.props.iconRightStyle)} className={this.props.iconRightClassName} />;
+    if (this.props.iconClassName) {
+      icon = (
+        <FontIcon style={this.mergeStyles(styles.icon, this.props.iconStyle,
+          this.props.selected && styles.rootWhenSelected)}
+          className={this.props.iconClassName} />
+      );
+    }
+    if (this.props.iconRightClassName) {
+      iconRight = (
+        <FontIcon style={this.mergeStyles(styles.iconRight, this.props.iconRightStyle)}
+          className={this.props.iconRightClassName} />
+      );
+    }
     if (this.props.data) data = <span style={this.prepareStyles(styles.data)}>{this.props.data}</span>;
-    if (this.props.number !== undefined) number = <span style={this.prepareStyles(styles.number)}>{this.props.number}</span>;
-    if (this.props.attribute !== undefined) attribute = <span style={this.prepareStyles(styles.style)}>{this.props.attribute}</span>;
+    if (this.props.number !== undefined) {
+      number = <span style={this.prepareStyles(styles.number)}>{this.props.number}</span>;
+    }
+    if (this.props.attribute !== undefined) {
+      attribute = <span style={this.prepareStyles(styles.style)}>{this.props.attribute}</span>;
+    }
     if (this.props.icon) icon = this.props.icon;
 
     if (this.props.toggle) {
@@ -172,7 +192,6 @@ const MenuItem = React.createClass({
         onMouseEnter,
         onMouseLeave,
         children,
-        label,
         style,
         ...other,
       } = this.props;
@@ -222,4 +241,4 @@ const MenuItem = React.createClass({
   },
 });
 
-module.exports = MenuItem;
+export default MenuItem;

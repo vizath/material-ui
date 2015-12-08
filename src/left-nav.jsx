@@ -1,26 +1,31 @@
-const isBrowser = require('./utils/is-browser');
+import isBrowser from './utils/is-browser';
+
+import warning from 'warning';
 
 let Modernizr = isBrowser ? require('./utils/modernizr.custom') : undefined;
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-const KeyCode = require('./utils/key-code');
-const StylePropable = require('./mixins/style-propable');
-const AutoPrefix = require('./styles/auto-prefix');
-const Transitions = require('./styles/transitions');
-const WindowListenable = require('./mixins/window-listenable');
-const Overlay = require('./overlay');
-const Paper = require('./paper');
-const Menu = require('./menu/menu');
-const DefaultRawTheme = require('./styles/raw-themes/light-raw-theme');
-const ThemeManager = require('./styles/theme-manager');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import KeyCode from './utils/key-code';
+import StylePropable from './mixins/style-propable';
+import AutoPrefix from './styles/auto-prefix';
+import Transitions from './styles/transitions';
+import WindowListenable from './mixins/window-listenable';
+import Overlay from './overlay';
+import Paper from './paper';
+import Menu from './menu/menu';
+import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
+import ThemeManager from './styles/theme-manager';
 
 let openNavEventHandler = null;
 
 
 const LeftNav = React.createClass({
 
-  mixins: [StylePropable, WindowListenable],
+  mixins: [
+    StylePropable,
+    WindowListenable,
+  ],
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
@@ -31,37 +36,42 @@ const LeftNav = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
   propTypes: {
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
     disableSwipeToOpen: React.PropTypes.bool,
     docked: React.PropTypes.bool,
     header: React.PropTypes.element,
+    menuItemClassName: React.PropTypes.string,
+    menuItemClassNameLink: React.PropTypes.string,
+    menuItemClassNameSubheader: React.PropTypes.string,
     menuItems: React.PropTypes.array,
     onChange: React.PropTypes.func,
-    onNavOpen: React.PropTypes.func,
     onNavClose: React.PropTypes.func,
+    onNavOpen: React.PropTypes.func,
+    onRequestChange: React.PropTypes.func,
+    open: React.PropTypes.bool,
     openRight: React.PropTypes.bool,
     selectedIndex: React.PropTypes.number,
-    menuItemClassName: React.PropTypes.string,
-    menuItemClassNameSubheader: React.PropTypes.string,
-    menuItemClassNameLink: React.PropTypes.string,
+    style: React.PropTypes.object,
   },
 
   windowListeners: {
-    'keyup': '_onWindowKeyUp',
-    'resize': '_onWindowResize',
+    keyup: '_onWindowKeyUp',
+    resize: '_onWindowResize',
   },
 
   getDefaultProps() {
     return {
       disableSwipeToOpen: false,
       docked: true,
+      open: null,
     };
   },
 
@@ -71,8 +81,10 @@ const LeftNav = React.createClass({
     this._touchStartY = null;
     this._swipeStartX = null;
 
+    this._testDeprecations();
+
     return {
-      open: this.props.docked,
+      open: (this.props.open !== null ) ? this.props.open : this.props.docked,
       swiping: null,
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -80,9 +92,19 @@ const LeftNav = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
-    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
-    this.setState({muiTheme: newMuiTheme});
+  componentWillReceiveProps(nextProps, nextContext) {
+    const newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    const newState = {muiTheme: newMuiTheme};
+
+    this._testDeprecations();
+
+    // If docked is changed, change the open state for when uncontrolled.
+    if (this.props.docked !== nextProps.docked) newState.open = nextProps.docked;
+
+    // If controlled then the open prop takes precedence.
+    if (nextProps.open !== null) newState.open = nextProps.open;
+
+    this.setState(newState);
   },
 
   componentDidMount() {
@@ -100,18 +122,22 @@ const LeftNav = React.createClass({
   },
 
   toggle() {
-    this.setState({ open: !this.state.open });
+    warning(false, 'using methods on left nav has been deprecated. Please refer to documentations.');
+    if (this.state.open) this.close();
+    else this.open();
     return this;
   },
 
   close() {
-    this.setState({ open: false });
+    warning(false, 'using methods on left nav has been deprecated. Please refer to documentations.');
+    this.setState({open: false});
     if (this.props.onNavClose) this.props.onNavClose();
     return this;
   },
 
   open() {
-    this.setState({ open: true });
+    warning(false, 'using methods on left nav has been deprecated. Please refer to documentations.');
+    this.setState({open: true});
     if (this.props.onNavOpen) this.props.onNavOpen();
     return this;
   },
@@ -145,6 +171,9 @@ const LeftNav = React.createClass({
         height: '100%',
         borderRadius: '0',
       },
+      overlay: {
+        pointerEvents: this.state.open ? 'auto' : 'none', // Bypass mouse events when left nav is closing.
+      },
       menuItem: {
         height: this.state.muiTheme.rawTheme.spacing.desktopLeftNavMenuItemHeight,
         lineHeight: this.state.muiTheme.rawTheme.spacing.desktopLeftNavMenuItemHeight + 'px',
@@ -176,7 +205,8 @@ const LeftNav = React.createClass({
       overlay = (
         <Overlay
           ref="overlay"
-          show={this.state.open || !!this.state.swiping}
+          show={this._shouldShow()}
+          style={styles.overlay}
           transitionEnabled={!this.state.swiping}
           onTouchTap={this._onOverlayTouchTap} />
       );
@@ -186,7 +216,7 @@ const LeftNav = React.createClass({
       children = this.props.children;
     }
     else {
-       children = (
+      children = (
         <Menu
           ref="menuItems"
           style={this.mergeStyles(styles.menu)}
@@ -221,12 +251,38 @@ const LeftNav = React.createClass({
     );
   },
 
+  _testDeprecations() {
+    warning(!(typeof this.props.onNavClose === 'function'),
+      'onNavClose will be removed in favor of onRequestChange');
+
+    warning(!(typeof this.props.onNavOpen === 'function'),
+      'onNavOpen will be removed in favor of onRequestChange');
+  },
+
+  _shouldShow() {
+    return this.state.open || !!this.state.swiping;  // component is swiping
+  },
+
+  _close(reason) {
+    if (this.props.open === null) this.setState({open: false});
+    if (this.props.onRequestChange) this.props.onRequestChange(false, reason);
+    return this;
+  },
+
+  _open(reason) {
+    if (this.props.open === null) this.setState({open: true});
+    if (this.props.onRequestChange) this.props.onRequestChange(true, reason);
+    return this;
+  },
+
   _updateMenuHeight() {
     if (this.props.header) {
-      let container = ReactDOM.findDOMNode(this.refs.clickAwayableElement);
-      let menu = ReactDOM.findDOMNode(this.refs.menuItems);
-      let menuHeight = container.clientHeight - menu.offsetTop;
-      menu.style.height = menuHeight + 'px';
+      const menu = ReactDOM.findDOMNode(this.refs.menuItems);
+      if (menu) {
+        const container = ReactDOM.findDOMNode(this.refs.clickAwayableElement);
+        const menuHeight = container.clientHeight - menu.offsetTop;
+        menu.style.height = menuHeight + 'px';
+      }
     }
   },
 
@@ -234,18 +290,18 @@ const LeftNav = React.createClass({
     if (this.props.onChange && this.props.selectedIndex !== key) {
       this.props.onChange(e, key, payload);
     }
-    if (!this.props.docked) this.close();
+    if (!this.props.docked) this._close('clickaway');
   },
 
   _onOverlayTouchTap() {
-    this.close();
+    this._close('clickaway');
   },
 
   _onWindowKeyUp(e) {
     if (e.keyCode === KeyCode.ESC &&
         !this.props.docked &&
         this.state.open) {
-      this.close();
+      this._close('escape');
     }
   },
 
@@ -280,15 +336,29 @@ const LeftNav = React.createClass({
   },
 
   _onBodyTouchStart(e) {
+
+    const swipeAreaWidth = 30;
+
+    let touchStartX = e.touches[0].pageX;
+    let touchStartY = e.touches[0].pageY;
+
+    // Open only if swiping from far left (or right) while closed
+    if (!this.state.open) {
+      if (this.props.openRight) {
+        // If openRight is true calculate from the far right
+        if (touchStartX < document.body.offsetWidth - swipeAreaWidth) return;
+      } else {
+        // If openRight is false calculate from the far left
+        if (touchStartX > swipeAreaWidth) return;
+      }
+    }
+
     if (!this.state.open &&
          (openNavEventHandler !== this._onBodyTouchStart ||
           this.props.disableSwipeToOpen)
        ) {
       return;
     }
-
-    let touchStartX = e.touches[0].pageX;
-    let touchStartY = e.touches[0].pageY;
 
     this._maybeSwiping = true;
     this._touchStartX = touchStartX;
@@ -301,9 +371,9 @@ const LeftNav = React.createClass({
 
   _setPosition(translateX) {
     let leftNav = ReactDOM.findDOMNode(this.refs.clickAwayableElement);
-    leftNav.style[AutoPrefix.single('transform')] =
-      'translate3d(' + (this._getTranslateMultiplier() * translateX) + 'px, 0, 0)';
+    let transformCSS = 'translate3d(' + (this._getTranslateMultiplier() * translateX) + 'px, 0, 0)';
     this.refs.overlay.setOpacity(1 - translateX / this._getMaxTranslateX());
+    AutoPrefix.set(leftNav.style, 'transform', transformCSS);
   },
 
   _getTranslateX(currentX) {
@@ -364,12 +434,12 @@ const LeftNav = React.createClass({
         if (swiping === 'opening') {
           this._setPosition(this._getMaxTranslateX());
         } else {
-          this.close();
+          this._close('swipe');
         }
       }
       else {
         if (swiping === 'opening') {
-          this.open();
+          this._open('swipe');
         } else {
           this._setPosition(0);
         }
@@ -386,4 +456,4 @@ const LeftNav = React.createClass({
 
 });
 
-module.exports = LeftNav;
+export default LeftNav;

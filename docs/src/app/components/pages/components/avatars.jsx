@@ -1,10 +1,18 @@
-let React = require('react');
-let { Avatar, FontIcon, List, ListItem, Styles } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let FileFolder = require('svg-icons/file/folder');
-let { Colors } = Styles;
-let Code = require('avatars-code');
-let CodeExample = require('../../code-example/code-example');
+import React from 'react';
+import {
+  Avatar,
+  FontIcon,
+  List,
+  ListItem,
+  Styles,
+  Paper,
+} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import FileFolder from 'material-ui/svg-icons/file/folder';
+const {Colors} = Styles;
+import Code from 'avatars-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 
 export default class AvatarsPage extends React.Component {
@@ -61,7 +69,8 @@ export default class AvatarsPage extends React.Component {
     let svgAvatar = <Avatar icon={<FileFolder />} />;
     let customSvgAvatar = <Avatar icon={<FileFolder />} color={Colors.orange200} backgroundColor={Colors.pink400} />;
     let fontAvatar = <Avatar icon={<FontIcon className="muidocs-icon-communication-voicemail" />} />;
-    let customFontAvatar = <Avatar icon={<FontIcon className="muidocs-icon-communication-voicemail" />} color={Colors.blue300} backgroundColor={Colors.indigo900} />;
+    let customFontAvatar = <Avatar icon={<FontIcon className="muidocs-icon-communication-voicemail" />}
+      color={Colors.blue300} backgroundColor={Colors.indigo900} />;
     let letterAvatar = <Avatar>A</Avatar>;
     let customLetterAvatar = <Avatar color={Colors.deepOrange300} backgroundColor={Colors.purple500}>A</Avatar>;
 
@@ -70,6 +79,16 @@ export default class AvatarsPage extends React.Component {
         name="Avatars"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport Avatar from \'material-ui/lib/avatar\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <List>
             <ListItem leftAvatar={imageAvatar} disabled={true}>Image Avatar</ListItem>

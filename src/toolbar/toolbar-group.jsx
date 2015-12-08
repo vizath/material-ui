@@ -1,8 +1,8 @@
-const React = require('react');
-const Colors = require('../styles/colors');
-const StylePropable = require('../mixins/style-propable');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import Colors from '../styles/colors';
+import StylePropable from '../mixins/style-propable';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const ToolbarGroup = React.createClass({
 
@@ -13,8 +13,12 @@ const ToolbarGroup = React.createClass({
   },
 
   propTypes: {
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
+    firstChild: React.PropTypes.bool,
     float: React.PropTypes.string,
+    lastChild: React.PropTypes.bool,
+    style: React.PropTypes.object,
   },
 
   //for passing default theme context to children
@@ -22,7 +26,7 @@ const ToolbarGroup = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -34,7 +38,7 @@ const ToolbarGroup = React.createClass({
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -42,7 +46,7 @@ const ToolbarGroup = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -66,7 +70,7 @@ const ToolbarGroup = React.createClass({
       dropDownMenu: {
         root: {
           float: 'left',
-          color: Colors.lightBlack,// removes hover color change, we want to keep it
+          color: Colors.lightBlack, // removes hover color change, we want to keep it
           display: 'inline-block',
           marginRight: this.getSpacing(),
         },
@@ -179,4 +183,4 @@ const ToolbarGroup = React.createClass({
   },
 });
 
-module.exports = ToolbarGroup;
+export default ToolbarGroup;

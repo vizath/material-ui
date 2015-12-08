@@ -1,7 +1,7 @@
-const React = require('react');
-const StylePropable = require('../mixins/style-propable');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import StylePropable from '../mixins/style-propable';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const Tab = React.createClass({
 
@@ -12,12 +12,13 @@ const Tab = React.createClass({
   },
 
   propTypes: {
-    onTouchTap: React.PropTypes.func,
     label: React.PropTypes.node,
     onActive: React.PropTypes.func,
+    onTouchTap: React.PropTypes.func,
     selected: React.PropTypes.bool,
-    width: React.PropTypes.string,
+    style: React.PropTypes.object,
     value: React.PropTypes.string,
+    width: React.PropTypes.string,
   },
 
   //for passing default theme context to children
@@ -25,20 +26,20 @@ const Tab = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getDefaultProps(){
+  getDefaultProps() {
     return {
       onActive: () => {},
       onTouchTap: () => {},
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -46,7 +47,7 @@ const Tab = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -88,10 +89,10 @@ const Tab = React.createClass({
     );
   },
 
-   _handleTouchTap(e) {
+  _handleTouchTap(e) {
     this.props.onTouchTap(this.props.value, e, this);
   },
 
 });
 
-module.exports = Tab;
+export default Tab;
