@@ -136,9 +136,9 @@ const TableCell = React.createClass({
   },
 
   render() {
-    const mergedStyles = this.mergeAndPrefix(this.props.style, {
-      width: this.props.width || '100%',
-    });
+    const mergedStyles = this.mergeAndPrefix({
+      flex: this.props.width ? null : 1,
+    }, this.props.style);
 
     return (
       <div style={mergedStyles}>
@@ -211,7 +211,7 @@ const TableList = React.createClass({
       },
     };
     const rowStyle = {
-      display: 'flex',
+      display: '-webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex',
       justifyContent: 'space-around',
       flexFlow: 'row nowrap',
       alignItems: 'center',
