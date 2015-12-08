@@ -1,11 +1,11 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const PureRenderMixin = require('react-addons-pure-render-mixin');
-const StylePropable = require('../mixins/style-propable');
-const AutoPrefix = require('../styles/auto-prefix');
-const Colors = require('../styles/colors');
-const Transitions = require('../styles/transitions');
-const ScaleInTransitionGroup = require('../transition-groups/scale-in');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import StylePropable from '../mixins/style-propable';
+import AutoPrefix from '../styles/auto-prefix';
+import Colors from '../styles/colors';
+import Transitions from '../styles/transitions';
+import ScaleInTransitionGroup from '../transition-groups/scale-in';
 
 const pulsateDuration = 750;
 
@@ -19,6 +19,7 @@ const FocusRipple = React.createClass({
     innerStyle: React.PropTypes.object,
     opacity: React.PropTypes.number,
     show: React.PropTypes.bool,
+    style: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -97,14 +98,14 @@ const FocusRipple = React.createClass({
 
     const startScale = 'scale(1)';
     const endScale = 'scale(0.85)';
-    let currentScale = innerCircle.style[AutoPrefix.single('transform')];
+    let currentScale = innerCircle.style.transform;
     let nextScale;
 
     currentScale = currentScale || startScale;
     nextScale = currentScale === startScale ?
       endScale : startScale;
 
-    innerCircle.style[AutoPrefix.single('transform')] = nextScale;
+    AutoPrefix.set(innerCircle.style, 'transform', nextScale);
     this._timeout = setTimeout(this._pulsate, pulsateDuration);
   },
 
@@ -125,4 +126,4 @@ const FocusRipple = React.createClass({
 
 });
 
-module.exports = FocusRipple;
+export default FocusRipple;

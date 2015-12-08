@@ -1,6 +1,6 @@
-let Colors = require('../colors');
-let ColorManipulator = require('../../utils/color-manipulator');
-let Spacing = require('../spacing');
+import Colors from '../colors';
+import ColorManipulator from '../../utils/color-manipulator';
+import Spacing from '../spacing';
 
 /*
  *  Light Theme is the default theme used in material-ui. It is guaranteed to
@@ -8,13 +8,17 @@ let Spacing = require('../spacing');
  *  in a custom theme will default to these values.
  */
 
-module.exports = {
+export default {
   spacing: Spacing,
   fontFamily: 'Roboto, sans-serif',
+  zIndex: {
+    layer: 20,
+    popover: 20,
+  },
   palette: {
     primary1Color: Colors.cyan500,
     primary2Color: Colors.cyan700,
-    primary3Color: Colors.lightBlack,
+    primary3Color: Colors.grey400,
     accent1Color: Colors.pinkA200,
     accent2Color: Colors.grey100,
     accent3Color: Colors.grey500,
@@ -23,5 +27,7 @@ module.exports = {
     canvasColor: Colors.white,
     borderColor: Colors.grey300,
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
+    pickerHeaderColor: Colors.cyan500,
+    clockCircleColor: ColorManipulator.fade(Colors.darkBlack, 0.07),
   },
 };

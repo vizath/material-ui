@@ -1,61 +1,25 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const { Styles } = require('material-ui');
-const { Spacing } = Styles;
-const { ThemeManager } = Styles;
-const DefaultRawTheme = Styles.LightRawTheme;
-
+import React from 'react';
+import MarkdownElement from '../MarkdownElement';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const CodeBlock = React.createClass({
-
-  contextTypes : {
-    muiTheme: React.PropTypes.object,
+  propTypes: {
+    children: React.PropTypes.string,
   },
-
-  //for passing default theme context to children
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext () {
-    return {
-      muiTheme: this.state.muiTheme,
-    };
-  },
-
-  getInitialState () {
-    return {
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
-    };
-  },
-
-  componentWillReceiveProps (nextProps, nextContext) {
-    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
-    this.setState({muiTheme: newMuiTheme});
-  },
-
-  componentDidMount() {
-    let code = ReactDOM.findDOMNode(this.refs.code);
-    require([
-      "codemirror/lib/codemirror.js",
-      "codemirror/mode/htmlmixed/htmlmixed.js",
-    ], function(Codemirror){
-      Codemirror.fromTextArea(code, {
-        mode: "htmlmixed",
-        readOnly: true,
-      });
-    });
-  },
-
-  shouldComponentUpdate({children}, nextState){
-    return this.props.children !== children;
-  },
-
+  mixins: [
+    PureRenderMixin,
+  ],
   render() {
+    const text = `\`\`\`js
+${this.props.children}
+    \`\`\``;
+
     return (
-      <textarea ref="code" value={this.props.children} readOnly={true}/>
+      <div className="CodeMirror">
+        <MarkdownElement text={text} />
+      </div>
     );
   },
 });
 
-module.exports = CodeBlock;
+export default CodeBlock;

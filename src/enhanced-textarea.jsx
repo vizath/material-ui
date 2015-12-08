@@ -1,8 +1,8 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const StylePropable = require('./mixins/style-propable');
-const DefaultRawTheme = require('./styles/raw-themes/light-raw-theme');
-const ThemeManager = require('./styles/theme-manager');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import StylePropable from './mixins/style-propable';
+import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
+import ThemeManager from './styles/theme-manager';
 
 const rowsHeight = 24;
 
@@ -19,16 +19,19 @@ const styles = {
     // Overflow also needed to here to remove the extra row
     // added to textareas in Firefox.
     overflow: 'hidden',
+    // Visibility needed to hide the extra text area on ipads
+    visibility: 'hidden',
     font: 'inherit',
     padding: 0,
     position: 'absolute',
-    opacity: 0,
   },
 };
 
 const EnhancedTextarea = React.createClass({
 
-  mixins: [StylePropable],
+  mixins: [
+    StylePropable,
+  ],
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
@@ -39,18 +42,23 @@ const EnhancedTextarea = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
   propTypes: {
+    defaultValue: React.PropTypes.any,
+    disabled: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     onHeightChange: React.PropTypes.func,
-    textareaStyle: React.PropTypes.object,
     rows: React.PropTypes.number,
     rowsMax: React.PropTypes.number,
+    style: React.PropTypes.object,
+    textareaStyle: React.PropTypes.object,
+    value: React.PropTypes.string,
+    valueLink: React.PropTypes.object,
   },
 
   getDefaultProps() {
@@ -134,7 +142,7 @@ const EnhancedTextarea = React.createClass({
 
     let newHeight = shadow.scrollHeight;
 
-    if (this.props.rowsMax > this.props.rows) {
+    if (this.props.rowsMax >= this.props.rows) {
       newHeight = Math.min(this.props.rowsMax * rowsHeight, newHeight);
     }
 
@@ -172,4 +180,4 @@ const EnhancedTextarea = React.createClass({
   },
 });
 
-module.exports = EnhancedTextarea;
+export default EnhancedTextarea;

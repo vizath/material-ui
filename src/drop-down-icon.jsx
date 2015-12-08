@@ -1,11 +1,11 @@
-const React = require('react');
-const StylePropable = require('./mixins/style-propable');
-const Transitions = require('./styles/transitions');
-const ClickAwayable = require('./mixins/click-awayable');
-const FontIcon = require('./font-icon');
-const Menu = require('./menu/menu');
-const DefaultRawTheme = require('./styles/raw-themes/light-raw-theme');
-const ThemeManager = require('./styles/theme-manager');
+import React from 'react';
+import StylePropable from './mixins/style-propable';
+import Transitions from './styles/transitions';
+import ClickAwayable from './mixins/click-awayable';
+import FontIcon from './font-icon';
+import Menu from './menu/menu';
+import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
+import ThemeManager from './styles/theme-manager';
 
 
 const DropDownIcon = React.createClass({
@@ -21,19 +21,21 @@ const DropDownIcon = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
   propTypes: {
-    onChange: React.PropTypes.func,
-    menuItems: React.PropTypes.array.isRequired,
+    children: React.PropTypes.node,
     closeOnMenuItemTouchTap: React.PropTypes.bool,
-    iconStyle: React.PropTypes.object,
     iconClassName: React.PropTypes.string,
     iconLigature: React.PropTypes.string,
+    iconStyle: React.PropTypes.object,
+    menuItems: React.PropTypes.array.isRequired,
+    onChange: React.PropTypes.func,
+    style: React.PropTypes.object,
   },
 
   getInitialState() {
@@ -45,7 +47,7 @@ const DropDownIcon = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -64,7 +66,7 @@ const DropDownIcon = React.createClass({
   },
 
   componentClickAway() {
-    this.setState({ open: false });
+    this.setState({open: false});
   },
 
   getStyles() {
@@ -78,7 +80,7 @@ const DropDownIcon = React.createClass({
         height: spacing.desktopToolbarHeight,
         fontSize: spacing.desktopDropDownMenuFontSize,
         cursor: 'pointer',
-       },
+      },
       menu: {
         transition: Transitions.easeOut(),
         right: '-14px !important',
@@ -86,9 +88,9 @@ const DropDownIcon = React.createClass({
         opacity: (this.state.open) ? 1 : 0,
       },
       menuItem: { // similair to drop down menu's menu item styles
-        paddingRight: (spacing.iconSize + (spacing.desktopGutterLess*2)),
+        paddingRight: (spacing.iconSize + (spacing.desktopGutterLess * 2)),
         height: spacing.desktopDropDownMenuItemHeight,
-        lineHeight: spacing.desktopDropDownMenuItemHeight +'px',
+        lineHeight: spacing.desktopDropDownMenuItemHeight + 'px',
       },
     };
     return styles;
@@ -128,16 +130,16 @@ const DropDownIcon = React.createClass({
   },
 
   _onControlClick() {
-    this.setState({ open: !this.state.open });
+    this.setState({open: !this.state.open});
   },
 
   _onMenuItemClick(e, key, payload) {
     if (this.props.onChange) this.props.onChange(e, key, payload);
 
     if (this.props.closeOnMenuItemTouchTap) {
-      this.setState({ open: false });
+      this.setState({open: false});
     }
   },
 });
 
-module.exports = DropDownIcon;
+export default DropDownIcon;

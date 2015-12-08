@@ -1,20 +1,25 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const update = require('react-addons-update');
-const Controllable = require('../mixins/controllable');
-const StylePropable = require('../mixins/style-propable');
-const AutoPrefix = require('../styles/auto-prefix');
-const Transitions = require('../styles/transitions');
-const KeyCode = require('../utils/key-code');
-const PropTypes = require('../utils/prop-types');
-const List = require('../lists/list');
-const Paper = require('../paper');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import update from 'react-addons-update';
+import Controllable from '../mixins/controllable';
+import StylePropable from '../mixins/style-propable';
+import ClickAwayable from '../mixins/click-awayable';
+import AutoPrefix from '../styles/auto-prefix';
+import Transitions from '../styles/transitions';
+import KeyCode from '../utils/key-code';
+import PropTypes from '../utils/prop-types';
+import List from '../lists/list';
+import Paper from '../paper';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const Menu = React.createClass({
 
-  mixins: [StylePropable, Controllable],
+  mixins: [
+    StylePropable,
+    Controllable,
+    ClickAwayable,
+  ],
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
@@ -23,6 +28,7 @@ const Menu = React.createClass({
   propTypes: {
     animated: React.PropTypes.bool,
     autoWidth: React.PropTypes.bool,
+    children: React.PropTypes.node,
     desktop: React.PropTypes.bool,
     initiallyKeyboardFocused: React.PropTypes.bool,
     listStyle: React.PropTypes.object,
@@ -33,6 +39,9 @@ const Menu = React.createClass({
     onKeyDown: React.PropTypes.func,
     openDirection: PropTypes.corners,
     selectedMenuItemStyle: React.PropTypes.object,
+    style: React.PropTypes.object,
+    value: React.PropTypes.any,
+    valueLink: React.PropTypes.object,
     width: PropTypes.stringOrNumber,
     zDepth: PropTypes.zDepth,
   },
@@ -55,7 +64,7 @@ const Menu = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -88,11 +97,10 @@ const Menu = React.createClass({
 
   componentWillLeave(callback) {
     let rootStyle = ReactDOM.findDOMNode(this).style;
-
-    AutoPrefix.set(rootStyle, 'transition', Transitions.easeOut('250ms', ['opacity', 'transform']));
-    AutoPrefix.set(rootStyle, 'transform', 'translate3d(0,-8px,0)');
+    rootStyle.transition = Transitions.easeOut('250ms', ['opacity', 'transform']);
+    rootStyle.transform = 'translate3d(0,-8px,0)';
     rootStyle.opacity = 0;
-
+    rootStyle = AutoPrefix.all(rootStyle);
     setTimeout(() => {
       if (this.isMounted()) callback();
     }, 250);
@@ -107,6 +115,12 @@ const Menu = React.createClass({
       keyWidth: nextProps.desktop ? 64 : 56,
       muiTheme: newMuiTheme,
     });
+  },
+
+  componentClickAway(e) {
+    if (e.defaultPrevented)
+      return;
+    this._setFocusIndex(-1, false);
   },
 
   render() {
@@ -180,12 +194,12 @@ const Menu = React.createClass({
     //Cascade children opacity
     let cumulativeDelay = openDown ? 175 : 325;
     let cascadeChildrenCount = this._getCascadeChildrenCount();
-    let cumulativeDelayIncrement = Math.ceil(150/cascadeChildrenCount);
+    let cumulativeDelayIncrement = Math.ceil(150 / cascadeChildrenCount);
 
     let menuItemIndex = 0;
     let newChildren = React.Children.map(children, (child) => {
 
-      let childIsADivider = child.type.displayName === 'MenuDivider';
+      let childIsADivider = child.type && child.type.displayName === 'MenuDivider';
       let childIsDisabled = child.props.disabled;
       let childrenContainerStyles = {};
 
@@ -259,7 +273,6 @@ const Menu = React.createClass({
   },
 
   _cloneMenuItem(child, childIndex, styles) {
-
     let {
       desktop,
       selectedMenuItemStyle,
@@ -322,7 +335,7 @@ const Menu = React.createClass({
     //max menu height
     React.Children.forEach(children, (child) => {
       if (currentHeight < maxHeight) {
-        let childIsADivider = child.type.displayName === 'MenuDivider';
+        let childIsADivider = child.type && child.type.displayName === 'MenuDivider';
 
         currentHeight += childIsADivider ? 16 : menuItemHeight;
         count++;
@@ -336,7 +349,7 @@ const Menu = React.createClass({
   _getMenuItemCount() {
     let menuItemCount = 0;
     React.Children.forEach(this.props.children, (child) => {
-      let childIsADivider = child.type.displayName === 'MenuDivider';
+      let childIsADivider = child.type && child.type.displayName === 'MenuDivider';
       let childIsDisabled = child.props.disabled;
       if (!childIsADivider && !childIsDisabled) menuItemCount++;
     });
@@ -351,7 +364,7 @@ const Menu = React.createClass({
     let menuItemIndex = 0;
 
     React.Children.forEach(children, (child) => {
-      let childIsADivider = child.type.displayName === 'MenuDivider';
+      let childIsADivider = child.type && child.type.displayName === 'MenuDivider';
 
       if (this._isChildSelected(child, props)) selectedIndex = menuItemIndex;
       if (!childIsADivider) menuItemIndex++;
@@ -387,10 +400,14 @@ const Menu = React.createClass({
   },
 
   _handleMenuItemTouchTap(e, item) {
+    let children = this.props.children;
     let multiple = this.props.multiple;
     let valueLink = this.getValueLink(this.props);
     let menuValue = valueLink.value;
     let itemValue = item.props.value;
+    let focusIndex = React.isValidElement(children) ? 0 : children.indexOf(item);
+
+    this._setFocusIndex(focusIndex, false);
 
     if (multiple) {
       let index = menuValue.indexOf(itemValue);
@@ -470,4 +487,4 @@ const Menu = React.createClass({
 
 });
 
-module.exports = Menu;
+export default Menu;

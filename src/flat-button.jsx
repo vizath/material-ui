@@ -1,16 +1,16 @@
-const React = require('react');
-const ContextPure = require('./mixins/context-pure');
-const Transitions = require('./styles/transitions');
-const Children = require('./utils/children');
-const ColorManipulator = require('./utils/color-manipulator');
-const ImmutabilityHelper = require('./utils/immutability-helper');
-const Typography = require('./styles/typography');
-const EnhancedButton = require('./enhanced-button');
-const FlatButtonLabel = require('./buttons/flat-button-label');
-const DefaultRawTheme = require('./styles/raw-themes/light-raw-theme');
-const ThemeManager = require('./styles/theme-manager');
+import React from 'react';
+import ContextPure from './mixins/context-pure';
+import Transitions from './styles/transitions';
+import Children from './utils/children';
+import ColorManipulator from './utils/color-manipulator';
+import ImmutabilityHelper from './utils/immutability-helper';
+import Typography from './styles/typography';
+import EnhancedButton from './enhanced-button';
+import FlatButtonLabel from './buttons/flat-button-label';
+import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
+import ThemeManager from './styles/theme-manager';
 
-function validateLabel (props, propName, componentName) {
+function validateLabel(props, propName, componentName) {
   if (!props.children && !props.label) {
     return new Error('Required prop label or children was not ' +
       'specified in ' + componentName + '.');
@@ -57,17 +57,22 @@ const FlatButton = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
   propTypes: {
+    backgroundColor: React.PropTypes.string,
+    children: React.PropTypes.node,
     disabled: React.PropTypes.bool,
     hoverColor: React.PropTypes.string,
     label: validateLabel,
-    labelPosition: React.PropTypes.oneOf(['before', 'after']),
+    labelPosition: React.PropTypes.oneOf([
+      'before',
+      'after',
+    ]),
     labelStyle: React.PropTypes.object,
     onKeyboardFocus: React.PropTypes.func,
     onMouseEnter: React.PropTypes.func,
@@ -76,12 +81,13 @@ const FlatButton = React.createClass({
     primary: React.PropTypes.bool,
     rippleColor: React.PropTypes.string,
     secondary: React.PropTypes.bool,
+    style: React.PropTypes.object,
   },
 
   getDefaultProps() {
     return {
       labelStyle: {},
-      labelPosition: 'before',
+      labelPosition: 'before', // Should be after but we keep it like for now (prevent breaking changes)
       onKeyboardFocus: () => {},
       onMouseEnter: () => {},
       onMouseLeave: () => {},
@@ -100,7 +106,7 @@ const FlatButton = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -123,7 +129,7 @@ const FlatButton = React.createClass({
       secondary,
       style,
       ...other,
-      } = this.props;
+    } = this.props;
 
     const {
       buttonColor,
@@ -172,10 +178,13 @@ const FlatButton = React.createClass({
     const labelElement = label ? (
       <FlatButtonLabel label={label} style={labelStyle} />
     ) : undefined;
-    // Place label before or after children.
-    const childrenFragment = labelPosition === 'before' ? { labelElement, children } : { children, labelElement };
-    const enhancedButtonChildren = Children.create(childrenFragment);
 
+    // Place label before or after children.
+    const childrenFragment = labelPosition === 'before' ?
+      {labelElement, children}
+      :
+      {children, labelElement};
+    const enhancedButtonChildren = Children.create(childrenFragment);
 
     return (
       <EnhancedButton
@@ -216,4 +225,4 @@ const FlatButton = React.createClass({
 
 });
 
-module.exports = FlatButton;
+export default FlatButton;

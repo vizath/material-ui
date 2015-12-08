@@ -1,20 +1,25 @@
-const React = require('react');
-const Paper = require('../paper');
-const StylePropable = require('../mixins/style-propable');
-const CardExpandable = require('./card-expandable');
+import React from 'react';
+import Paper from '../paper';
+import StylePropable from '../mixins/style-propable';
+import CardExpandable from './card-expandable';
 
 const Card = React.createClass({
-  mixins:[StylePropable],
+  mixins: [StylePropable],
 
   getInitialState() {
-    return { expanded: this.props.initiallyExpanded ? true : false };
+    return {
+      expanded: this.props.initiallyExpanded ? true : false,
+    };
   },
 
   propTypes: {
-    style: React.PropTypes.object,
+    actAsExpander: React.PropTypes.bool,
+    children: React.PropTypes.node,
     expandable: React.PropTypes.bool,
     initiallyExpanded: React.PropTypes.bool,
     onExpandChange: React.PropTypes.func,
+    showExpandableButton: React.PropTypes.bool,
+    style: React.PropTypes.object,
   },
 
   _onExpandable() {
@@ -39,7 +44,7 @@ const Card = React.createClass({
       if (currentChild.props.actAsExpander === true) {
         doClone = true;
         newProps.onTouchTap = this._onExpandable;
-        newProps.style = this.mergeStyles({ cursor: 'pointer' }, currentChild.props.style);
+        newProps.style = this.mergeStyles({cursor: 'pointer'}, currentChild.props.style);
       }
       if (currentChild.props.showExpandableButton === true) {
         doClone = true;
@@ -53,8 +58,8 @@ const Card = React.createClass({
 
     // If the last element is text or a title we should add
     // 8px padding to the bottom of the card
-    let addBottomPadding = (lastElement && (lastElement.type.displayName === "CardText" ||
-      lastElement.type.displayName === "CardTitle"));
+    let addBottomPadding = (lastElement && (lastElement.type.displayName === 'CardText' ||
+      lastElement.type.displayName === 'CardTitle'));
     let {
       style,
       ...other,
@@ -75,4 +80,4 @@ const Card = React.createClass({
   },
 });
 
-module.exports = Card;
+export default Card;
