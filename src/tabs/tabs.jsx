@@ -1,11 +1,11 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const TabTemplate = require('./tabTemplate');
-const InkBar = require('../ink-bar');
-const StylePropable = require('../mixins/style-propable');
-const Controllable = require('../mixins/controllable');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TabTemplate from './tabTemplate';
+import InkBar from '../ink-bar';
+import StylePropable from '../mixins/style-propable';
+import Controllable from '../mixins/controllable';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const Tabs = React.createClass({
 
@@ -16,9 +16,11 @@ const Tabs = React.createClass({
   },
 
   propTypes: {
+    children: React.PropTypes.node,
     contentContainerStyle: React.PropTypes.object,
     initialSelectedIndex: React.PropTypes.number,
     inkBarStyle: React.PropTypes.object,
+    style: React.PropTypes.object,
     tabItemContainerStyle: React.PropTypes.object,
     tabTemplate: React.PropTypes.func,
   },
@@ -28,7 +30,7 @@ const Tabs = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
@@ -41,7 +43,7 @@ const Tabs = React.createClass({
     };
   },
 
-  getInitialState(){
+  getInitialState() {
     let valueLink = this.getValueLink(this.props);
     let initialIndex = this.props.initialSelectedIndex;
 
@@ -55,7 +57,7 @@ const Tabs = React.createClass({
     };
   },
 
-  getEvenWidth(){
+  getEvenWidth() {
     return (
       parseInt(window
         .getComputedStyle(ReactDOM.findDOMNode(this))
@@ -71,7 +73,7 @@ const Tabs = React.createClass({
     let valueLink = this.getValueLink(newProps);
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
 
-    if (valueLink.value){
+    if (valueLink.value) {
       this.setState({selectedIndex: this._getSelectedIndex(newProps)});
     }
 
@@ -85,7 +87,6 @@ const Tabs = React.createClass({
       initialSelectedIndex,
       inkBarStyle,
       style,
-      tabWidth,
       tabItemContainerStyle,
       tabTemplate,
       ...other,
@@ -108,12 +109,12 @@ const Tabs = React.createClass({
     let tabValue = valueLink.value;
     let tabContent = [];
 
-    let width = 100 / this.getTabCount() +'%';
+    let width = 100 / this.getTabCount() + '%';
 
     let left = 'calc(' + width + '*' + this.state.selectedIndex + ')';
 
     let tabs = React.Children.map(children, (tab, index) => {
-      if (tab.type.displayName === "Tab") {
+      if (tab.type.displayName === 'Tab') {
         if (!tab.props.value && tabValue && process.env.NODE_ENV !== 'production') {
           console.error('Tabs value prop has been passed, but Tab ' + index +
           ' does not have a value prop. Needs value if Tabs is going' +
@@ -181,7 +182,7 @@ const Tabs = React.createClass({
     return selectedIndex;
   },
 
-  _handleTabTouchTap(value, e, tab){
+  _handleTabTouchTap(value, e, tab) {
     let valueLink = this.getValueLink(this.props);
     let tabIndex = tab.props.tabIndex;
 
@@ -202,4 +203,4 @@ const Tabs = React.createClass({
 
 });
 
-module.exports = Tabs;
+export default Tabs;

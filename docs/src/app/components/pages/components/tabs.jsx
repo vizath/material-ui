@@ -1,10 +1,11 @@
-let React = require('react');
-let CodeExample = require('../../code-example/code-example');
-let {IconButton, Slider, Styles, Tab, Tabs } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let { Colors, Typography } = Styles;
-let Code = require('tabs-code');
-const SwipeableViews = require('react-swipeable-views');
+import React from 'react';
+import CodeExample from '../../code-example/code-example';
+import {IconButton, Slider, Styles, Tab, Tabs, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+const {Colors, Typography} = Styles;
+import Code from 'tabs-code';
+import SwipeableViews from 'react-swipeable-views';
+import CodeBlock from '../../code-example/code-block';
 
 export default class TabsPage extends React.Component {
 
@@ -17,7 +18,7 @@ export default class TabsPage extends React.Component {
     };
   }
 
-  render(){
+  render() {
     let desc = 'Tabs can now operate in two different modes: controlled and uncontrolled. ' +
       'The uncontrolled mode takes over automatically if no value prop is passed to your' +
       'Tabs and Tab components. If you want controllable tabs, passing a value to both the' +
@@ -38,7 +39,10 @@ export default class TabsPage extends React.Component {
             name: 'initialSelectedIndex',
             type: 'number',
             header: 'optional',
-            desc: 'Specify initial visible tab index. Initial selected index is set by default to 0. If initialSelectedIndex is set but larger than the total amount of specified tabs, initialSelectedIndex will revert back to default',
+            desc: `Specify initial visible tab index.
+              Initial selected index is set by default to 0.
+              If initialSelectedIndex is set but larger than the total amount of specified tabs,
+              initialSelectedIndex will revert back to default`,
           },
           {
             name: 'inkBarStyle',
@@ -66,7 +70,7 @@ export default class TabsPage extends React.Component {
           },
           {
             name: 'value',
-            type: 'string or number',
+            type: 'oneOfType [string, number]',
             header: 'optional',
             desc: 'Makes Tabs controllable and selects the tab whose value prop matches this prop.',
           },
@@ -79,7 +83,8 @@ export default class TabsPage extends React.Component {
             name: 'onChange',
             type: 'function(value, e, tab)',
             header: 'optional',
-            desc: 'Fired on touch or tap of a tab. Passes the value of the tab, the touchTap event and the tab element.',
+            desc: `Fired on touch or tap of a tab.
+              Passes the value of the tab, the touchTap event and the tab element.`,
           },
         ],
       },
@@ -108,7 +113,10 @@ export default class TabsPage extends React.Component {
             name: 'onActive',
             type: 'function(tab)',
             header: 'optional',
-            desc: 'Fired when the active tab changes by touch or tap. Use this event to specify any functionality when an active tab changes. For example - we are using this to route to home when the third tab becomes active. This function will always recieve the active tab as it\'s first argument.',
+            desc: `Fired when the active tab changes by touch or tap.
+              Use this event to specify any functionality when an active tab changes.
+              For example - we are using this to route to home when the third tab becomes active.
+              This function will always recieve the active tab as it\'s first argument.`,
           },
         ],
       },
@@ -163,6 +171,17 @@ export default class TabsPage extends React.Component {
         name="Tabs"
         desc={desc}
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport Tabs from \'material-ui/lib/tabs/tabs\';\n' +
+            'import Tab from \'material-ui/lib/tabs/tab\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <Tabs>
             <Tab label="Item One" >
@@ -272,11 +291,16 @@ export default class TabsPage extends React.Component {
     this.setState({tabsValue: 'c'});
   }
 
-  _handleTabActive(tab){
+  _handleTabActive(tab) {
     this.props.history.pushState(null, tab.props.route);
   }
 
-  _handleTabsChange(value, e, tab){
+  _handleTabsChange(value) {
     this.setState({tabsValue: value});
   }
 }
+
+
+TabsPage.propTypes = {
+  history: React.PropTypes.object,
+};

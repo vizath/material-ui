@@ -1,13 +1,15 @@
-const React = require('react');
-const Checkbox = require('../checkbox');
-const StylePropable = require('../mixins/style-propable');
-const TableHeaderColumn = require('./table-header-column');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import Checkbox from '../checkbox';
+import StylePropable from '../mixins/style-propable';
+import TableHeaderColumn from './table-header-column';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const TableHeader = React.createClass({
 
-  mixins: [StylePropable],
+  mixins: [
+    StylePropable,
+  ],
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
@@ -15,6 +17,8 @@ const TableHeader = React.createClass({
 
   propTypes: {
     adjustForCheckbox: React.PropTypes.bool,
+    children: React.PropTypes.node,
+    className: React.PropTypes.string,
     displaySelectAll: React.PropTypes.bool,
     enableSelectAll: React.PropTypes.bool,
     onSelectAll: React.PropTypes.func,
@@ -27,13 +31,13 @@ const TableHeader = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -41,7 +45,7 @@ const TableHeader = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -152,7 +156,7 @@ const TableHeader = React.createClass({
   },
 
   _getSelectAllCheckboxColumn(props) {
-  if (!this.props.displaySelectAll) return this._getCheckboxPlaceholder(props);
+    if (!this.props.displaySelectAll) return this._getCheckboxPlaceholder(props);
 
     const checkbox =
       <Checkbox
@@ -163,8 +167,9 @@ const TableHeader = React.createClass({
         checked={this.props.selectAllSelected}
         onCheck={this._onSelectAll} />;
 
+    const key = 'hpcb' + props.rowNumber;
     return (
-      <TableHeaderColumn style={{width: 24}}>
+      <TableHeaderColumn key={key} style={{width: 24}}>
         {checkbox}
       </TableHeaderColumn>
     );
@@ -176,4 +181,4 @@ const TableHeader = React.createClass({
 
 });
 
-module.exports = TableHeader;
+export default TableHeader;

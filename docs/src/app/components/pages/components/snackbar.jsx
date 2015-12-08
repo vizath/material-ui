@@ -1,9 +1,9 @@
-let React = require('react');
-let { RaisedButton, Snackbar, TextField } = require('material-ui');
-let ComponentDoc = require('../../component-doc');
-let Code = require('snackbars-code');
-let CodeExample = require('../../code-example/code-example');
-
+import React from 'react';
+import {RaisedButton, Snackbar, TextField, Paper} from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import Code from 'snackbars-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 export default class SnackbarPage extends React.Component {
 
@@ -35,7 +35,10 @@ export default class SnackbarPage extends React.Component {
             name: 'autoHideDuration',
             type: 'number',
             header: 'optional',
-            desc: 'The number of milliseconds to wait before automatically dismissing. If no value is specified the snackbar will dismiss normally. If a value is provided the snackbar can still be dismissed normally. If a snackbar is dismissed before the timer expires, the timer will be cleared.',
+            desc: `The number of milliseconds to wait before automatically dismissing.
+              If no value is specified the snackbar will dismiss normally.
+              If a value is provided the snackbar can still be dismissed normally.
+              If a snackbar is dismissed before the timer expires, the timer will be cleared.`,
           },
           {
             name: 'message',
@@ -54,6 +57,12 @@ export default class SnackbarPage extends React.Component {
             type: 'object',
             header: 'optional',
             desc: 'Override the inline-styles of the Snackbar\'s root element.',
+          },
+          {
+            name: 'bodyStyle',
+            type: 'object',
+            header: 'optional',
+            desc: 'Override the inline-styles of the Snackbar\'s body element.',
           },
         ],
       },
@@ -98,6 +107,16 @@ export default class SnackbarPage extends React.Component {
       <ComponentDoc
         name="Snackbar"
         componentInfo={componentInfo}>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statement:\nimport Snackbar from \'material-ui/lib/snackbar\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <CodeExample code={Code}>
           <RaisedButton
             onTouchTap={this._handleClick}
@@ -146,7 +165,7 @@ export default class SnackbarPage extends React.Component {
 
   _handleAction() {
     //We can add more code here! In this example, we'll just include an alert.
-    window.alert("We removed the event from your calendar.");
+    window.alert('We removed the event from your calendar.');
   }
 
   _updateAutoHideDuration(e) {

@@ -1,3 +1,91 @@
+## 0.14.0-rc1
+###### _Dec 4, 2015_
+
+##### Breaking Changes
+- [IconMenu] removed openDirection prop in favor of anchorOrigin and targetOrigin (#2149)
+
+##### General
+- Use ES6 import / export syntax over require (#2253, #2333, #2334)
+- Dialog render-to-layer version (#2129)
+- Add declarative props to LeftNav, deprecate methods (#2180, #2351)
+- Add linting to test files (#2273)
+- Support nested menu items using Popover (#2148)
+- [DropdownMenu] add labelMember prop (#2285)
+- Add new ESLint rules (#2293, #2314, #2319, #2348, #2360, #2365, #2366)
+- Add unit tests for Dialog (#2298)
+- [AutoComplete] Support changing searchText via props (#2306)
+- [AutoComplete] dataSource prop is of type array (#2286)
+- [AppBar] add titleStyle prop (#2324)
+- [TimePicker] update as per spec (#2358)
+- [Popover] add useLayerForClickAway prop (#2359)
+
+##### Component Fixes / Enhancements
+- Fix wrong proptype for value in RadioButton (#2276)
+- Make LeftNav swipeable only from far left / right (#2263)
+- [TextField] allow rowsMax prop to equal rows prop (#2312)
+- Fix Invariant Violation error in ClickAwayable mixin (#2296)
+- [DatePicker] fix calendarTextColor context key (#2318)
+- Fix and improve examples (#2344, #2345)
+- [Dropdown][SelectField] change value PropType to React.PropTypes.any (#2352)
+- [CardActions] prevent children styles from being overridden (#2361)
+
+## 0.13.4
+###### _Nov 24, 2015_
+
+##### General
+- Introduced SelectableEnhance HOC to wrap List with valueLink (#1976)
+- Added color prop to LinearProgress and RefreshIndicator (#2206)
+- [AutoComplete] new component! (#2187) (thanks @yongxu)
+- [Table] added wrapperStyle prop to override table wrapper's styles (#2238)
+- Updated SVG icons (#2240)
+- [Table] added props for headerStyle, bodyStyle and footerStyle (#2246)
+
+##### Component Fixes / Enhancements
+- Fixed double ripple due to compat mouse down (#2216)
+- [RenderToLayer] iframe support for clickaway (#2210)
+- [TextField] Fixed floating label element not allowing focus (#2228)
+- [SelectField] onFocus and onBlur handlers passed to underlying TextField component (#2102)
+
+## 0.13.3
+###### _Nov 17, 2015_
+
+##### General
+- [Snackbar] add bodyStyle prop to style child div (#2104)
+- [DatePicker] add container prop to display DatePicker in-line or inside Dialog (#2120 and #2153)
+- [AppBar] add relative positioning for z-index to take effect (#1478)
+- [AppBar] add onTitleTouchTap prop to AppBar (#2125)
+- [Popover] new component! (#2043) (thanks @chrismcv)
+- Split [SelectField] and [TextField] doc pages (#2161)
+
+##### Component Fixes / Enhancements
+- [SelectField] onChange triggered consistently when using value prop (#1610)
+- [Dialog] fix page scrolling behind dialog after resizing (#1946)
+- [DatePicker] fix calendar height (#2141)
+- [TimePicker] allow to set time to null (#2108)
+
+## 0.13.2
+###### _Nov 9, 2015_
+
+##### General
+- Add tabs with slide effect (#1907)
+- Universal rendering support (#2007) (thanks @Cavitt)
+- Add labelPosition prop to buttons (#2014)
+- Add RenderToLayer component (#2042) (thanks @chrismcv)
+- Open state of of dialog now controlled through props (#1996)
+  - openImmediately, show(), dismiss() deprecated
+- Update TextField docs (#2070)
+- New Badge component (#2045) (thanks @rhythnic)
+- Add import statements to components' docs pages (#2113)
+
+##### Component Fixes / Enhancements
+- Fix server side rendering (#2021)
+- Add key to TableHeaderColumn for selectAll (#2030)
+- Fix Circular Progress transition (#2047)
+- Fix Snackbar getting stuck when receiving new props (#2024)
+- iPad enhanced textarea fix (#1720)
+- Table clickAway triggers onRowSelection (#2054)
+- Theme color fixes for Slider and Toggle (#2016)
+
 ## 0.13.1
 ###### _Oct 29, 2015_
 

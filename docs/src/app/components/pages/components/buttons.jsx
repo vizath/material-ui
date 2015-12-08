@@ -1,25 +1,25 @@
-let React = require('react');
-let ComponentDoc = require('../../component-doc');
-let mui = require('material-ui');
-let ToggleStar = require('svg-icons/toggle/star');
+import React from 'react';
+import ComponentDoc from '../../component-doc';
+import ToggleStar from 'material-ui/svg-icons/toggle/star';
 
-let {
-  ClearFix,
+import {
   FlatButton,
   FloatingActionButton,
   FontIcon,
   RaisedButton,
+  Paper,
   Styles,
   Tab,
   Tabs,
   Utils,
-} = mui;
-let extend = Utils.Extend;
-let { Colors, Typography } = Styles;
-let RaisedButtonCode = require('raised-button-code');
-let FloatingActionButtonCode = require('floating-action-button-code');
-let FlatButtonCode = require('flat-button-code');
-let CodeExample = require('../../code-example/code-example');
+} from 'material-ui';
+const extend = Utils.Extend;
+const {Colors, Typography} = Styles;
+import RaisedButtonCode from 'raised-button-code';
+import FloatingActionButtonCode from 'floating-action-button-code';
+import FlatButtonCode from 'flat-button-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 
 export default class ButtonPage extends React.Component {
@@ -28,19 +28,21 @@ export default class ButtonPage extends React.Component {
     super(props);
 
     this.desc = 'This component generates a button element and all props except for ' +
-                'the custom props below will be passed down to the button element. Also, ' +
-                'focus styles will happen on tab but not on click.';
+                'the custom props listed below. Also, ' +
+                'focus styles will be applied on tab (and not on click).';
 
     this.componentInfo = [
       {
-        name: 'Flat Button',
+        name: 'Flat Button Props',
         infoArray: [
           {
             name: 'containerElement',
             type: 'oneOfType [string, element]',
             header: 'default: button',
-            desc: 'This component will render a button element by default and an anchor element if linkButton is set to true. ' +
-              'However, you can override this behavior by passing in a string or another react element into this prop. This is ' +
+            desc: 'This component will render a button element by default and an anchor element ' +
+              'if linkButton is set to true. ' +
+              'However, you can override this behavior by passing in a string or another react ' +
+              'element into this prop. This is ' +
               'useful for generating link buttons with the react router link element.',
           },
           {
@@ -59,9 +61,11 @@ export default class ButtonPage extends React.Component {
             name: 'label or children',
             type: 'string (label) or HTML/React elements (children)',
             header: 'required',
-            desc: 'This is what will be displayed inside the button. If a label is specified, the text within the label prop will be displayed.'+
-            ' Otherwise, the component will expect children which will then be displayed (in our example, we are nesting an <input type="file" />'+
-            'and a span that acts as our label to be displayed.) '+
+            desc: 'This is what will be displayed inside the button. If a label is specified,' +
+            ' the text within the label prop will be displayed.' +
+            ' Otherwise, the component will expect children which will then be displayed (in our example, ' +
+            ' we are nesting an <input type="file" />' +
+            'and a span that acts as our label to be displayed.) ' +
             'This only applies to flat and raised buttons.',
           },
           {
@@ -69,6 +73,12 @@ export default class ButtonPage extends React.Component {
             type: 'object',
             header: 'optional',
             desc: 'Override the inline-styles of the button\'s label element.',
+          },
+          {
+            name: 'labelPosition',
+            type: 'oneOf ["before", "after"]',
+            header: 'default: "before"',
+            desc: 'Place label before or after the passed children',
           },
           {
             name: 'linkButton',
@@ -103,14 +113,16 @@ export default class ButtonPage extends React.Component {
         ],
       },
       {
-        name: 'Raised Button',
+        name: 'Raised Button Props',
         infoArray: [
           {
             name: 'containerElement',
             type: 'oneOfType [string, element]',
             header: 'default: button',
-            desc: 'This component will render a button element by default and an anchor element if linkButton is set to true. ' +
-              'However, you can override this behavior by passing in a string or another react element into this prop. This is ' +
+            desc: 'This component will render a button element by default and an anchor' +
+              ' element if linkButton is set to true. ' +
+              'However, you can override this behavior by passing in a string or another ' +
+              'react element into this prop. This is ' +
               'useful for generating link buttons with the react router link element.',
           },
           {
@@ -129,9 +141,11 @@ export default class ButtonPage extends React.Component {
             name: 'label or children',
             type: 'string (label) or HTML/React elements (children)',
             header: 'required',
-            desc: 'This is what will be displayed inside the button. If a label is specified, the text within the label prop will be displayed.'+
-            ' Otherwise, the component will expect children which will then be displayed (in our example, we are nesting an <input type="file" />'+
-            'and a span that acts as our label to be displayed.) '+
+            desc: 'This is what will be displayed inside the button. If a label is specified, the text' +
+            ' within the label prop will be displayed.' +
+            ' Otherwise, the component will expect children which will then be displayed ' +
+            '(in our example, we are nesting an <input type="file" />' +
+            'and a span that acts as our label to be displayed.) ' +
             'This only applies to flat and raised buttons.',
           },
           {
@@ -197,22 +211,24 @@ export default class ButtonPage extends React.Component {
         ],
       },
       {
-        name: 'Floating Action Button',
+        name: 'Floating Action Button Props',
         infoArray: [
           {
             name: 'backgroundColor',
             type: 'string',
             header: 'optional',
-            desc: 'This value will override the default background color for the button. However it will not override the' +
-              'default disabled background color. This has to be set separately using the disabledColor attribute.',
+            desc: `This value will override the default background color for the button.
+              However it will not override the default disabled background color.
+              This has to be set separately using the disabledColor attribute.`,
           },
           {
             name: 'containerElement',
             type: 'oneOfType [string, element]',
             header: 'default: button',
-            desc: 'This component will render a button element by default and an anchor element if linkButton is set to true. ' +
-              'However, you can override this behavior by passing in a string or another react element into this prop. This is ' +
-              'useful for generating link buttons with the react router link element.',
+            desc: `This component will render a button element by default and an anchor element
+              if linkButton is set to true.
+              However, you can override this behavior by passing in a string or another react element into this prop.
+              This is useful for generating link buttons with the react router link element.`,
           },
           {
             name: 'disabled',
@@ -268,6 +284,17 @@ export default class ButtonPage extends React.Component {
           },
         ],
       },
+      {
+        name: 'Button Events',
+        infoArray: [
+          {
+            name: 'onTouchTap',
+            type: 'function(event)',
+            header: 'optional',
+            desc: 'Called when a touch tap event occurs on the button.',
+          },
+        ],
+      },
     ];
   }
 
@@ -319,7 +346,6 @@ export default class ButtonPage extends React.Component {
         height: '100%',
         display: 'inline-block',
         verticalAlign: 'middle',
-        float: 'left',
         paddingLeft: '12px',
         lineHeight: '36px',
         color: Colors.cyan500,
@@ -347,12 +373,25 @@ export default class ButtonPage extends React.Component {
     return (
       <div>
         <h2 style={styles.headline}>Buttons</h2>
+
+        <Paper style = {{marginBottom: '22px'}}>
+          <CodeBlock>
+          {
+            '//Import statements:\nimport FlatButton from \'material-ui/lib/flat-button\';\n' +
+            'import RaisedButton from \'material-ui/lib/raised-button\';\n' +
+            'import FloatingActionButton from \'material-ui/lib/floating-action-button\';\n\n' +
+            '//See material-ui/lib/index.js for more\n'
+          }
+          </CodeBlock>
+        </Paper>
+
         <Tabs>
           <Tab label="Flat Buttons">
             <ComponentDoc
               name=""
               desc={this.desc}
               componentInfo={this.componentInfo.slice(0, 1)}>
+
               <CodeExample code={FlatButtonCode}>
                 <div style={styles.group}>
                   <div style={styles.container}>
@@ -375,7 +414,17 @@ export default class ButtonPage extends React.Component {
                     <FlatButton
                       linkButton={true}
                       href="https://github.com/callemall/material-ui"
-                      secondary={true} label="GitHub"
+                      secondary={true}
+                      label="GitHub"
+                      labelStyle={styles.buttonLabel}>
+                      <FontIcon style={styles.exampleFlatButtonIcon} className="muidocs-icon-custom-github"/>
+                    </FlatButton>
+                  </div>
+                  <div style={styles.container}>
+                    <FlatButton
+                      secondary={true}
+                      label="Label after"
+                      labelPosition="after"
                       labelStyle={styles.buttonLabel}>
                       <FontIcon style={styles.exampleFlatButtonIcon} className="muidocs-icon-custom-github"/>
                     </FlatButton>
@@ -421,6 +470,15 @@ export default class ButtonPage extends React.Component {
                     </RaisedButton>
                   </div>
                   <div style={styles.container}>
+                    <RaisedButton
+                      secondary={true}
+                      label="Label after"
+                      labelPosition="after"
+                      labelStyle={styles.buttonLabel}>
+                      <FontIcon style={styles.exampleButtonIcon} className="muidocs-icon-custom-github"/>
+                    </RaisedButton>
+                  </div>
+                  <div style={styles.container}>
                     <RaisedButton label="Disabled" disabled={true} />
                   </div>
                 </div>
@@ -431,7 +489,7 @@ export default class ButtonPage extends React.Component {
             <ComponentDoc
               name=""
               desc={this.desc}
-              componentInfo={this.componentInfo.slice(2)}>
+              componentInfo={this.componentInfo.slice(2, 3)}>
               <CodeExample code={FloatingActionButtonCode}>
                 <div style={styles.groupFloatingAction}>
                   <div style={styles.container}>
@@ -467,6 +525,10 @@ export default class ButtonPage extends React.Component {
             </ComponentDoc>
           </Tab>
         </Tabs>
+        <ComponentDoc
+          name=""
+          desc=""
+          componentInfo={this.componentInfo.slice(3)} />
       </div>
     );
   }

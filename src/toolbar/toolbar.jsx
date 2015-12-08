@@ -1,7 +1,7 @@
-const React = require('react');
-const StylePropable = require('../mixins/style-propable');
-const DefaultRawTheme = require('../styles/raw-themes/light-raw-theme');
-const ThemeManager = require('../styles/theme-manager');
+import React from 'react';
+import StylePropable from '../mixins/style-propable';
+import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
+import ThemeManager from '../styles/theme-manager';
 
 const Toolbar = React.createClass({
 
@@ -12,7 +12,9 @@ const Toolbar = React.createClass({
   },
 
   propTypes: {
+    children: React.PropTypes.node,
     className: React.PropTypes.string,
+    noGutter: React.PropTypes.bool,
     style: React.PropTypes.object,
   },
 
@@ -21,13 +23,13 @@ const Toolbar = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext () {
+  getChildContext() {
     return {
       muiTheme: this.state.muiTheme,
     };
   },
 
-  getInitialState () {
+  getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
     };
@@ -35,7 +37,7 @@ const Toolbar = React.createClass({
 
   //to update theme inside state whenever a new theme is passed down
   //from the parent / owner using context
-  componentWillReceiveProps (nextProps, nextContext) {
+  componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
   },
@@ -65,4 +67,4 @@ const Toolbar = React.createClass({
 
 });
 
-module.exports = Toolbar;
+export default Toolbar;
