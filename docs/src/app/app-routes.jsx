@@ -21,6 +21,7 @@ const InlineStyles = require('./components/pages/customization/inline-styles');
 
 const Components = require('./components/pages/components');
 const AppBar = require('./components/pages/components/app-bar');
+const AppBarNew = require('./components/pages/components/app-bar-new');
 const Avatars = require('./components/pages/components/avatars');
 const Buttons = require('./components/pages/components/buttons');
 const Cards = require('./components/pages/components/cards');
@@ -76,6 +77,7 @@ const AppRoutes = (
     <Redirect from="components" to="/components/appbar" />
     <Route path="components" component={Components}>
       <Route path="appbar" component={AppBar} />
+      <Route path="appbarnew" component={AppBarNew} />
       <Route path="avatars" component={Avatars} />
       <Route path="buttons" component={Buttons} />
       <Route path="cards" component={Cards} />

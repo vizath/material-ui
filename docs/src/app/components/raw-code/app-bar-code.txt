@@ -1,29 +1,16 @@
 <AppBar
   title="Title"
-  moreIcon={<IconButton><NavigationExpandMore /></IconButton>} />
-<br />
+  iconClassNameRight="muidocs-icon-navigation-expand-more" />
+
 <AppBar
   title="Title"
-  navIcon={<IconButton><NavigationMenu /></IconButton>}
-  actionIcons={[<FlatButton key="button" label="Save" />]} />
-<br />
+  iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+  iconElementRight={<FlatButton label="Save" />} />
+
 <AppBar
   title="Title"
-  navIcon={<IconButton><NavigationArrowBack /></IconButton>}
-  filterIcon={
-    <IconMenu iconButtonElement={
-      <IconButton><NavigationArrowDropDown /></IconButton>
-    }>
-      <MenuItem primaryText="Inbox" />
-      <MenuItem primaryText="Sent" />
-      <MenuItem primaryText="Trash" />
-    </IconMenu>
-  }
-  actionIcons={[
-    <IconButton key="expand"><ActionSearch /></IconButton>,
-    <IconButton key="close"><ActionFavorite /></IconButton>,
-  ]}
-  moreIcon={
+  iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+  iconElementRight={
     <IconMenu iconButtonElement={
       <IconButton><MoreVertIcon /></IconButton>
     }>
@@ -31,5 +18,4 @@
       <MenuItem primaryText="Help" />
       <MenuItem primaryText="Sign out" />
     </IconMenu>
-  }
-/>
+} />
