@@ -3,59 +3,33 @@ import ReactDOM from 'react-dom';
 import StylePropable from './mixins/style-propable';
 import Transitions from './styles/transitions';
 import Colors from './styles/colors';
-import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
-import ThemeManager from './styles/theme-manager';
-
 
 const Overlay = React.createClass({
 
-  _originalBodyOverflow: '',
+  propTypes: {
+    autoLockScrolling: React.PropTypes.bool,
+    show: React.PropTypes.bool.isRequired,
 
-  mixins: [StylePropable],
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: React.PropTypes.object,
+    transitionEnabled: React.PropTypes.bool,
+  },
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
   },
 
-  //for passing default theme context to children
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: this.state.muiTheme,
-    };
-  },
-
-  getInitialState() {
-    return {
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
-    };
-  },
-
-  //to update theme inside state whenever a new theme is passed down
-  //from the parent / owner using context
-  componentWillReceiveProps(nextProps, nextContext) {
-    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
-    this.setState({muiTheme: newMuiTheme});
-    if (this.props.show !== nextProps.show) {
-      this._applyAutoLockScrolling(nextProps);
-    }
-  },
-
-  propTypes: {
-    autoLockScrolling: React.PropTypes.bool,
-    show: React.PropTypes.bool.isRequired,
-    style: React.PropTypes.object,
-    transitionEnabled: React.PropTypes.bool,
-  },
+  mixins: [
+    StylePropable,
+  ],
 
   getDefaultProps() {
     return {
       autoLockScrolling: true,
       transitionEnabled: true,
-      style:{},
+      style: {},
     };
   },
 
@@ -66,9 +40,17 @@ const Overlay = React.createClass({
     }
   },
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.show !== nextProps.show) {
+      this._applyAutoLockScrolling(nextProps);
+    }
+  },
+
   componentWillUnmount() {
     this._allowScrolling();
   },
+
+  _originalBodyOverflow: '',
 
   setOpacity(opacity) {
     let overlay = ReactDOM.findDOMNode(this);
@@ -76,12 +58,11 @@ const Overlay = React.createClass({
   },
 
   getStyles() {
-    let styles = {
+    return {
       root: {
         position: 'fixed',
         height: '100%',
         width: '100%',
-        zIndex: 9,
         top: 0,
         left: '-100%',
         opacity: 0,
@@ -106,21 +87,6 @@ const Overlay = React.createClass({
           Transitions.easeOut('400ms', 'opacity'),
       },
     };
-    return styles;
-  },
-
-  render() {
-    const {
-      show,
-      style,
-      ...other,
-    } = this.props;
-
-    const styles = this.prepareStyles(this.getStyles().root, style, show && this.getStyles().rootWhenShown);
-
-    return (
-      <div {...other} style={styles} />
-    );
   },
 
   _applyAutoLockScrolling(props) {
@@ -134,13 +100,27 @@ const Overlay = React.createClass({
   },
 
   _preventScrolling() {
-    let body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName('body')[0];
     body.style.overflow = 'hidden';
   },
 
   _allowScrolling() {
-    let body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName('body')[0];
     body.style.overflow = this._originalBodyOverflow || '';
+  },
+
+  render() {
+    const {
+      show,
+      style,
+      ...other,
+    } = this.props;
+
+    const styles = this.mergeStyles(this.getStyles().root, style, show && this.getStyles().rootWhenShown);
+
+    return (
+      <div {...other} style={this.prepareStyles(styles)} />
+    );
   },
 
 });

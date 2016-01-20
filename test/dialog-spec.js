@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Dialog from 'dialog';
 import {spy} from 'sinon';
 import TestUtils from 'react-addons-test-utils';
@@ -9,7 +9,8 @@ describe('Dialog', () => {
     TestUtils.renderIntoDocument(
       <Dialog
         open={true}
-        contentClassName={testClass} />
+        contentClassName={testClass}
+      />
     );
 
     let dialogEl = document.getElementsByClassName(testClass)[0];
@@ -27,10 +28,12 @@ describe('Dialog', () => {
           <button
             key="a"
             onClick={clickSpy}
-            className={testClass}>
+            className={testClass}
+          >
             test
           </button>,
-        ]} />
+        ]}
+      />
     );
 
     let actionEl = document.getElementsByClassName(testClass)[0];

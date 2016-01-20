@@ -1,48 +1,28 @@
 import React from 'react';
-import {MenuItem, LeftNav, Mixins, Styles} from 'material-ui';
-const {Colors, Spacing, Typography} = Styles;
-const {StylePropable} = Mixins;
+import LeftNav from 'material-ui/lib/left-nav';
+import List from 'material-ui/lib/lists/list';
+import ListItem from 'material-ui/lib/lists/list-item';
+import Divider from 'material-ui/lib/divider';
+import {SelectableContainerEnhance} from 'material-ui/lib/hoc/selectable-enhance';
+import {
+  Colors,
+  Spacing,
+  Typography,
+} from 'material-ui/lib/styles';
+import {StylePropable} from 'material-ui/lib/mixins';
 
-const menuItems = [
-  {
-    route: 'get-started',
-    text: 'Get Started',
-  },
-  {
-    route: 'customization',
-    text: 'Customization',
-  },
-  {
-    route: 'components',
-    text: 'Components',
-  },
-  {
-    type: MenuItem.Types.SUBHEADER,
-    text: 'Resources',
-  },
-  {
-    type: MenuItem.Types.LINK,
-    payload: 'https://github.com/callemall/material-ui',
-    text: 'GitHub',
-  },
-  {
-    type: MenuItem.Types.LINK,
-    payload: 'http://facebook.github.io/react',
-    text: 'React',
-  },
-  {
-    type: MenuItem.Types.LINK,
-    payload: 'https://www.google.com/design/spec/material-design/introduction.html',
-    text: 'Material Design',
-  },
-];
-
+const SelectableList = SelectableContainerEnhance(List);
 
 const AppLeftNav = React.createClass({
-  mixins: [StylePropable],
 
   propTypes: {
-    history: React.PropTypes.object,
+    docked: React.PropTypes.bool.isRequired,
+    history: React.PropTypes.object.isRequired,
+    location: React.PropTypes.object.isRequired,
+    onRequestChangeLeftNav: React.PropTypes.func.isRequired,
+    onRequestChangeList: React.PropTypes.func.isRequired,
+    open: React.PropTypes.bool.isRequired,
+    style: React.PropTypes.object,
   },
 
   contextTypes: {
@@ -50,73 +30,176 @@ const AppLeftNav = React.createClass({
     router: React.PropTypes.func,
   },
 
-  getInitialState() {
-    return {
+  mixins: [
+    StylePropable,
+  ],
+
+  handleRequestChangeLink(event, value) {
+    window.location = value;
+  },
+
+  handleTouchTapHeader() {
+    this.props.history.push('/');
+    this.setState({
       leftNavOpen: false,
-    };
+    });
   },
 
   getStyles() {
     return {
-      cursor: 'pointer',
-      //.mui-font-style-headline
-      fontSize: '24px',
-      color: Typography.textFullWhite,
-      lineHeight: Spacing.desktopKeylineIncrement + 'px',
-      fontWeight: Typography.fontWeightLight,
-      backgroundColor: Colors.cyan500,
-      paddingLeft: Spacing.desktopGutter,
-      paddingTop: '0px',
-      marginBottom: '8px',
+      logo: {
+        cursor: 'pointer',
+        fontSize: 24,
+        color: Typography.textFullWhite,
+        lineHeight: Spacing.desktopKeylineIncrement + 'px',
+        fontWeight: Typography.fontWeightLight,
+        backgroundColor: Colors.cyan500,
+        paddingLeft: Spacing.desktopGutter,
+        marginBottom: 8,
+      },
     };
   },
 
   render() {
-    let header = (
-      <div style={this.prepareStyles(this.getStyles())} onTouchTap={this._onHeaderClick}>
-        material ui
-      </div>
-    );
+    const {
+      location,
+      docked,
+      onRequestChangeLeftNav,
+      onRequestChangeList,
+      open,
+      style,
+    } = this.props;
+
+    const styles = this.getStyles();
 
     return (
       <LeftNav
-        ref="leftNav"
-        docked={false}
-        open={this.state.leftNavOpen}
-        onRequestChange={this._onLeftNavChangeRequest}
-        header={header}
-        menuItems={menuItems}
-        selectedIndex={this._getSelectedIndex()}
-        onChange={this._onLeftNavChange} />
+        style={style}
+        docked={docked}
+        open={open}
+        onRequestChange={onRequestChangeLeftNav}
+      >
+        <div style={this.prepareStyles(styles.logo)} onTouchTap={this.handleTouchTapHeader}>
+          material ui
+        </div>
+        <SelectableList
+          valueLink={{value: location.pathname, requestChange: onRequestChangeList}}
+        >
+          <ListItem
+            primaryText="Get Started"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="Prerequisites" value="/get-started/prerequisites" />,
+              <ListItem primaryText="Installation" value="/get-started/installation" />,
+              <ListItem primaryText="Usage" value="/get-started/usage" />,
+              <ListItem primaryText="Examples" value="/get-started/examples" />,
+            ]}
+          />
+          <ListItem
+            primaryText="Customization"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="Themes" value="/customization/themes" />,
+              <ListItem primaryText="Inline Styles" value="/customization/inline-styles" />,
+              <ListItem primaryText="Colors" value="/customization/colors" />,
+            ]}
+          />
+          <ListItem
+            primaryText="Components"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="App Bar" value="/components/app-bar" />,
+              <ListItem primaryText="Auto Complete" value="/components/auto-complete" />,
+              <ListItem primaryText="Avatar" value="/components/avatar" />,
+              <ListItem primaryText="Badge" value="/components/badge" />,
+              <ListItem
+                primaryText="Buttons"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem primaryText="Flat Button" value="/components/flat-button" />,
+                  <ListItem primaryText="Raised Button" value="/components/raised-button" />,
+                  <ListItem primaryText="Floating Action Button" value="/components/floating-action-button" />,
+                  <ListItem primaryText="Icon Button" value="/components/icon-button" />,
+                ]}
+              />,
+              <ListItem primaryText="Card" value="/components/card" />,
+              <ListItem primaryText="Date Picker" value="/components/date-picker" />,
+              <ListItem primaryText="Dialog" value="/components/dialog" />,
+              <ListItem primaryText="Divider" value="/components/divider" />,
+              <ListItem primaryText="Grid List" value="/components/grid-list" />,
+              <ListItem
+                primaryText="Icons"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem primaryText="Font Icon" value="/components/font-icon" />,
+                  <ListItem primaryText="SVG Icon" value="/components/svg-icon" />,
+                ]}
+              />,
+              <ListItem primaryText="Left Nav" value="/components/left-nav" />,
+              <ListItem primaryText="List" value="/components/list" />,
+              <ListItem
+                primaryText="Menus"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem primaryText="Menu" value="/components/menu" />,
+                  <ListItem primaryText="Icon Menu" value="/components/icon-menu" />,
+                  <ListItem primaryText="Drop Down Menu" value="/components/dropdown-menu" />,
+                ]}
+              />,
+              <ListItem primaryText="Paper" value="/components/paper" />,
+              <ListItem primaryText="Popover" value="/components/popover" />,
+              <ListItem
+                primaryText="Progress"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem primaryText="Circular Progress" value="/components/circular-progress" />,
+                  <ListItem primaryText="Linear Progress" value="/components/linear-progress" />,
+                  <ListItem primaryText="Refresh Indicator" value="/components/refresh-indicator" />,
+                ]}
+              />,
+              <ListItem primaryText="Select Field" value="/components/select-field" />,
+              <ListItem primaryText="Slider" value="/components/slider" />,
+              <ListItem
+                primaryText="Switches"
+                primaryTogglesNestedList={true}
+                nestedItems={[
+                  <ListItem primaryText="Checkbox" value="/components/checkbox" />,
+                  <ListItem primaryText="Radio Button" value="/components/radio-button" />,
+                  <ListItem primaryText="Toggle" value="/components/toggle" />,
+                ]}
+              />,
+              <ListItem primaryText="Snackbar" value="/components/snackbar" />,
+              <ListItem primaryText="Table" value="/components/table" />,
+              <ListItem primaryText="Tabs" value="/components/tabs" />,
+              <ListItem primaryText="Text Field" value="/components/text-field" />,
+              <ListItem primaryText="Time Picker" value="/components/time-picker" />,
+              <ListItem primaryText="Toolbars" value="/components/toolbars" />,
+            ]}
+          />
+          <ListItem
+            primaryText="Discover More"
+            primaryTogglesNestedList={true}
+            nestedItems={[
+              <ListItem primaryText="Community" value="/discover-more/community" />,
+              <ListItem primaryText="Showcase" value="/discover-more/showcase" />,
+            ]}
+          />
+        </SelectableList>
+        <Divider />
+        <SelectableList
+          subheader="Resources"
+          valueLink={{value: '', requestChange: this.handleRequestChangeLink}}
+        >
+          <ListItem primaryText="GitHub" value="https://github.com/callemall/material-ui" />
+          <ListItem primaryText="React" value="http://facebook.github.io/react" />
+          <ListItem
+            primaryText="Material Design"
+            value="https://www.google.com/design/spec/material-design/introduction.html"
+          />
+        </SelectableList>
+      </LeftNav>
     );
   },
-
-  toggle() {
-    this.setState({leftNavOpen: !this.state.leftNavOpen});
-  },
-
-  _getSelectedIndex() {
-    let currentItem;
-
-    for (let i = menuItems.length - 1; i >= 0; i--) {
-      currentItem = menuItems[i];
-      if (currentItem.route && this.props.history.isActive(currentItem.route)) return i;
-    }
-  },
-
-  _onLeftNavChangeRequest(open) {
-    this.setState({leftNavOpen: open});
-  },
-
-  _onLeftNavChange(e, key, payload) {
-    this.props.history.pushState(null, payload.route);
-  },
-
-  _onHeaderClick() {
-    this.props.history.pushState(null, '/');
-    this.setState({leftNavOpen: false});
-  },
-
 });
 
 export default AppLeftNav;

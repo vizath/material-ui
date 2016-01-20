@@ -8,25 +8,41 @@ import ThemeManager from './styles/theme-manager';
 
 const Tooltip = React.createClass({
 
-  mixins: [StylePropable],
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
   propTypes: {
+    /**
+     * The css class name of the root element.
+     */
     className: React.PropTypes.string,
     horizontalPosition: React.PropTypes.oneOf(['left', 'right', 'center']),
     label: React.PropTypes.node.isRequired,
     show: React.PropTypes.bool,
+
+    /**
+     * Override the inline-styles of the root element.
+     */
     style: React.PropTypes.object,
     touch: React.PropTypes.bool,
     verticalPosition: React.PropTypes.oneOf(['top', 'bottom']),
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object,
+  },
+
   //for passing default theme context to children
   childContextTypes: {
     muiTheme: React.PropTypes.object,
+  },
+
+  mixins: [
+    StylePropable,
+  ],
+
+  getInitialState() {
+    return {
+      offsetWidth: null,
+      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+    };
   },
 
   getChildContext() {
@@ -53,13 +69,6 @@ const Tooltip = React.createClass({
     this._setRippleSize();
   },
 
-  getInitialState() {
-    return {
-      offsetWidth: null,
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
-    };
-  },
-
   getStyles() {
     let verticalPosition = this.props.verticalPosition;
     let horizontalPosition = this.props.horizontalPosition;
@@ -68,13 +77,17 @@ const Tooltip = React.createClass({
     let offset = verticalPosition === 'bottom' ?
       14 + touchMarginOffset : -14 - touchMarginOffset;
 
+    const muiTheme = this.state.muiTheme;
+    const rawTheme = muiTheme.rawTheme;
+
     let styles = {
       root: {
         position: 'absolute',
-        fontFamily: this.state.muiTheme.rawTheme.fontFamily,
+        fontFamily: rawTheme.fontFamily,
         fontSize: '10px',
         lineHeight: '22px',
         padding: '0 8px',
+        zIndex: muiTheme.zIndex.tooltip,
         color: Colors.white,
         overflow: 'hidden',
         top: -10000,
@@ -133,29 +146,6 @@ const Tooltip = React.createClass({
     return styles;
   },
 
-  render() {
-    let {
-      label,
-      ...other} = this.props;
-    let styles = this.getStyles();
-    return (
-      <div {...other}
-        style={this.prepareStyles(
-            styles.root,
-            this.props.show && styles.rootWhenShown,
-            this.props.touch && styles.rootWhenTouched,
-            this.props.style
-          )}>
-        <div
-          ref="ripple"
-          style={this.prepareStyles(
-            styles.ripple,
-            this.props.show && styles.rippleWhenShown)} />
-        <span style={this.prepareStyles(styles.label)}>{this.props.label}</span>
-      </div>
-    );
-  },
-
   _setRippleSize() {
     let ripple = ReactDOM.findDOMNode(this.refs.ripple);
     let tooltip = window.getComputedStyle(ReactDOM.findDOMNode(this));
@@ -168,8 +158,7 @@ const Tooltip = React.createClass({
     if (this.props.show) {
       ripple.style.height = rippleDiameter + 'px';
       ripple.style.width = rippleDiameter + 'px';
-    }
-    else {
+    } else {
       ripple.style.width = '0px';
       ripple.style.height = '0px';
     }
@@ -178,6 +167,36 @@ const Tooltip = React.createClass({
   _setTooltipPosition() {
     let tooltip = ReactDOM.findDOMNode(this);
     this.setState({offsetWidth: tooltip.offsetWidth});
+  },
+
+  render() {
+    const {
+      label,
+      ...other,
+    } = this.props;
+    const styles = this.getStyles();
+
+    return (
+      <div
+        {...other}
+        style={this.prepareStyles(
+          styles.root,
+          this.props.show && styles.rootWhenShown,
+          this.props.touch && styles.rootWhenTouched,
+          this.props.style
+        )}
+      >
+        <div
+          ref="ripple"
+          style={this.prepareStyles(
+            styles.ripple,
+            this.props.show && styles.rippleWhenShown)}
+        />
+        <span style={this.prepareStyles(styles.label)}>
+          {label}
+        </span>
+      </div>
+    );
   },
 
 });

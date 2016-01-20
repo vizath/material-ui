@@ -7,25 +7,9 @@ import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
 import ThemeManager from './styles/theme-manager';
 import Paper from './paper';
 import PropTypes from './utils/prop-types';
+import warning from 'warning';
 
 const AppBar = React.createClass({
-
-  mixins: [StylePropable],
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  //for passing default theme context to children
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: this.state.muiTheme,
-    };
-  },
 
   propTypes: {
     /**
@@ -88,7 +72,7 @@ const AppBar = React.createClass({
     showMenuIconButton: React.PropTypes.bool,
 
     /**
-     * Override the inline-styles of the app bar's root element.
+     * Override the inline-styles of the root element.
      */
     style: React.PropTypes.object,
 
@@ -103,24 +87,22 @@ const AppBar = React.createClass({
     titleStyle: React.PropTypes.object,
 
     /**
-     * The zDepth of the app bar.
+     * The zDepth of the component.
      * The shadow of the app bar is also dependent on this property.
      */
     zDepth: PropTypes.zDepth,
   },
 
-  getInitialState() {
-    return {
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
-    };
+  contextTypes: {
+    muiTheme: React.PropTypes.object,
   },
 
-  //to update theme inside state whenever a new theme is passed down
-  //from the parent / owner using context
-  componentWillReceiveProps(nextProps, nextContext) {
-    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
-    this.setState({muiTheme: newMuiTheme});
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: React.PropTypes.object,
   },
+
+  mixins: [StylePropable],
 
   getDefaultProps() {
     return {
@@ -130,39 +112,51 @@ const AppBar = React.createClass({
     };
   },
 
-  componentDidMount() {
-    if (process.env.NODE_ENV !== 'production') {
-      if (this.props.iconElementLeft && this.props.iconClassNameLeft) {
-        console.warn(
-          'Properties iconClassNameLeft and iconElementLeft cannot be simultaneously ' +
-          'defined. Please use one or the other.'
-        );
-      }
+  getInitialState() {
+    return {
+      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+    };
+  },
 
-      if (this.props.iconElementRight && this.props.iconClassNameRight) {
-        console.warn(
-          'Properties iconClassNameRight and iconElementRight cannot be simultaneously ' +
-          'defined. Please use one or the other.'
-        );
-      }
-    }
+  getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme,
+    };
+  },
+
+  componentDidMount() {
+    warning(!this.props.iconElementLeft || !this.props.iconClassNameLeft, `Properties iconElementLeft
+      and iconClassNameLeft cannot be simultaneously defined. Please use one or the other.`);
+
+    warning(!this.props.iconElementRight || !this.props.iconClassNameRight, `Properties iconElementRight
+      and iconClassNameRight cannot be simultaneously defined. Please use one or the other.`);
+  },
+
+  //to update theme inside state whenever a new theme is passed down
+  //from the parent / owner using context
+  componentWillReceiveProps(nextProps, nextContext) {
+    let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
+    this.setState({muiTheme: newMuiTheme});
   },
 
   getStyles() {
-    let spacing = this.state.muiTheme.rawTheme.spacing;
-    let themeVariables = this.state.muiTheme.appBar;
-    let iconButtonSize = this.state.muiTheme.button.iconButtonSize;
+    const muiTheme = this.state.muiTheme;
+    const rawTheme = muiTheme.rawTheme;
+
+    let themeVariables = muiTheme.appBar;
+    let iconButtonSize = muiTheme.button.iconButtonSize;
     let flatButtonSize = 36;
+
     let styles = {
       root: {
         position: 'relative',
-        zIndex: 5,
+        zIndex: muiTheme.zIndex.appBar,
         width: '100%',
         display: 'flex',
         minHeight: themeVariables.height,
         backgroundColor: themeVariables.color,
-        paddingLeft: spacing.desktopGutter,
-        paddingRight: spacing.desktopGutter,
+        paddingLeft: rawTheme.spacing.desktopGutter,
+        paddingRight: rawTheme.spacing.desktopGutter,
       },
       title: {
         whiteSpace: 'nowrap',
@@ -193,12 +187,29 @@ const AppBar = React.createClass({
       },
       flatButton: {
         color: themeVariables.textColor,
-        backgroundColor: 'transparent',
         marginTop: (iconButtonSize - flatButtonSize) / 2 + 2,
       },
     };
 
     return styles;
+  },
+
+  _onLeftIconButtonTouchTap(event) {
+    if (this.props.onLeftIconButtonTouchTap) {
+      this.props.onLeftIconButtonTouchTap(event);
+    }
+  },
+
+  _onRightIconButtonTouchTap(event) {
+    if (this.props.onRightIconButtonTouchTap) {
+      this.props.onRightIconButtonTouchTap(event);
+    }
+  },
+
+  _onTitleTouchTap(event) {
+    if (this.props.onTitleTouchTap) {
+      this.props.onTitleTouchTap(event);
+    }
   },
 
   render() {
@@ -231,12 +242,16 @@ const AppBar = React.createClass({
       // If the title is a string, wrap in an h1 tag.
       // If not, just use it as a node.
       titleElement = typeof title === 'string' || title instanceof String ?
-        <h1 onTouchTap={this._onTitleTouchTap}
-          style={this.prepareStyles(styles.title, styles.mainElement, titleStyle)}>
+        <h1
+          onTouchTap={this._onTitleTouchTap}
+          style={this.prepareStyles(styles.title, styles.mainElement, titleStyle)}
+        >
           {title}
         </h1> :
-        <div onTouchTap={this._onTitleTouchTap}
-          style={this.prepareStyles(styles.title, styles.mainElement, titleStyle)}>
+        <div
+          onTouchTap={this._onTitleTouchTap}
+          style={this.prepareStyles(styles.title, styles.mainElement, titleStyle)}
+        >
           {title}
         </div>;
     }
@@ -246,7 +261,7 @@ const AppBar = React.createClass({
         switch (iconElementLeft.type.displayName) {
           case 'IconButton':
             iconElementLeft = React.cloneElement(iconElementLeft, {
-              iconStyle: this.mergeStyles(styles.iconButton.iconStyle),
+              iconStyle: this.mergeStyles(styles.iconButton.iconStyle, iconElementLeft.props.iconStyle),
             });
             break;
         }
@@ -263,7 +278,8 @@ const AppBar = React.createClass({
             style={this.mergeStyles(styles.iconButton.style)}
             iconStyle={this.mergeStyles(styles.iconButton.iconStyle)}
             iconClassName={iconClassNameLeft}
-            onTouchTap={this._onLeftIconButtonTouchTap}>
+            onTouchTap={this._onLeftIconButtonTouchTap}
+          >
               {child}
           </IconButton>
         );
@@ -275,7 +291,7 @@ const AppBar = React.createClass({
         case 'IconMenu':
         case 'IconButton':
           iconElementRight = React.cloneElement(iconElementRight, {
-            iconStyle: this.mergeStyles(styles.iconButton.iconStyle),
+            iconStyle: this.mergeStyles(styles.iconButton.iconStyle, iconElementRight.props.iconStyle),
           });
           break;
 
@@ -297,7 +313,8 @@ const AppBar = React.createClass({
           style={iconRightStyle}
           iconStyle={this.mergeStyles(styles.iconButton.iconStyle)}
           iconClassName={iconClassNameRight}
-          onTouchTap={this._onRightIconButtonTouchTap} />
+          onTouchTap={this._onRightIconButtonTouchTap}
+        />
       );
     }
 
@@ -307,33 +324,15 @@ const AppBar = React.createClass({
         rounded={false}
         className={className}
         style={this.mergeStyles(styles.root, style)}
-        zDepth={zDepth}>
-          {menuElementLeft}
-          {titleElement}
-          {menuElementRight}
-          {children}
+        zDepth={zDepth}
+      >
+        {menuElementLeft}
+        {titleElement}
+        {menuElementRight}
+        {children}
       </Paper>
     );
   },
-
-  _onLeftIconButtonTouchTap(event) {
-    if (this.props.onLeftIconButtonTouchTap) {
-      this.props.onLeftIconButtonTouchTap(event);
-    }
-  },
-
-  _onRightIconButtonTouchTap(event) {
-    if (this.props.onRightIconButtonTouchTap) {
-      this.props.onRightIconButtonTouchTap(event);
-    }
-  },
-
-  _onTitleTouchTap(event) {
-    if (this.props.onTitleTouchTap) {
-      this.props.onTitleTouchTap(event);
-    }
-  },
-
 });
 
 export default AppBar;
