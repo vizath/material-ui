@@ -109,6 +109,7 @@ const AppLeftNav = React.createClass({
             primaryTogglesNestedList={true}
             nestedItems={[
               <ListItem primaryText="App Bar" value="/components/app-bar" />,
+              <ListItem primaryText="App Bar New" value="/components/app-bar-new" />,
               <ListItem primaryText="Auto Complete" value="/components/auto-complete" />,
               <ListItem primaryText="Avatar" value="/components/avatar" />,
               <ListItem primaryText="Badge" value="/components/badge" />,
@@ -170,6 +171,7 @@ const AppLeftNav = React.createClass({
               />,
               <ListItem primaryText="Snackbar" value="/components/snackbar" />,
               <ListItem primaryText="Table" value="/components/table" />,
+              <ListItem primaryText="Table List" value="/components/table-list" />,
               <ListItem primaryText="Tabs" value="/components/tabs" />,
               <ListItem primaryText="Text Field" value="/components/text-field" />,
               <ListItem primaryText="Time Picker" value="/components/time-picker" />,

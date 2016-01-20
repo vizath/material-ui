@@ -8,23 +8,6 @@ const Paper = require('./paper');
 
 const AppBar = React.createClass({
 
-  mixins: [StylePropable],
-
-  contextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  //for passing default theme context to children
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
-  getChildContext() {
-    return {
-      muiTheme: this.state.muiTheme,
-    };
-  },
-
   propTypes: {
     actionIcons: React.PropTypes.array,
     children: React.PropTypes.node,
@@ -41,9 +24,33 @@ const AppBar = React.createClass({
     zDepth: React.PropTypes.number,
   },
 
+  contextTypes: {
+    muiTheme: React.PropTypes.object,
+  },
+
+  //for passing default theme context to children
+  childContextTypes: {
+    muiTheme: React.PropTypes.object,
+  },
+
+  mixins: [StylePropable],
+
+  getDefaultProps() {
+    return {
+      title: '',
+      zDepth: 1,
+    };
+  },
+
   getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+    };
+  },
+
+  getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme,
     };
   },
 
@@ -52,13 +59,6 @@ const AppBar = React.createClass({
   componentWillReceiveProps(nextProps, nextContext) {
     let newMuiTheme = nextContext.muiTheme ? nextContext.muiTheme : this.state.muiTheme;
     this.setState({muiTheme: newMuiTheme});
-  },
-
-  getDefaultProps() {
-    return {
-      title: '',
-      zDepth: 1,
-    };
   },
 
   getStyles() {
@@ -114,6 +114,18 @@ const AppBar = React.createClass({
     return styles;
   },
 
+  _onLeftIconButtonTouchTap(event) {
+    if (this.props.onLeftIconButtonTouchTap) {
+      this.props.onLeftIconButtonTouchTap(event);
+    }
+  },
+
+  _onRightIconButtonTouchTap(event) {
+    if (this.props.onRightIconButtonTouchTap) {
+      this.props.onRightIconButtonTouchTap(event);
+    }
+  },
+
   render() {
     let {
       title,
@@ -136,7 +148,7 @@ const AppBar = React.createClass({
     let rightIconElements;
 
     let styles = this.getStyles();
-    let iconRightStyle = this.mergeAndPrefix(styles.iconButton.style, {
+    let iconRightStyle = this.prepareStyles(styles.iconButton.style, {
       marginRight: -16,
       marginLeft: 'auto',
     }, iconStyleRight);
@@ -144,7 +156,7 @@ const AppBar = React.createClass({
     if (navIcon) {
       if (navIcon.type.displayName === 'IconButton') {
         navIcon = React.cloneElement(navIcon, {
-          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, navIcon.props.iconStyle),
+          iconStyle: this.mergeStyles(styles.iconButton.iconStyle, navIcon.props.iconStyle),
         });
       }
 
@@ -160,7 +172,7 @@ const AppBar = React.createClass({
       // If the title is a string, wrap in an h1 tag.
       // If not, just use it as a node.
       if (typeof title === 'string' || title instanceof String) {
-        title = <h1 style={this.mergeAndPrefix(styles.title, titleStyle)}>{title}</h1>;
+        title = <h1 style={this.prepareStyles(styles.title, titleStyle)}>{title}</h1>;
       }
     }
 
@@ -168,12 +180,12 @@ const AppBar = React.createClass({
     if (filterIcon) {
       if (filterIcon.type.displayName === 'IconButton' || filterIcon.type.displayName === 'IconMenu') {
         filterIcon = React.cloneElement(filterIcon, {
-          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, filterIcon.props.iconStyle),
+          iconStyle: this.mergeStyles(styles.iconButton.iconStyle, filterIcon.props.iconStyle),
         });
       }
 
       filterIconElement = (
-        <div style={this.mergeAndPrefix({display: 'inline-block', verticalAlign: 'sub'})}>
+        <div style={this.prepareStyles({display: 'inline-block', verticalAlign: 'sub'})}>
           {filterIcon}
         </div>
       );
@@ -181,7 +193,7 @@ const AppBar = React.createClass({
 
     // Builded title (text and filter icon)
     titleElement = (
-      <div style={this.mergeAndPrefix(styles.mainElement)}>
+      <div style={this.prepareStyles(styles.mainElement)}>
         {title}
         {filterIconElement}
       </div>
@@ -192,12 +204,11 @@ const AppBar = React.createClass({
       actionIcons = actionIcons.map(function(icon) {
         if (icon.type.displayName === 'IconButton') {
           icon = React.cloneElement(icon, {
-            iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, icon.props.iconStyle),
+            iconStyle: this.mergeStyles(styles.iconButton.iconStyle, icon.props.iconStyle),
           });
-        }
-        else if (icon.type.displayName === 'FlatButton') {
+        } else if (icon.type.displayName === 'FlatButton') {
           icon = React.cloneElement(icon, {
-            style: this.mergeAndPrefix(styles.flatButton, icon.props.style),
+            style: this.mergeStyles(styles.flatButton, icon.props.style),
           });
         }
         return icon;
@@ -210,7 +221,7 @@ const AppBar = React.createClass({
     if (moreIcon) {
       if (moreIcon.type.displayName === 'IconButton' || moreIcon.type.displayName === 'IconMenu') {
         moreIcon = React.cloneElement(moreIcon, {
-          iconStyle: this.mergeAndPrefix(styles.iconButton.iconStyle, moreIcon.props.iconStyle),
+          iconStyle: this.mergeStyles(styles.iconButton.iconStyle, moreIcon.props.iconStyle),
         });
       }
 
@@ -231,8 +242,9 @@ const AppBar = React.createClass({
         {...other}
         rounded={false}
         className={className}
-        style={this.mergeAndPrefix(styles.root, style)}
-        zDepth={zDepth}>
+        style={this.mergeStyles(styles.root, style)}
+        zDepth={zDepth}
+      >
           {navIconElement}
           {titleElement}
           {rightIconElements}
@@ -240,19 +252,6 @@ const AppBar = React.createClass({
       </Paper>
     );
   },
-
-  _onLeftIconButtonTouchTap(event) {
-    if (this.props.onLeftIconButtonTouchTap) {
-      this.props.onLeftIconButtonTouchTap(event);
-    }
-  },
-
-  _onRightIconButtonTouchTap(event) {
-    if (this.props.onRightIconButtonTouchTap) {
-      this.props.onRightIconButtonTouchTap(event);
-    }
-  },
-
 });
 
 module.exports = AppBar;
