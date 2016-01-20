@@ -1,13 +1,11 @@
 import React from 'react';
 import {History} from 'react-router';
-import {Mixins, RaisedButton, Styles} from 'material-ui';
 import HomeFeature from './home-feature';
 import FullWidthSection from '../full-width-section';
 
-const {StylePropable, StyleResizable} = Mixins;
-const {Colors, Spacing, Typography} = Styles;
-const DefaultRawTheme = Styles.LightRawTheme;
-
+import RaisedButton from 'material-ui/lib/raised-button';
+import {StylePropable, StyleResizable} from 'material-ui/lib/mixins';
+import {Colors, Spacing, Typography, lightBaseTheme} from 'material-ui/lib/styles';
 
 const HomePage = React.createClass({
 
@@ -17,21 +15,6 @@ const HomePage = React.createClass({
     History,
   ],
 
-  render() {
-    let style = {
-      paddingTop: Spacing.desktopKeylineIncrement,
-    };
-
-    return (
-      <div style={style}>
-        {this._getHomePageHero()}
-        {this._getHomePurpose()}
-        {this._getHomeFeatures()}
-        {this._getHomeContribute()}
-      </div>
-    );
-  },
-
   _getHomePageHero() {
     let styles = {
       root: {
@@ -39,8 +22,9 @@ const HomePage = React.createClass({
         overflow: 'hidden',
       },
       svgLogo: {
-        marginLeft: (window.innerWidth * 0.5) - 130 + 'px',
+        marginLeft: window.innerWidth * 0.5 - 130,
         width: 420,
+        height: 157,
       },
       tagline: {
         margin: '16px auto 0 auto',
@@ -48,7 +32,7 @@ const HomePage = React.createClass({
         maxWidth: 575,
       },
       label: {
-        color: DefaultRawTheme.palette.primary1Color,
+        color: lightBaseTheme.palette.primary1Color,
       },
       githubStyle: {
         margin: '16px 32px 0px 8px',
@@ -94,28 +78,29 @@ const HomePage = React.createClass({
 
     return (
       <FullWidthSection style={styles.root}>
-          <img style={styles.svgLogo} src="images/material-ui-logo.svg" />
-          <div style={styles.tagline}>
-            <h1 style={styles.h1}>material ui</h1>
-            <h2 style={styles.h2}>
-              A Set of React Components <span style={styles.nowrap}>
-              that Implement</span> <span style={styles.nowrap}>
-              Google&apos;s Material Design</span>
-            </h2>
-            <RaisedButton
-              className="demo-button"
-              label="Demo"
-              onTouchTap={this._onDemoClick}
-              linkButton={true}
-              style={styles.demoStyle}
-              labelStyle={styles.label}/>
-          </div>
+        <img style={styles.svgLogo} src="images/material-ui-logo.svg" />
+        <div style={styles.tagline}>
+          <h1 style={styles.h1}>material ui</h1>
+          <h2 style={styles.h2}>
+            A Set of React Components <span style={styles.nowrap}>
+            that Implement</span> <span style={styles.nowrap}>
+            Google&apos;s Material Design</span>
+          </h2>
+          <RaisedButton
+            className="demo-button"
+            label="Demo"
+            onTouchTap={this._onDemoClick}
+            linkButton={true}
+            style={styles.demoStyle}
+            labelStyle={styles.label}
+          />
+        </div>
       </FullWidthSection>
     );
   },
 
   _getHomePurpose() {
-    let styles = {
+    const styles = {
       root: {
         backgroundColor: Colors.grey200,
       },
@@ -139,7 +124,8 @@ const HomePage = React.createClass({
         useContent={true}
         contentStyle={styles.content}
         contentType="p"
-        className="home-purpose">
+        className="home-purpose"
+      >
         Material-UI came about from our love of&nbsp;
         <a href="http://facebook.github.io/react/">React</a> and&nbsp;
         <a href="https://www.google.com/design/spec/material-design/introduction.html">
@@ -152,29 +138,33 @@ const HomePage = React.createClass({
   },
 
   _getHomeFeatures() {
-    let styles = {maxWidth: '906px'};
+    const styles = {maxWidth: 906};
+
     return (
       <FullWidthSection useContent={true} contentStyle={styles}>
         <HomeFeature
           heading="Get Started"
           route="/get-started"
           img="images/get-started.svg"
-          firstChild={true}/>
+          firstChild={true}
+        />
         <HomeFeature
           heading="Customization"
           route="/customization"
-          img="images/css-framework.svg" />
+          img="images/css-framework.svg"
+        />
         <HomeFeature
           heading="Components"
           route="/components"
           img="images/components.svg"
-          lastChild={true}/>
+          lastChild={true}
+        />
       </FullWidthSection>
     );
   },
 
   _getHomeContribute() {
-    let styles = {
+    const styles = {
       root: {
         backgroundColor: Colors.grey200,
         textAlign: 'center',
@@ -201,7 +191,8 @@ const HomePage = React.createClass({
           primary={true}
           linkButton={true}
           href="https://github.com/callemall/material-ui"
-          style={styles.button}/>
+          style={styles.button}
+        />
       </FullWidthSection>
     );
   },
@@ -209,6 +200,22 @@ const HomePage = React.createClass({
   _onDemoClick() {
     this.history.pushState(null, '/components');
   },
+
+  render() {
+    const style = {
+      paddingTop: Spacing.desktopKeylineIncrement,
+    };
+
+    return (
+      <div style={style}>
+        {this._getHomePageHero()}
+        {this._getHomePurpose()}
+        {this._getHomeFeatures()}
+        {this._getHomeContribute()}
+      </div>
+    );
+  },
+
 });
 
 export default HomePage;

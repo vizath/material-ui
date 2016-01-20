@@ -5,20 +5,55 @@ import ThemeManager from '../styles/theme-manager';
 
 const Tab = React.createClass({
 
-  mixins: [StylePropable],
+  propTypes: {
+    /**
+     * The css class name of the root element.
+     */
+    className: React.PropTypes.string,
+
+    /**
+     * Sets the text value of the tab item to the string specified.
+     */
+    label: React.PropTypes.node,
+
+    /**
+     * Fired when the active tab changes by touch or tap.
+     * Use this event to specify any functionality when an active tab changes.
+     * For example - we are using this to route to home when the third tab becomes active.
+     * This function will always recieve the active tab as it\'s first argument.
+     */
+    onActive: React.PropTypes.func,
+
+    /**
+     * This property is overriden by the Tabs component.
+     */
+    onTouchTap: React.PropTypes.func,
+
+    /**
+     * Defines if the current tab is selected or not.
+     * The Tabs component is responsible for setting this property.
+     */
+    selected: React.PropTypes.bool,
+
+    /**
+     * Override the inline-styles of the root element.
+     */
+    style: React.PropTypes.object,
+
+    /**
+     * If value prop passed to Tabs component, this value prop is also required.
+     * It assigns a value to the tab so that it can be selected by the Tabs.
+     */
+    value: React.PropTypes.any,
+
+    /**
+     * This property is overriden by the Tabs component.
+     */
+    width: React.PropTypes.string,
+  },
 
   contextTypes: {
     muiTheme: React.PropTypes.object,
-  },
-
-  propTypes: {
-    label: React.PropTypes.node,
-    onActive: React.PropTypes.func,
-    onTouchTap: React.PropTypes.func,
-    selected: React.PropTypes.bool,
-    style: React.PropTypes.object,
-    value: React.PropTypes.string,
-    width: React.PropTypes.string,
   },
 
   //for passing default theme context to children
@@ -26,22 +61,19 @@ const Tab = React.createClass({
     muiTheme: React.PropTypes.object,
   },
 
-  getChildContext() {
-    return {
-      muiTheme: this.state.muiTheme,
-    };
-  },
-
-  getDefaultProps() {
-    return {
-      onActive: () => {},
-      onTouchTap: () => {},
-    };
-  },
+  mixins: [
+    StylePropable,
+  ],
 
   getInitialState() {
     return {
       muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+    };
+  },
+
+  getChildContext() {
+    return {
+      muiTheme: this.state.muiTheme,
     };
   },
 
@@ -52,8 +84,14 @@ const Tab = React.createClass({
     this.setState({muiTheme: newMuiTheme});
   },
 
+  _handleTouchTap(event) {
+    if (this.props.onTouchTap) {
+      this.props.onTouchTap(this.props.value, event, this);
+    }
+  },
+
   render() {
-    let {
+    const {
       label,
       onActive,
       onTouchTap,
@@ -63,7 +101,8 @@ const Tab = React.createClass({
       width,
       ...other,
     } = this.props;
-    let styles = this.prepareStyles({
+
+    const styles = this.mergeStyles({
       display: 'table-cell',
       cursor: 'pointer',
       textAlign: 'center',
@@ -82,15 +121,12 @@ const Tab = React.createClass({
     return (
       <div
         {...other}
-        style={styles}
-        onTouchTap={this._handleTouchTap}>
+        style={this.prepareStyles(styles)}
+        onTouchTap={this._handleTouchTap}
+      >
         {label}
       </div>
     );
-  },
-
-  _handleTouchTap(e) {
-    this.props.onTouchTap(this.props.value, e, this);
   },
 
 });

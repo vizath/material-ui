@@ -1,7 +1,7 @@
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-import React from 'react/addons';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Calendar from 'date-picker/calendar';
 import CalendarToolbar from 'date-picker/calendar-toolbar';
@@ -23,12 +23,12 @@ describe(`Calendar`, () => {
       let maxDate = new Date(initialDate.toDateString());
 
       let render = TestUtils.renderIntoDocument(
-          <ThemedCalendar
-            initialDate={initialDate}
-            DateTimeFormat={DateTime.DateTimeFormat}
-            locale="en-US"
-            maxDate={maxDate}
-          />
+        <ThemedCalendar
+          initialDate={initialDate}
+          DateTimeFormat={DateTime.DateTimeFormat}
+          locale="en-US"
+          maxDate={maxDate}
+        />
       );
       let renderedCalendarToolbar =
                 TestUtils.findRenderedComponentWithType(render, CalendarToolbar);
@@ -46,7 +46,8 @@ describe(`Calendar`, () => {
           initialDate={initialDate}
           DateTimeFormat={DateTime.DateTimeFormat}
           locale="en-US"
-          maxDate={maxDate} />
+          maxDate={maxDate}
+        />
       );
       let renderedCalendarToolbar =
                 TestUtils.findRenderedComponentWithType(render, CalendarToolbar);
@@ -64,7 +65,8 @@ describe(`Calendar`, () => {
           initialDate={initialDate}
           DateTimeFormat={DateTime.DateTimeFormat}
           locale="en-US"
-          maxDate={maxDate} />
+          maxDate={maxDate}
+        />
       );
 
       let renderedCalendarToolbar =
@@ -82,7 +84,8 @@ describe(`Calendar`, () => {
           initialDate={initialDate}
           DateTimeFormat={DateTime.DateTimeFormat}
           locale="en-US"
-          maxDate={maxDate} />
+          maxDate={maxDate}
+        />
       );
       let prevMonthButton = ReactDOM.findDOMNode(
                 TestUtils.scryRenderedComponentsWithType(render, IconButton)[0]);
@@ -104,7 +107,8 @@ describe(`Calendar`, () => {
           initialDate={initialDate}
           DateTimeFormat={DateTime.DateTimeFormat}
           locale="en-US"
-          maxDate={maxDate} />
+          maxDate={maxDate}
+        />
       );
       let nextMonthButton = ReactDOM.findDOMNode(
                 TestUtils.scryRenderedComponentsWithType(render, IconButton)[1]);
