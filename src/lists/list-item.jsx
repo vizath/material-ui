@@ -11,8 +11,7 @@ import IconButton from '../icon-button';
 import OpenIcon from '../svg-icons/navigation/arrow-drop-up';
 import CloseIcon from '../svg-icons/navigation/arrow-drop-down';
 import NestedList from './nested-list';
-import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
-import ThemeManager from '../styles/theme-manager';
+import getMuiTheme from '../styles/getMuiTheme';
 
 const ListItem = React.createClass({
 
@@ -85,6 +84,11 @@ const ListItem = React.createClass({
      * This property is automatically managed so modify at your own risk.
      */
     nestedLevel: React.PropTypes.number,
+
+    /**
+     * Override the inline-styles of the nestedItems NestedList.
+     */
+    nestedListStyle: React.PropTypes.object,
 
     /**
      * Called when the ListItem has keyboard focus.
@@ -211,7 +215,7 @@ const ListItem = React.createClass({
       rightIconButtonHovered: false,
       rightIconButtonKeyboardFocused: false,
       touch: false,
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+      muiTheme: this.context.muiTheme || getMuiTheme(),
     };
   },
 
@@ -264,14 +268,14 @@ const ListItem = React.createClass({
     return (
       <div
         {...additionalProps}
-        style={mergedDivStyles}
+        style={this.prepareStyles(mergedDivStyles)}
       >
         {contentChildren}
       </div>
      );
   },
 
-  _createLabelElement(styles, contentChildren) {
+  _createLabelElement(styles, contentChildren, additionalProps) {
     const {
       innerDivStyle,
       style,
@@ -285,7 +289,14 @@ const ListItem = React.createClass({
       style
     );
 
-    return React.createElement('label', {style: this.prepareStyles(mergedLabelStyles)}, contentChildren);
+    return (
+      <label
+        {...additionalProps}
+        style={this.prepareStyles(mergedLabelStyles)}
+      >
+        {contentChildren}
+      </label>
+     );
   },
 
   _createTextElement(styles, data, key) {
@@ -400,6 +411,7 @@ const ListItem = React.createClass({
       leftIcon,
       nestedItems,
       nestedLevel,
+      nestedListStyle,
       onKeyboardFocus,
       onMouseLeave,
       onMouseEnter,
@@ -631,7 +643,7 @@ const ListItem = React.createClass({
     }
 
     const nestedList = nestedItems.length ? (
-      <NestedList nestedLevel={nestedLevel + 1} open={this.state.open}>
+      <NestedList nestedLevel={nestedLevel + 1} open={this.state.open} style={nestedListStyle}>
         {nestedItems}
       </NestedList>
     ) : undefined;
@@ -639,7 +651,7 @@ const ListItem = React.createClass({
     return (
       <div>
         {
-          hasCheckbox ? this._createLabelElement(styles, contentChildren) :
+          hasCheckbox ? this._createLabelElement(styles, contentChildren, other) :
           disabled ? this._createDisabledElement(styles, contentChildren, other) : (
             <EnhancedButton
               {...other}

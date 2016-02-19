@@ -80,7 +80,7 @@ const AppLeftNav = React.createClass({
         onRequestChange={onRequestChangeLeftNav}
       >
         <div style={this.prepareStyles(styles.logo)} onTouchTap={this.handleTouchTapHeader}>
-          material ui
+          Material-UI
         </div>
         <SelectableList
           valueLink={{value: location.pathname, requestChange: onRequestChangeList}}
@@ -92,6 +92,7 @@ const AppLeftNav = React.createClass({
               <ListItem primaryText="Prerequisites" value="/get-started/prerequisites" />,
               <ListItem primaryText="Installation" value="/get-started/installation" />,
               <ListItem primaryText="Usage" value="/get-started/usage" />,
+              <ListItem primaryText="Server Rendering" value="/get-started/server-rendering" />,
               <ListItem primaryText="Examples" value="/get-started/examples" />,
             ]}
           />
@@ -175,7 +176,7 @@ const AppLeftNav = React.createClass({
               <ListItem primaryText="Tabs" value="/components/tabs" />,
               <ListItem primaryText="Text Field" value="/components/text-field" />,
               <ListItem primaryText="Time Picker" value="/components/time-picker" />,
-              <ListItem primaryText="Toolbars" value="/components/toolbars" />,
+              <ListItem primaryText="Toolbar" value="/components/toolbar" />,
             ]}
           />
           <ListItem
@@ -183,7 +184,9 @@ const AppLeftNav = React.createClass({
             primaryTogglesNestedList={true}
             nestedItems={[
               <ListItem primaryText="Community" value="/discover-more/community" />,
+              <ListItem primaryText="Contributing" value="/discover-more/contributing" />,
               <ListItem primaryText="Showcase" value="/discover-more/showcase" />,
+              <ListItem primaryText="Related projects" value="/discover-more/related-projects" />,
             ]}
           />
         </SelectableList>

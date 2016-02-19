@@ -1,17 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import update from 'react-addons-update';
-import Controllable from '../mixins/controllable';
 import StylePropable from '../mixins/style-propable';
 import ClickAwayable from '../mixins/click-awayable';
-import AutoPrefix from '../styles/auto-prefix';
+import autoPrefix from '../styles/auto-prefix';
 import Transitions from '../styles/transitions';
 import KeyCode from '../utils/key-code';
 import PropTypes from '../utils/prop-types';
 import List from '../lists/list';
 import Paper from '../paper';
-import DefaultRawTheme from '../styles/raw-themes/light-raw-theme';
-import ThemeManager from '../styles/theme-manager';
+import getMuiTheme from '../styles/getMuiTheme';
 
 const Menu = React.createClass({
 
@@ -137,7 +135,6 @@ const Menu = React.createClass({
 
   mixins: [
     StylePropable,
-    Controllable,
     ClickAwayable,
   ],
 
@@ -149,6 +146,7 @@ const Menu = React.createClass({
       initiallyKeyboardFocused: false,
       maxHeight: null,
       multiple: false,
+      onChange: () => {},
       onEscKeyDown: () => {},
       onItemTouchTap: () => {},
       onKeyDown: () => {},
@@ -165,7 +163,7 @@ const Menu = React.createClass({
       focusIndex: selectedIndex >= 0 ? selectedIndex : 0,
       isKeyboardFocused: this.props.initiallyKeyboardFocused,
       keyWidth: this.props.desktop ? 64 : 56,
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+      muiTheme: this.context.muiTheme || getMuiTheme(),
     };
   },
 
@@ -197,27 +195,19 @@ const Menu = React.createClass({
     if (this.props.autoWidth) this._setWidth();
   },
 
-  componentDidEnter() {
-    this._animateOpen();
-  },
-
-  componentWillLeave(callback) {
-    let rootStyle = ReactDOM.findDOMNode(this).style;
-    rootStyle.transition = Transitions.easeOut('250ms', ['opacity', 'transform']);
-    rootStyle.transform = 'translate3d(0,-8px,0)';
-    rootStyle.opacity = 0;
-    rootStyle = AutoPrefix.all(rootStyle);
-    setTimeout(() => {
-      if (this.isMounted()) callback();
-    }, 250);
-  },
-
   componentClickAway(e) {
     if (e.defaultPrevented)
       return;
     this._setFocusIndex(-1, false);
   },
 
+  // Do not use outside of this component, it will be removed once valueLink is deprecated
+  getValueLink(props) {
+    return props.valueLink || {
+      value: props.value,
+      requestChange: props.onChange,
+    };
+  },
 
   setKeyboardFocused(keyboardFocused) {
     this.setState({
@@ -240,8 +230,8 @@ const Menu = React.createClass({
     let scrollContainerStyle = ReactDOM.findDOMNode(this.refs.scrollContainer).style;
     let menuContainers = ReactDOM.findDOMNode(this.refs.list).childNodes;
 
-    AutoPrefix.set(rootStyle, 'transform', 'scaleX(1)');
-    AutoPrefix.set(scrollContainerStyle, 'transform', 'scaleY(1)');
+    autoPrefix.set(rootStyle, 'transform', 'scaleX(1)', this.state.muiTheme);
+    autoPrefix.set(scrollContainerStyle, 'transform', 'scaleY(1)', this.state.muiTheme);
     scrollContainerStyle.opacity = 1;
 
     for (let i = 0; i < menuContainers.length; ++i) {
