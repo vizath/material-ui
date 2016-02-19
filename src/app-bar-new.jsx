@@ -88,11 +88,22 @@ const AppBar = React.createClass({
         color: themeVariables.textColor,
         lineHeight: themeVariables.height + 'px',
       },
+
+      // http://jsfiddle.net/iamanubhavsaini/zWtBu/
       mainElement: {
-        boxFlex: 1,
-        flex: 1,
-        overflow: 'hidden',
+        flex: '0 1 auto',
+        minWidth: 0,
       },
+      filterIcon: {
+        marginTop: (themeVariables.height - iconButtonSize) / 2,
+        flex: '1 0 auto',
+      },
+      rightContainer: {
+        marginRight: -16,
+        marginLeft: 0,
+        flex: '0 0 auto',
+      },
+
       iconButton: {
         style: {
           marginTop: (themeVariables.height - iconButtonSize) / 2,
@@ -148,10 +159,7 @@ const AppBar = React.createClass({
     let rightIconElements;
 
     let styles = this.getStyles();
-    let iconRightStyle = this.prepareStyles(styles.iconButton.style, {
-      marginRight: -16,
-      marginLeft: 'auto',
-    }, iconStyleRight);
+    let iconRightContainerStyle = this.prepareStyles(styles.iconButton.style, styles.rightContainer, iconStyleRight);
 
     if (navIcon) {
       if (navIcon.type.displayName === 'IconButton') {
@@ -183,19 +191,17 @@ const AppBar = React.createClass({
           iconStyle: this.mergeStyles(styles.iconButton.iconStyle, filterIcon.props.iconStyle),
         });
       }
-
-      filterIconElement = (
-        <div style={this.prepareStyles({display: 'inline-block', verticalAlign: 'sub'})}>
-          {filterIcon}
-        </div>
-      );
     }
+    filterIconElement = (
+      <div style={this.prepareStyles(styles.filterIcon)}>
+        {filterIcon}
+      </div>
+    );
 
     // Builded title (text and filter icon)
     titleElement = (
       <div style={this.prepareStyles(styles.mainElement)}>
         {title}
-        {filterIconElement}
       </div>
     );
 
@@ -231,7 +237,7 @@ const AppBar = React.createClass({
     // Right-most Icon container
     if (rightIcons.length > 0) {
       rightIconElements = (
-        <div style={iconRightStyle}>
+        <div style={iconRightContainerStyle}>
           {rightIcons}
         </div>
       );
@@ -247,6 +253,7 @@ const AppBar = React.createClass({
       >
           {navIconElement}
           {titleElement}
+          {filterIconElement}
           {rightIconElements}
           {children}
       </Paper>
