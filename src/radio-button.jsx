@@ -4,8 +4,7 @@ import Transitions from './styles/transitions';
 import EnhancedSwitch from './enhanced-switch';
 import RadioButtonOff from './svg-icons/toggle/radio-button-unchecked';
 import RadioButtonOn from './svg-icons/toggle/radio-button-checked';
-import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
-import ThemeManager from './styles/theme-manager';
+import getMuiTheme from './styles/getMuiTheme';
 
 const RadioButton = React.createClass({
 
@@ -27,8 +26,9 @@ const RadioButton = React.createClass({
     iconStyle: React.PropTypes.object,
 
     /**
-     * Where the label will be placed next to the radio button.
+     * Used internally by `RadioButtonGroup`. Use the `labelPosition` property of `RadioButtonGroup` instead.
      */
+    /* Where the label will be placed next to the radio button. */
     labelPosition: React.PropTypes.oneOf(['left', 'right']),
 
     /**
@@ -73,7 +73,7 @@ const RadioButton = React.createClass({
 
   getInitialState() {
     return {
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+      muiTheme: this.context.muiTheme || getMuiTheme(),
     };
   },
 

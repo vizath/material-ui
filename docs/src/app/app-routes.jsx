@@ -13,6 +13,7 @@ import Prerequisites from './components/pages/get-started/Prerequisites';
 import Installation from './components/pages/get-started/Installation';
 import Usage from './components/pages/get-started/Usage';
 import Examples from './components/pages/get-started/Examples';
+import ServerRendering from './components/pages/get-started/ServerRendering';
 
 import Colors from './components/pages/customization/colors';
 import Themes from './components/pages/customization/themes';
@@ -55,10 +56,12 @@ import TabsPage from './components/pages/components/Tabs/Page';
 import TextFieldPage from './components/pages/components/TextField/Page';
 import TimePickerPage from './components/pages/components/TimePicker/Page';
 import TogglePage from './components/pages/components/Toggle/Page';
-import ToolbarsPage from './components/pages/components/Toolbars/Page';
+import ToolbarPage from './components/pages/components/Toolbar/Page';
 
 import Community from './components/pages/discover-more/Community';
+import Contributing from './components/pages/discover-more/Contributing';
 import Showcase from './components/pages/discover-more/Showcase';
+import RelatedProjects from './components/pages/discover-more/RelatedProjects';
 
 /**
  * Routes: https://github.com/rackt/react-router/blob/master/docs/api/components/Route.md
@@ -79,6 +82,7 @@ const AppRoutes = (
       <Route path="installation" component={Installation} />
       <Route path="usage" component={Usage} />
       <Route path="examples" component={Examples} />
+      <Route path="server-rendering" component={ServerRendering} />
     </Route>
     <Redirect from="customization" to="/customization/themes" />
     <Route path="customization">
@@ -125,12 +129,14 @@ const AppRoutes = (
       <Route path="text-field" component={TextFieldPage} />
       <Route path="time-picker" component={TimePickerPage} />
       <Route path="toggle" component={TogglePage} />
-      <Route path="toolbars" component={ToolbarsPage} />
+      <Route path="toolbar" component={ToolbarPage} />
     </Route>
     <Redirect from="discover-more" to="/discover-more/community" />
     <Route path="discover-more">
       <Route path="community" component={Community} />
+      <Route path="contributing" component={Contributing} />
       <Route path="showcase" component={Showcase} />
+      <Route path="related-projects" component={RelatedProjects} />
     </Route>
   </Route>
 );

@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import StylePropable from './mixins/style-propable';
-import AutoPrefix from './styles/auto-prefix';
+import autoPrefix from './styles/auto-prefix';
 import Transitions from './styles/transitions';
-import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
-import ThemeManager from './styles/theme-manager';
+import getMuiTheme from './styles/getMuiTheme';
 
 const CircularProgress = React.createClass({
 
@@ -74,7 +73,7 @@ const CircularProgress = React.createClass({
 
   getInitialState() {
     return {
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+      muiTheme: this.context.muiTheme || getMuiTheme(),
     };
   },
 
@@ -144,13 +143,13 @@ const CircularProgress = React.createClass({
   _rotateWrapper(wrapper) {
     if (this.props.mode !== 'indeterminate') return;
 
-    AutoPrefix.set(wrapper.style, 'transform', 'rotate(0deg)');
-    AutoPrefix.set(wrapper.style, 'transitionDuration', '0ms');
+    autoPrefix.set(wrapper.style, 'transform', 'rotate(0deg)', this.state.muiTheme);
+    autoPrefix.set(wrapper.style, 'transitionDuration', '0ms', this.state.muiTheme);
 
     setTimeout(() => {
-      AutoPrefix.set(wrapper.style, 'transform', 'rotate(1800deg)');
-      AutoPrefix.set(wrapper.style, 'transitionDuration', '10s');
-      AutoPrefix.set(wrapper.style, 'transitionTimingFunction', 'linear');
+      autoPrefix.set(wrapper.style, 'transform', 'rotate(1800deg)', this.state.muiTheme);
+      autoPrefix.set(wrapper.style, 'transitionDuration', '10s', this.state.muiTheme);
+      autoPrefix.set(wrapper.style, 'transitionTimingFunction', 'linear', this.state.muiTheme);
     }, 50);
 
     this.rotateWrapperTimer = setTimeout(() => this._rotateWrapper(wrapper), 10050);
@@ -197,7 +196,7 @@ const CircularProgress = React.createClass({
       },
     };
 
-    AutoPrefix.set(styles.wrapper, 'transitionTimingFunction', 'linear');
+    autoPrefix.set(styles.wrapper, 'transitionTimingFunction', 'linear', this.state.muiTheme);
 
     if (this.props.mode === 'determinate') {
       let relVal = this._getRelativeValue();

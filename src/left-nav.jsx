@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import KeyCode from './utils/key-code';
 import StylePropable from './mixins/style-propable';
-import AutoPrefix from './styles/auto-prefix';
+import autoPrefix from './styles/auto-prefix';
 import Transitions from './styles/transitions';
 import WindowListenable from './mixins/window-listenable';
 import Overlay from './overlay';
 import Paper from './paper';
 import Menu from './menu/menu';
-import DefaultRawTheme from './styles/raw-themes/light-raw-theme';
-import ThemeManager from './styles/theme-manager';
+import getMuiTheme from './styles/getMuiTheme';
 import warning from 'warning';
 import deprecated from './utils/deprecatedPropType';
 
@@ -180,7 +179,7 @@ const LeftNav = React.createClass({
     return {
       open: (this.props.open !== null ) ? this.props.open : this.props.docked,
       swiping: null,
-      muiTheme: this.context.muiTheme ? this.context.muiTheme : ThemeManager.getMuiTheme(DefaultRawTheme),
+      muiTheme: this.context.muiTheme || getMuiTheme(),
     };
   },
 
@@ -413,7 +412,7 @@ const LeftNav = React.createClass({
     const leftNav = ReactDOM.findDOMNode(this.refs.clickAwayableElement);
     const transformCSS = 'translate3d(' + (this._getTranslateMultiplier() * translateX) + 'px, 0, 0)';
     this.refs.overlay.setOpacity(1 - translateX / this._getMaxTranslateX());
-    AutoPrefix.set(leftNav.style, 'transform', transformCSS);
+    autoPrefix.set(leftNav.style, 'transform', transformCSS, this.state.muiTheme);
   },
 
   _getTranslateX(currentX) {
