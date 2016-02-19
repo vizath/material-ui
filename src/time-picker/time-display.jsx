@@ -91,7 +91,6 @@ const TimeDisplay = React.createClass({
       root: {
         position: 'relative',
         width: 280,
-        height: '100%',
       },
 
       box: {
