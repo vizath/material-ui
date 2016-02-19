@@ -11,7 +11,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 
 const AppBarExampleIconMenu = () => (
   <AppBarNew
-    title="Title"
+    title="A Vert Long Title Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"
     navIcon={<IconButton><NavigationArrowBack /></IconButton>}
     filterIcon={
       <IconMenu iconButtonElement={

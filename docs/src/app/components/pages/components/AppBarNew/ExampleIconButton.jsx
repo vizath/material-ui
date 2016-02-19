@@ -16,7 +16,7 @@ const styles = {
 
 const AppBarExampleIconButton = () => (
   <AppBarNew
-    title="Title"
+    title="A Vert Long Title Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"
     navIcon={<IconButton><NavigationMenu /></IconButton>}
     actionIcons={[<FlatButton key="button" label="Save" />]}
   />

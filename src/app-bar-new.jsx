@@ -87,11 +87,11 @@ const AppBar = React.createClass({
         fontWeight: Typography.fontWeightNormal,
         color: themeVariables.textColor,
         lineHeight: themeVariables.height + 'px',
-        display: 'inline',
       },
       mainElement: {
         boxFlex: 1,
         flex: 1,
+        overflow: 'hidden',
       },
       iconButton: {
         style: {
