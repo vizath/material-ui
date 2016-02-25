@@ -115,6 +115,7 @@ const DialogInline = React.createClass({
     modal: React.PropTypes.bool,
     onRequestClose: React.PropTypes.func,
     open: React.PropTypes.bool.isRequired,
+    overflowInBody: React.PropTypes.bool,
     overlayClassName: React.PropTypes.string,
     overlayStyle: React.PropTypes.object,
     repositionOnUpdate: React.PropTypes.bool,
@@ -123,7 +124,6 @@ const DialogInline = React.createClass({
     titleClassName: React.PropTypes.string,
     titleStyle: React.PropTypes.object,
     width: React.PropTypes.any,
-    overflowInBody: React.PropTypes.bool,
   },
 
   contextTypes: {
@@ -180,9 +180,9 @@ const DialogInline = React.createClass({
     const spacing = rawTheme.spacing;
     const gutter = spacing.desktopGutter;
 
-    var doc = document.documentElement;
-    var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
-    var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+    const doc = document.documentElement;
+    const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+    const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 
     return {
       root: {
@@ -557,6 +557,11 @@ const Dialog = React.createClass({
     open: React.PropTypes.bool.isRequired,
 
     /**
+     * When the content of the dialog overflow, the body is scrollable.
+     */
+    overflowInBody: React.PropTypes.bool,
+
+    /**
      * The `className` to add to the `Overlay` component that is rendered behind the `Dialog`.
      */
     overlayClassName: React.PropTypes.string,
@@ -597,10 +602,6 @@ const Dialog = React.createClass({
     width: deprecated(React.PropTypes.any,
       'Use the contentStyle.'),
 
-    /**
-     * When the content of the dialog overflow, the body is scrollable.
-     */
-    overflowInBody: React.PropTypes.bool,
   },
 
   getDefaultProps() {
@@ -609,6 +610,7 @@ const Dialog = React.createClass({
       autoScrollBodyContent: false,
       modal: false,
       repositionOnUpdate: true,
+      overflowInBody: false,
     };
   },
 

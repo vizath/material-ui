@@ -12,6 +12,8 @@ import DialogExampleCustomWidth from './ExampleCustomWidth';
 import dialogExampleCustomWidthCode from '!raw!./ExampleCustomWidth';
 import DialogExampleDialogDatePicker from './ExampleDialogDatePicker';
 import dialogExampleDialogDatePickerCode from '!raw!./ExampleDialogDatePicker';
+import DialogExampleHugeContent from './ExampleHugeContent';
+import dialogExampleDialogHudeContentCode from '!raw!./ExampleHugeContent';
 import dialogCode from '!raw!material-ui/lib/dialog';
 
 const descriptions = {
@@ -21,6 +23,7 @@ const descriptions = {
   modal: 'A modal dialog can only be closed by selecting one of the actions.',
   styled: 'The dialog width has been set to occupy the full width of browser through the `contentStyle` property.',
   nested: 'Dialogs can be nested. This example opens a Date Picker from within a Dialog.',
+  hugeContent: 'Dialogs can have a massive content which will create an overflow on the body.',
 };
 
 const DialogPage = () => (
@@ -53,6 +56,13 @@ const DialogPage = () => (
       code={dialogExampleDialogDatePickerCode}
     >
       <DialogExampleDialogDatePicker />
+    </CodeExample>
+    <CodeExample
+      title="Huge Content"
+      description={descriptions.hugeContent}
+      code={dialogExampleDialogHudeContentCode}
+    >
+      <DialogExampleHugeContent />
     </CodeExample>
     <PropTypeDescription code={dialogCode} />
   </div>
