@@ -123,6 +123,7 @@ const DialogInline = React.createClass({
     titleClassName: React.PropTypes.string,
     titleStyle: React.PropTypes.object,
     width: React.PropTypes.any,
+    overflowInBody: React.PropTypes.bool,
   },
 
   contextTypes: {
@@ -171,6 +172,7 @@ const DialogInline = React.createClass({
       autoScrollBodyContent,
       open,
       width,
+      overflowInBody,
     } = this.props;
 
     const muiTheme = this.state.muiTheme;
@@ -178,14 +180,19 @@ const DialogInline = React.createClass({
     const spacing = rawTheme.spacing;
     const gutter = spacing.desktopGutter;
 
+    var doc = document.documentElement;
+    var left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+    var top = (window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0);
+
     return {
       root: {
-        position: 'fixed',
+        position: overflowInBody ? 'absolute' : 'fixed',
+        overflow: overflowInBody ? 'auto' : 'inherit',
         boxSizing: 'border-box',
         WebkitTapHighlightColor: 'rgba(0,0,0,0)',
         zIndex: muiTheme.zIndex.dialog,
-        top: 0,
-        left: open ? 0 : -10000,
+        top: overflowInBody ? top : 0,
+        left: open ? (overflowInBody ? left : 0) : -10000,
         width: '100%',
         height: '100%',
         transition: open
@@ -589,6 +596,11 @@ const Dialog = React.createClass({
      */
     width: deprecated(React.PropTypes.any,
       'Use the contentStyle.'),
+
+	  /**
+     * When the content of the dialog overflow, the body is scrollable.
+     */
+    overflowInBody: React.PropTypes.bool,
   },
 
   getDefaultProps() {
