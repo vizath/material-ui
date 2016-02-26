@@ -115,6 +115,7 @@ const DialogInline = React.createClass({
     modal: React.PropTypes.bool,
     onRequestClose: React.PropTypes.func,
     open: React.PropTypes.bool.isRequired,
+    overflowInBody: React.PropTypes.bool,
     overlayClassName: React.PropTypes.string,
     overlayStyle: React.PropTypes.object,
     repositionOnUpdate: React.PropTypes.bool,
@@ -171,6 +172,7 @@ const DialogInline = React.createClass({
       autoScrollBodyContent,
       open,
       width,
+      overflowInBody,
     } = this.props;
 
     const muiTheme = this.state.muiTheme;
@@ -178,14 +180,19 @@ const DialogInline = React.createClass({
     const spacing = rawTheme.spacing;
     const gutter = spacing.desktopGutter;
 
+    const doc = document.documentElement;
+    const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+    const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+
     return {
       root: {
-        position: 'fixed',
+        position: overflowInBody ? 'absolute' : 'fixed',
+        overflow: overflowInBody ? 'auto' : 'inherit',
         boxSizing: 'border-box',
         WebkitTapHighlightColor: 'rgba(0,0,0,0)',
         zIndex: muiTheme.zIndex.dialog,
-        top: 0,
-        left: open ? 0 : -10000,
+        top: overflowInBody ? top : 0,
+        left: open ? (overflowInBody ? left : 0) : -10000,
         width: '100%',
         height: '100%',
         transition: open
@@ -550,6 +557,11 @@ const Dialog = React.createClass({
     open: React.PropTypes.bool.isRequired,
 
     /**
+     * When the content of the dialog overflow, the body is scrollable.
+     */
+    overflowInBody: React.PropTypes.bool,
+
+    /**
      * The `className` to add to the `Overlay` component that is rendered behind the `Dialog`.
      */
     overlayClassName: React.PropTypes.string,
@@ -589,6 +601,7 @@ const Dialog = React.createClass({
      */
     width: deprecated(React.PropTypes.any,
       'Use the contentStyle.'),
+
   },
 
   getDefaultProps() {
@@ -597,6 +610,7 @@ const Dialog = React.createClass({
       autoScrollBodyContent: false,
       modal: false,
       repositionOnUpdate: true,
+      overflowInBody: false,
     };
   },
 
