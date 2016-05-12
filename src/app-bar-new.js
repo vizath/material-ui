@@ -1,5 +1,4 @@
 import React from 'react';
-import StylePropable from './utils/stylePropable';
 import Paper from 'material-ui/Paper';
 
 const AppBar = React.createClass({
@@ -24,8 +23,6 @@ const AppBar = React.createClass({
     muiTheme: React.PropTypes.object.isRequired,
   },
 
-  mixins: [StylePropable],
-
   getDefaultProps() {
     return {
       title: '',
@@ -42,7 +39,7 @@ const AppBar = React.createClass({
       root: {
         zIndex: 5,
         width: '100%',
-        display: '-webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex',
+        display: 'flex',
         minHeight: themeVariables.height,
         backgroundColor: themeVariables.color,
         paddingLeft: spacing.desktopGutter,
@@ -79,7 +76,6 @@ const AppBar = React.createClass({
       iconButton: {
         style: {
           marginTop: (themeVariables.height - iconButtonSize) / 2,
-          marginRight: 8,
           marginLeft: -16,
         },
         iconStyle: {
@@ -130,13 +126,14 @@ const AppBar = React.createClass({
     let rightIcons = [];
     let rightIconElements;
 
+    const {prepareStyles} = this.context.muiTheme;
     let styles = this.getStyles();
-    let iconRightContainerStyle = this.prepareStyles(styles.iconButton.style, styles.rightContainer, iconStyleRight);
+    let iconRightContainerStyle = prepareStyles(styles.iconButton.style, styles.rightContainer, iconStyleRight);
 
     if (navIcon) {
-      if (navIcon.type.displayName === 'IconButton') {
+      if (navIcon.type.muiName === 'IconButton') {
         navIcon = React.cloneElement(navIcon, {
-          iconStyle: this.mergeStyles(styles.iconButton.iconStyle, navIcon.props.iconStyle),
+          iconStyle: Object.assign({}, styles.iconButton.iconStyle, navIcon.props.iconStyle),
         });
       }
 
@@ -152,27 +149,27 @@ const AppBar = React.createClass({
       // If the title is a string, wrap in an h1 tag.
       // If not, just use it as a node.
       if (typeof title === 'string' || title instanceof String) {
-        title = <h1 style={this.prepareStyles(styles.title, titleStyle)}>{title}</h1>;
+        title = <h1 style={prepareStyles(styles.title, titleStyle)}>{title}</h1>;
       }
     }
 
     // Filter Icon
     if (filterIcon) {
-      if (filterIcon.type.displayName === 'IconButton' || filterIcon.type.displayName === 'IconMenu') {
+      if (filterIcon.type.muiName === 'IconButton' || filterIcon.type.muiName === 'IconMenu') {
         filterIcon = React.cloneElement(filterIcon, {
-          iconStyle: this.mergeStyles(styles.iconButton.iconStyle, filterIcon.props.iconStyle),
+          iconStyle: Object.assign({}, styles.iconButton.iconStyle, filterIcon.props.iconStyle),
         });
       }
     }
     filterIconElement = (
-      <div style={this.prepareStyles(styles.filterIcon)}>
+      <div style={prepareStyles(styles.filterIcon)}>
         {filterIcon}
       </div>
     );
 
     // Builded title (text and filter icon)
     titleElement = (
-      <div style={this.prepareStyles(styles.mainElement)}>
+      <div style={prepareStyles(styles.mainElement)}>
         {title}
       </div>
     );
@@ -180,13 +177,13 @@ const AppBar = React.createClass({
     // Action Icons
     if (actionIcons) {
       actionIcons = actionIcons.map(function(icon) {
-        if (icon.type.displayName === 'IconButton') {
+        if (icon.type.muiName === 'IconButton') {
           icon = React.cloneElement(icon, {
-            iconStyle: this.mergeStyles(styles.iconButton.iconStyle, icon.props.iconStyle),
+            iconStyle: Object.assign({}, styles.iconButton.iconStyle, icon.props.iconStyle),
           });
-        } else if (icon.type.displayName === 'FlatButton') {
+        } else if (icon.type.muiName === 'FlatButton') {
           icon = React.cloneElement(icon, {
-            style: this.mergeStyles(styles.flatButton, icon.props.style),
+            style: Object.assign({}, styles.flatButton, icon.props.style),
           });
         }
         return icon;
@@ -197,9 +194,9 @@ const AppBar = React.createClass({
 
     // More Icon
     if (moreIcon) {
-      if (moreIcon.type.displayName === 'IconButton' || moreIcon.type.displayName === 'IconMenu') {
+      if (moreIcon.type.muiName === 'IconButton' || moreIcon.type.muiName === 'IconMenu') {
         moreIcon = React.cloneElement(moreIcon, {
-          iconStyle: this.mergeStyles(styles.iconButton.iconStyle, moreIcon.props.iconStyle),
+          iconStyle: Object.assign({}, styles.iconButton.iconStyle, moreIcon.props.iconStyle),
         });
       }
 
@@ -220,7 +217,7 @@ const AppBar = React.createClass({
         {...other}
         rounded={false}
         className={className}
-        style={this.mergeStyles(styles.root, style)}
+        style={Object.assign({}, styles.root, style)}
         zDepth={zDepth}
       >
           {navIconElement}
