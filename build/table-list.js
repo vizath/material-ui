@@ -14,7 +14,7 @@ var _transitions = require('./styles/transitions');
 
 var _transitions2 = _interopRequireDefault(_transitions);
 
-var _Divider = require('material-ui/Divider');
+var _Divider = require('./Divider/');
 
 var _Divider2 = _interopRequireDefault(_Divider);
 
@@ -24,7 +24,7 @@ var _EnhancedButton2 = _interopRequireDefault(_EnhancedButton);
 
 var _colorManipulator = require('./utils/colorManipulator');
 
-var _colors = require('material-ui/styles/colors');
+var _colors = require('./styles/colors');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

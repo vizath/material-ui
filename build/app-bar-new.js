@@ -10,7 +10,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Paper = require('material-ui/Paper');
+var _Paper = require('./Paper');
 
 var _Paper2 = _interopRequireDefault(_Paper);
 
