@@ -16,6 +16,18 @@ npm start
 ```
 Server is located at http://localhost:3000
 
+Note: To allow external viewing of the demo, change the following value in `webpack-dev-server.config.js`
+
+```
+host: 'localhost'  //Change to '0.0.0.0' for external facing server
+```
+
+You can also lint your code with:
+
+```sh
+npm run lint
+```
+
 ## Description of [Webpack](http://webpack.github.io/docs/)
 
 Webpack is a module bundler that we are using to run our documentation site. This is a quick overview of how the configuration file works.
