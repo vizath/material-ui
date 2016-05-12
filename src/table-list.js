@@ -1,10 +1,12 @@
 import React from 'react';
-import StylePropable from './utils/stylePropable';
 import Transitions from './styles/transitions';
-import Colors from './styles/colors';
 import Divider from 'material-ui/Divider';
 import EnhancedButton from './internal/EnhancedButton';
 import {fade} from './utils/colorManipulator';
+
+import {
+darkBlack,
+} from 'material-ui/styles/colors';
 
 const TableItem = React.createClass({
   propTypes: {
@@ -22,8 +24,6 @@ const TableItem = React.createClass({
   contextTypes: {
     muiTheme: React.PropTypes.object.isRequired,
   },
-
-  mixins: [StylePropable],
 
   getDefaultProps() {
     return {
@@ -76,6 +76,7 @@ const TableItem = React.createClass({
       innerDivStyle,
       ...other,
     } = this.props;
+    const {prepareStyles} = this.context.muiTheme;
 
     const textColor = this.context.muiTheme.rawTheme.palette.textColor;
     const hoverColor = fade(textColor, 0.1);
@@ -108,9 +109,9 @@ const TableItem = React.createClass({
         onTouchStart={this._handleTouchStart}
         onTouchTap={onTouchTap}
         ref="enhancedButton"
-        style={this.mergeStyles(styles.root, style)}
+        style={Object.assign({}, styles.root, style)}
       >
-        <div style={this.prepareStyles(styles.innerDiv, innerDivStyle)}>
+        <div style={prepareStyles(styles.innerDiv, innerDivStyle)}>
           {children}
         </div>
       </EnhancedButton>
@@ -133,15 +134,14 @@ const TableCell = React.createClass({
     muiTheme: React.PropTypes.object.isRequired,
   },
 
-  mixins: [StylePropable],
-
   render() {
-    const mergedStyles = this.mergeStyles({
+    const {prepareStyles} = this.context.muiTheme;
+    const mergedStyles = Object.assign({}, {
       flex: this.props.width ? null : 1,
     }, this.props.style);
 
     return (
-      <div style={this.prepareStyles(mergedStyles)}>
+      <div style={prepareStyles(mergedStyles)}>
         {this.props.children}
       </div>
     );
@@ -162,8 +162,6 @@ const TableList = React.createClass({
     muiTheme: React.PropTypes.object.isRequired,
   },
 
-  mixins: [StylePropable],
-
   getDefaultProps() {
     return {
       data: [],
@@ -172,11 +170,15 @@ const TableList = React.createClass({
   },
 
   _onHeaderClick(header) {
-    this.props.onHeaderClick(header);
+    if (this.props.onHeaderClick) {
+      this.props.onHeaderClick(header);
+    }
   },
 
   _onItemClick(item) {
-    this.props.onItemClick(item);
+    if (this.props.onItemClick) {
+      this.props.onItemClick(item);
+    }
   },
 
   render() {
@@ -186,6 +188,7 @@ const TableList = React.createClass({
       style,
       ...other,
     } = this.props;
+    const {prepareStyles} = this.context.muiTheme;
 
     const styles = {
       root: {
@@ -195,7 +198,7 @@ const TableList = React.createClass({
       },
     };
     const rowStyle = {
-      display: '-webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex',
+      display: 'flex',
       justifyContent: 'space-around',
       flexFlow: 'row nowrap',
       alignItems: 'center',
@@ -222,7 +225,7 @@ const TableList = React.createClass({
     }.bind(this));
 
     // props or theme ?
-    const grey = fade(Colors.darkBlack, 0.4);
+    const grey = fade(darkBlack, 0.4);
 
     const rowHeaders = headers.map(function(header, i) {
       const hover = header.text ?
@@ -241,7 +244,7 @@ const TableList = React.createClass({
     }.bind(this));
 
     return (
-      <div {...other} style={this.prepareStyles(styles.root, style)}>
+      <div {...other} style={prepareStyles(styles.root, style)}>
         <div style={{paddingLeft: 16, paddingRight: 16}}>
           <div style={rowStyle}>
             {rowHeaders}

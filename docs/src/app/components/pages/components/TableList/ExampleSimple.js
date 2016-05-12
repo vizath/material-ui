@@ -2,13 +2,16 @@ import React from 'react';
 
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
-import Styles from 'material-ui/styles';
 import TableList from 'material-ui/table-list';
 import {fade} from 'material-ui/utils/colorManipulator';
 
 import IconMenu from 'material-ui/IconMenu';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem';
+
+import {
+darkBlack,
+} from 'material-ui/styles/colors';
 
 const propContainerStyle = {
   width: 200,
@@ -92,7 +95,7 @@ export default class TableExampleSimple extends React.Component {
       },
     ];
 
-    const grey = fade(Styles.Colors.darkBlack, 0.4);
+    const grey = fade(darkBlack, 0.4);
 
     // Add paddingTop and paddingBottom to center for IE
     const headers = [
@@ -108,8 +111,8 @@ export default class TableExampleSimple extends React.Component {
         <TableList
           data={data}
           headers={headers}
-          onHeaderClick={this._onHeaderClick}
-          onItemClick={this._onItemClick}
+          onHeaderClick={(header) => console.log('onHeaderClick', header)}
+          onItemClick={(item) => console.log('onItemClick', item)}
         />
       </div>
     );
