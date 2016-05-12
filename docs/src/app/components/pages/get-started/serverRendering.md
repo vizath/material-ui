@@ -19,15 +19,15 @@ We rely on the [muiTheme](/#/customization/themes) context to spread the user ag
 For instance, you can provide it like this:
 
 ```js
-import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
-import themeDecorator from 'material-ui/lib/styles/theme-decorator';
-import colors from 'material-ui/lib/styles/colors';
+import getMuiTheme from 'material-ui/getMuiTheme';
+import MuiThemeProvider from 'material-ui/MuiThemeProvider';
+import {green100, green500, green700} from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme({
   palette: {
-    primary1Color: colors.green500,
-    primary2Color: colors.green700,
-    primary3Color: colors.green100,
+    primary1Color: green500,
+    primary2Color: green700,
+    primary3Color: green100,
   },
 }, {
   avatar: {
@@ -39,12 +39,14 @@ const muiTheme = getMuiTheme({
 class Main extends React.Component {
   render() {
     return (
-      <div>Hello world</div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>Hello world</div>
+      </MuiThemeProvider>
     );
   }
 }
 
-export default themeDecorator(muiTheme)(Main)
+export default Main;
 ```
 
 ### process.env.NODE_ENV
