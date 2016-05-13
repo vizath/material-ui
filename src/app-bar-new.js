@@ -1,5 +1,5 @@
 import React from 'react';
-import Paper from 'material-ui/Paper';
+import Paper from './Paper';
 
 const AppBar = React.createClass({
 
