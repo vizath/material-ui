@@ -14,7 +14,7 @@ var _transitions = require('./styles/transitions');
 
 var _transitions2 = _interopRequireDefault(_transitions);
 
-var _Divider = require('./Divider/');
+var _Divider = require('./Divider');
 
 var _Divider2 = _interopRequireDefault(_Divider);
 
