@@ -1,6 +1,6 @@
 import React from 'react';
 import Transitions from './styles/transitions';
-import Divider from './Divider/';
+import Divider from './Divider';
 import EnhancedButton from './internal/EnhancedButton';
 import {fade} from './utils/colorManipulator';
 
