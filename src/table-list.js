@@ -1,12 +1,12 @@
 import React from 'react';
 import Transitions from './styles/transitions';
-import Divider from 'material-ui/Divider';
+import Divider from './Divider';
 import EnhancedButton from './internal/EnhancedButton';
 import {fade} from './utils/colorManipulator';
 
 import {
 darkBlack,
-} from 'material-ui/styles/colors';
+} from './styles/colors';
 
 const TableItem = React.createClass({
   propTypes: {
