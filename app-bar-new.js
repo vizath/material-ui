@@ -145,7 +145,7 @@ var AppBar = _react2.default.createClass({
     var prepareStyles = this.context.muiTheme.prepareStyles;
 
     var styles = this.getStyles();
-    var iconRightContainerStyle = prepareStyles(styles.iconButton.style, styles.rightContainer, iconStyleRight);
+    var iconRightContainerStyle = prepareStyles((0, _simpleAssign2.default)({}, styles.iconButton.style, styles.rightContainer, iconStyleRight));
 
     if (navIcon) {
       if (navIcon.type.muiName === 'IconButton') {
@@ -168,7 +168,7 @@ var AppBar = _react2.default.createClass({
       if (typeof title === 'string' || title instanceof String) {
         title = _react2.default.createElement(
           'h1',
-          { style: prepareStyles(styles.title, titleStyle) },
+          { style: prepareStyles((0, _simpleAssign2.default)({}, styles.title, titleStyle)) },
           title
         );
       }

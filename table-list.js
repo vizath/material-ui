@@ -132,7 +132,7 @@ var TableItem = _react2.default.createClass({
       }),
       _react2.default.createElement(
         'div',
-        { style: prepareStyles(styles.innerDiv, innerDivStyle) },
+        { style: prepareStyles((0, _simpleAssign2.default)({}, styles.innerDiv, innerDivStyle)) },
         children
       )
     );
@@ -269,7 +269,7 @@ var TableList = _react2.default.createClass({
 
     return _react2.default.createElement(
       'div',
-      _extends({}, other, { style: prepareStyles(styles.root, style) }),
+      _extends({}, other, { style: prepareStyles((0, _simpleAssign2.default)({}, styles.root, style)) }),
       _react2.default.createElement(
         'div',
         { style: { paddingLeft: 16, paddingRight: 16 } },
