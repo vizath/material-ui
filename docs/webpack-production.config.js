@@ -7,7 +7,8 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const config = {
   // Entry point to the project
   entry: [
-    path.join(__dirname, '/src/app/app.js'),
+    './node_modules/babel-polyfill/lib/index.js',
+    path.resolve(__dirname, 'src/app/app.js'),
   ],
   // Webpack config options on how to obtain modules
   resolve: {
@@ -56,9 +57,6 @@ const config = {
       {from: 'www/images', to: 'images'},
     ], path.resolve(__dirname, 'src')),
   ],
-  externals: {
-    fs: 'fs', // To remove once https://github.com/benjamn/recast/pull/238 is released
-  },
   module: {
     // Allow loading of non-es5 js files.
     loaders: [
