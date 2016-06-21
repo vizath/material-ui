@@ -31,11 +31,11 @@ const AppBar = React.createClass({
   },
 
   getStyles() {
-    let spacing = this.context.muiTheme.rawTheme.spacing;
-    let themeVariables = this.context.muiTheme.appBar;
-    let iconButtonSize = this.context.muiTheme.button.iconButtonSize;
-    let flatButtonSize = 36;
-    let styles = {
+    const spacing = this.context.muiTheme.rawTheme.spacing;
+    const themeVariables = this.context.muiTheme.appBar;
+    const iconButtonSize = this.context.muiTheme.button.iconButtonSize;
+    const flatButtonSize = 36;
+    const styles = {
       root: {
         zIndex: 5,
         width: '100%',
@@ -128,7 +128,7 @@ const AppBar = React.createClass({
 
     const {prepareStyles} = this.context.muiTheme;
     let styles = this.getStyles();
-    let iconRightContainerStyle = prepareStyles(styles.iconButton.style, styles.rightContainer, iconStyleRight);
+    let iconRightContainerStyle = prepareStyles(Object.assign({}, styles.iconButton.style, styles.rightContainer, iconStyleRight));
 
     if (navIcon) {
       if (navIcon.type.muiName === 'IconButton') {
@@ -149,7 +149,7 @@ const AppBar = React.createClass({
       // If the title is a string, wrap in an h1 tag.
       // If not, just use it as a node.
       if (typeof title === 'string' || title instanceof String) {
-        title = <h1 style={prepareStyles(styles.title, titleStyle)}>{title}</h1>;
+        title = <h1 style={prepareStyles(Object.assign({}, styles.title, titleStyle))}>{title}</h1>;
       }
     }
 
