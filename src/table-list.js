@@ -111,7 +111,7 @@ const TableItem = React.createClass({
         ref="enhancedButton"
         style={Object.assign({}, styles.root, style)}
       >
-        <div style={prepareStyles(styles.innerDiv, innerDivStyle)}>
+        <div style={prepareStyles(Object.assign({}, styles.innerDiv, innerDivStyle))}>
           {children}
         </div>
       </EnhancedButton>
@@ -244,7 +244,7 @@ const TableList = React.createClass({
     }.bind(this));
 
     return (
-      <div {...other} style={prepareStyles(styles.root, style)}>
+      <div {...other} style={prepareStyles(Object.assign({}, styles.root, style))}>
         <div style={{paddingLeft: 16, paddingRight: 16}}>
           <div style={rowStyle}>
             {rowHeaders}
