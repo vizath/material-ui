@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import TextField from '../TextField';
 import DropDownMenu from '../DropDownMenu';
+import deprecated from '../utils/deprecatedPropType';
 
 function getStyles(props) {
   return {
@@ -15,6 +16,9 @@ function getStyles(props) {
     hideDropDownUnderline: {
       borderTop: 'none',
     },
+    dropDownMenu: {
+      display: 'block',
+    },
   };
 }
 
@@ -23,22 +27,21 @@ class SelectField extends Component {
     /**
      * If true, the width will automatically be set according to the
      * items inside the menu.
-     * To control this width in css instead, leave this prop to `false`.
+     * To control the width in CSS instead, leave this prop set to `false`.
      */
     autoWidth: PropTypes.bool,
     /**
-     * The `MenuItem` elements to populate the `Menu` with.
-     * If the MenuItems have the prop `label` that value will
-     * be used to render the representation of that
-     * item within the field.
+     * The `MenuItem` elements to populate the select field with.
+     * If the menu items have a `label` prop, that value will
+     * represent the selected menu item in the rendered select field.
      */
     children: PropTypes.node,
     /**
-     * Disables the select field if set to true.
+     * If true, the select field will be disabled.
      */
     disabled: PropTypes.bool,
     /**
-     * The style object to use to override error styles.
+     * Override the inline-styles of the error element.
      */
     errorStyle: PropTypes.object,
     /**
@@ -46,19 +49,23 @@ class SelectField extends Component {
      */
     errorText: PropTypes.node,
     /**
-     * The style object to use to override floating label styles.
+     * If true, the floating label will float even when no value is selected.
+     */
+    floatingLabelFixed: PropTypes.bool,
+    /**
+     * Override the inline-styles of the floating label.
      */
     floatingLabelStyle: PropTypes.object,
     /**
-     * The content to use for the floating label element.
+     * The content of the floating label.
      */
     floatingLabelText: PropTypes.node,
     /**
-     * If true, the field receives the property width 100%.
+     * If true, the select field will take up the full width of its container.
      */
     fullWidth: PropTypes.bool,
     /**
-     * The style object to use to override hint styles.
+     * Override the inline-styles of the hint element.
      */
     hintStyle: PropTypes.object,
     /**
@@ -66,7 +73,7 @@ class SelectField extends Component {
      */
     hintText: PropTypes.node,
     /**
-     * Overrides the styles of the icon element.
+     * Override the inline-styles of the icon element.
      */
     iconStyle: PropTypes.object,
     /**
@@ -74,40 +81,51 @@ class SelectField extends Component {
      */
     id: PropTypes.string,
     /**
-     * Overrides the styles of label when the `SelectField` is inactive.
+     * Override the label style when the select field is inactive.
      */
     labelStyle: PropTypes.object,
     /**
-     * Callback function that is fired when the `SelectField` loses focus.
+     * Override the default max-height of the underlying `DropDownMenu` element.
      */
+    maxHeight: PropTypes.number,
+    /**
+     * Override the inline-styles of the underlying `DropDownMenu` element.
+     */
+    menuStyle: PropTypes.object,
+    /** @ignore */
     onBlur: PropTypes.func,
     /**
-     * Callback function that is fired when the value changes.
+     * Callback function fired when a menu item is selected.
+     *
+     * @param {object} event TouchTap event targeting the menu item
+     * that was selected.
+     * @param {number} key The index of the selected menu item.
+     * @param {any} payload The `value` prop of the selected menu item.
      */
     onChange: PropTypes.func,
-    /**
-     * Callback function that is fired when the `SelectField` gains focus.
-     */
+    /** @ignore */
     onFocus: PropTypes.func,
     /**
-     * The style object to use to override the `DropDownMenu`.
+     * Override the inline-styles of the underlying `DropDownMenu` element.
      */
-    selectFieldRoot: PropTypes.object, // Must be changed!
-
+    selectFieldRoot: deprecated(PropTypes.object,
+      'Instead, use `menuStyle`. It will be removed with v0.16.0.'),
     /**
      * Override the inline-styles of the root element.
      */
     style: PropTypes.object,
     /**
-     * Override the inline-styles of the underline element when disabled.
+     * Override the inline-styles of the underline element when the select
+     * field is disabled.
      */
     underlineDisabledStyle: PropTypes.object,
     /**
-     * Override the inline-styles of the underline element when focused.
+     * Override the inline-styles of the underline element when the select field
+     * is focused.
      */
     underlineFocusStyle: PropTypes.object,
     /**
-     * Overrides the styles of the underline element.
+     * Override the inline-styles of the underline element.
      */
     underlineStyle: PropTypes.object,
     /**
@@ -140,12 +158,15 @@ class SelectField extends Component {
       errorStyle,
       selectFieldRoot,
       disabled,
+      floatingLabelFixed,
       floatingLabelText,
       floatingLabelStyle,
       hintStyle,
       hintText,
       fullWidth,
       errorText,
+      maxHeight,
+      menuStyle,
       onFocus,
       onBlur,
       onChange,
@@ -157,7 +178,10 @@ class SelectField extends Component {
 
     return (
       <TextField
+        {...other}
         style={style}
+        disabled={disabled}
+        floatingLabelFixed={floatingLabelFixed}
         floatingLabelText={floatingLabelText}
         floatingLabelStyle={floatingLabelStyle}
         hintStyle={hintStyle}
@@ -174,14 +198,14 @@ class SelectField extends Component {
       >
         <DropDownMenu
           disabled={disabled}
-          style={selectFieldRoot}
+          style={Object.assign(styles.dropDownMenu, selectFieldRoot, menuStyle)}
           labelStyle={Object.assign(styles.label, labelStyle)}
           iconStyle={Object.assign(styles.icon, iconStyle)}
           underlineStyle={styles.hideDropDownUnderline}
           autoWidth={autoWidth}
           value={value}
           onChange={onChange}
-          {...other}
+          maxHeight={maxHeight}
         >
           {children}
         </DropDownMenu>

@@ -1,8 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const buildPath = path.resolve(__dirname, 'build');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TransferWebpackPlugin = require('transfer-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
   // Entry point to the project
@@ -23,6 +22,8 @@ const config = {
   // Configuration for server
   devServer: {
     contentBase: 'build',
+    // Required for webpack-dev-server
+    outputPath: buildPath,
   },
   // Output file config
   output: {
@@ -45,17 +46,16 @@ const config = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      template: path.join(__dirname, '/src/www/index.html'),
-    }),
-    // Allows error warninggs but does not stop compiling. Will remove when eslint is added
+
+    // Allows error warnings but does not stop compiling. Will remove when eslint is added
     new webpack.NoErrorsPlugin(),
     // Transfer Files
-    new TransferWebpackPlugin([
-      {from: 'www/css', to: 'css'},
-      {from: 'www/images', to: 'images'},
-    ], path.resolve(__dirname, 'src')),
+    new CopyWebpackPlugin([
+      {from: 'src/www/css', to: 'css'},
+      {from: 'src/www/images', to: 'images'},
+      {from: 'src/www/index.html'},
+      {from: 'src/www/versions.json'},
+    ]),
   ],
   module: {
     // Allow loading of non-es5 js files.

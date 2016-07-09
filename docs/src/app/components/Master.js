@@ -78,6 +78,19 @@ class Master extends Component {
         color: lightWhite,
         maxWidth: 356,
       },
+      browserstack: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        margin: '25px 15px 0',
+        padding: 0,
+        color: lightWhite,
+        lineHeight: '25px',
+        fontSize: 12,
+      },
+      browserstackLogo: {
+        margin: '0 3px',
+      },
       iconButton: {
         color: darkWhite,
       },
@@ -163,7 +176,6 @@ class Master extends Component {
             <IconButton
               iconClassName="muidocs-icon-custom-github"
               href="https://github.com/callemall/material-ui"
-              linkButton={true}
             />
           }
           style={styles.appBar}
@@ -205,8 +217,14 @@ class Master extends Component {
             iconStyle={styles.iconButton}
             iconClassName="muidocs-icon-custom-github"
             href="https://github.com/callemall/material-ui"
-            linkButton={true}
           />
+          <p style={prepareStyles(styles.browserstack)}>
+            {'Thank you to '}
+            <a href="https://www.browserstack.com" style={prepareStyles(styles.browserstackLogo)} target="_blank">
+              <img src="http://www.browserstack.com/images/layout/logo.png" height="25" width="auto" />
+            </a>
+            {' for providing real browser testing infrastructure.'}
+          </p>
         </FullWidthSection>
       </div>
     );
