@@ -194,10 +194,10 @@ var Drawer = function (_Component) {
         });
         // Otherwise, if docked is changed, change the open state for when uncontrolled.
       } else if (this.props.docked !== nextProps.docked) {
-          this.setState({
-            open: nextProps.docked
-          });
-        }
+        this.setState({
+          open: nextProps.docked
+        });
+      }
     }
   }, {
     key: 'componentDidUpdate',
@@ -213,7 +213,7 @@ var Drawer = function (_Component) {
     key: 'getStyles',
     value: function getStyles() {
       var muiTheme = this.context.muiTheme;
-      var theme = muiTheme.navDrawer;
+      var theme = muiTheme.drawer;
 
       var x = this.getTranslateMultiplier() * (this.state.open ? 0 : this.getMaxTranslateX());
 
@@ -222,7 +222,7 @@ var Drawer = function (_Component) {
           height: '100%',
           width: this.props.width || theme.width,
           position: 'fixed',
-          zIndex: muiTheme.zIndex.navDrawer,
+          zIndex: muiTheme.zIndex.drawer,
           left: 0,
           top: 0,
           transform: 'translate3d(' + x + 'px, 0, 0)',
@@ -230,11 +230,9 @@ var Drawer = function (_Component) {
           backgroundColor: theme.color,
           overflow: 'auto',
           WebkitOverflowScrolling: 'touch' },
-        // iOS momentum scrolling
         overlay: {
           zIndex: muiTheme.zIndex.drawerOverlay,
           pointerEvents: this.state.open ? 'auto' : 'none' },
-        // Bypass mouse events when left nav is closing.
         rootWhenOpenRight: {
           left: 'auto',
           right: 0
@@ -265,7 +263,7 @@ var Drawer = function (_Component) {
   }, {
     key: 'getMaxTranslateX',
     value: function getMaxTranslateX() {
-      var width = this.props.width || this.context.muiTheme.navDrawer.width;
+      var width = this.props.width || this.context.muiTheme.drawer.width;
       return width + 10;
     }
   }, {
@@ -342,7 +340,7 @@ var Drawer = function (_Component) {
           className: className,
           style: style
         },
-        _react2.default.createElement(_reactEventListener2.default, { elementName: 'window', onKeyUp: this.handleKeyUp }),
+        _react2.default.createElement(_reactEventListener2.default, { target: 'window', onKeyUp: this.handleKeyUp }),
         overlay,
         _react2.default.createElement(
           _Paper2.default,

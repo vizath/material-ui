@@ -20,10 +20,6 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactAddonsUpdate = require('react-addons-update');
-
-var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
-
 var _shallowEqual = require('recompose/shallowEqual');
 
 var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
@@ -60,9 +56,13 @@ var _warning = require('warning');
 
 var _warning2 = _interopRequireDefault(_warning);
 
+var _menuUtils = require('./menuUtils');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -141,14 +141,20 @@ var Menu = function (_Component) {
       isKeyboardFocused: props.initiallyKeyboardFocused,
       keyWidth: props.desktop ? 64 : 56
     };
+
+    _this.hotKeyHolder = new _menuUtils.HotKeyHolder();
     return _this;
   }
 
   _createClass(Menu, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      if (this.props.autoWidth) this.setWidth();
-      if (!this.props.animated) this.animateOpen();
+      if (this.props.autoWidth) {
+        this.setWidth();
+      }
+      if (!this.props.animated) {
+        this.animateOpen();
+      }
       this.setScollPosition();
     }
   }, {
@@ -164,8 +170,8 @@ var Menu = function (_Component) {
     }
   }, {
     key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return !(0, _shallowEqual2.default)(this.props, nextProps) || !(0, _shallowEqual2.default)(this.state, nextState);
+    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+      return !(0, _shallowEqual2.default)(this.props, nextProps) || !(0, _shallowEqual2.default)(this.state, nextState) || !(0, _shallowEqual2.default)(this.context, nextContext);
     }
   }, {
     key: 'componentDidUpdate',
@@ -317,6 +323,26 @@ var Menu = function (_Component) {
       return selectedIndex;
     }
   }, {
+    key: 'setFocusIndexStartsWith',
+    value: function setFocusIndexStartsWith(keys) {
+      var foundIndex = -1;
+      _react2.default.Children.forEach(this.props.children, function (child, index) {
+        if (foundIndex >= 0) {
+          return;
+        }
+        var primaryText = child.props.primaryText;
+
+        if (typeof primaryText === 'string' && new RegExp('^' + keys, 'i').test(primaryText)) {
+          foundIndex = index;
+        }
+      });
+      if (foundIndex >= 0) {
+        this.setFocusIndex(foundIndex, true);
+        return true;
+      }
+      return false;
+    }
+  }, {
     key: 'handleMenuItemTouchTap',
     value: function handleMenuItemTouchTap(event, item, index) {
       var children = this.props.children;
@@ -330,7 +356,16 @@ var Menu = function (_Component) {
 
       if (multiple) {
         var itemIndex = menuValue.indexOf(itemValue);
-        var newMenuValue = itemIndex === -1 ? (0, _reactAddonsUpdate2.default)(menuValue, { $push: [itemValue] }) : (0, _reactAddonsUpdate2.default)(menuValue, { $splice: [[itemIndex, 1]] });
+
+        var _menuValue = _toArray(menuValue);
+
+        var newMenuValue = _menuValue;
+
+        if (itemIndex === -1) {
+          newMenuValue.push(itemValue);
+        } else {
+          newMenuValue.splice(itemIndex, 1);
+        }
 
         valueLink.requestChange(event, newMenuValue);
       } else if (!multiple && itemValue !== menuValue) {
@@ -414,32 +449,27 @@ var Menu = function (_Component) {
       var _props3 = this.props;
       var animated = _props3.animated;
       var autoWidth = _props3.autoWidth;
-      var // eslint-disable-line no-unused-vars
-      children = _props3.children;
+      var children = _props3.children;
       var desktop = _props3.desktop;
+      var disableAutoFocus = _props3.disableAutoFocus;
       var initiallyKeyboardFocused = _props3.initiallyKeyboardFocused;
-      var // eslint-disable-line no-unused-vars
-      listStyle = _props3.listStyle;
+      var listStyle = _props3.listStyle;
       var maxHeight = _props3.maxHeight;
-      var // eslint-disable-line no-unused-vars
-      multiple = _props3.multiple;
+      var multiple = _props3.multiple;
       var _props3$openDirection = _props3.openDirection;
-      var // eslint-disable-line no-unused-vars
-      openDirection = _props3$openDirection === undefined ? 'bottom-left' : _props3$openDirection;
+      var openDirection = _props3$openDirection === undefined ? 'bottom-left' : _props3$openDirection;
+      var onItemTouchTap = _props3.onItemTouchTap;
+      var onEscKeyDown = _props3.onEscKeyDown;
       var selectedMenuItemStyle = _props3.selectedMenuItemStyle;
-      var // eslint-disable-line no-unused-vars
-      style = _props3.style;
+      var style = _props3.style;
       var value = _props3.value;
-      var // eslint-disable-line no-unused-vars
-      valueLink = _props3.valueLink;
-      var // eslint-disable-line no-unused-vars
-      width = _props3.width;
-      var // eslint-disable-line no-unused-vars
-      zDepth = _props3.zDepth;
+      var valueLink = _props3.valueLink;
+      var width = _props3.width;
+      var zDepth = _props3.zDepth;
 
-      var other = _objectWithoutProperties(_props3, ['animated', 'autoWidth', 'children', 'desktop', 'initiallyKeyboardFocused', 'listStyle', 'maxHeight', 'multiple', 'openDirection', 'selectedMenuItemStyle', 'style', 'value', 'valueLink', 'width', 'zDepth']);
+      var other = _objectWithoutProperties(_props3, ['animated', 'autoWidth', 'children', 'desktop', 'disableAutoFocus', 'initiallyKeyboardFocused', 'listStyle', 'maxHeight', 'multiple', 'openDirection', 'onItemTouchTap', 'onEscKeyDown', 'selectedMenuItemStyle', 'style', 'value', 'valueLink', 'width', 'zDepth']);
 
-      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(typeof zDepth === 'undefined', 'Menu no longer supports `zDepth`. Instead, wrap it in `Paper` ' + 'or another component that provides `zDepth`.') : void 0;
+      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(typeof zDepth === 'undefined', 'Menu no longer supports `zDepth`. Instead, wrap it in `Paper` ' + 'or another component that provides `zDepth`. It will be removed with v0.16.0.') : void 0;
 
       var focusIndex = this.state.focusIndex;
       var prepareStyles = this.context.muiTheme.prepareStyles;
@@ -520,7 +550,7 @@ Menu.propTypes = {
    * is added to the DOM. In order for transitions to
    * work, wrap the menu inside a `ReactTransitionGroup`.
    */
-  animated: (0, _deprecatedPropType2.default)(_react.PropTypes.bool, 'Instead, use a [Popover](/#/components/popover).'),
+  animated: (0, _deprecatedPropType2.default)(_react.PropTypes.bool, 'Instead, use a [Popover](/#/components/popover).\n      It will be removed with v0.16.0.'),
   /**
    * If true, the width of the menu will be set automatically
    * according to the widths of its children,
@@ -586,17 +616,12 @@ Menu.propTypes = {
    * @param {number} index The index of the menu item.
    */
   onItemTouchTap: _react.PropTypes.func,
-  /**
-   * Callback function fired when the menu is focused and a key
-   * is pressed.
-   *
-   * @param {object} event `keydown` event targeting the menu.
-   */
+  /** @ignore */
   onKeyDown: _react.PropTypes.func,
   /**
    * This is the placement of the menu relative to the `IconButton`.
    */
-  openDirection: (0, _deprecatedPropType2.default)(_propTypes2.default.corners, 'Instead, use a [Popover](/#/components/popover).'),
+  openDirection: (0, _deprecatedPropType2.default)(_propTypes2.default.corners, 'Instead, use a [Popover](/#/components/popover).\n      It will be removed with v0.16.0.'),
   /**
    * Override the inline-styles of selected menu items.
    */
@@ -658,7 +683,8 @@ var _initialiseProps = function _initialiseProps() {
 
   this.handleKeyDown = function (event) {
     var filteredChildren = _this5.getFilteredChildren(_this5.props.children);
-    switch ((0, _keycode2.default)(event)) {
+    var key = (0, _keycode2.default)(event);
+    switch (key) {
       case 'down':
         event.preventDefault();
         _this5.incrementKeyboardFocusIndex(filteredChildren);
@@ -678,6 +704,13 @@ var _initialiseProps = function _initialiseProps() {
         event.preventDefault();
         _this5.decrementKeyboardFocusIndex();
         break;
+      default:
+        if (key.length === 1) {
+          var hotKeys = _this5.hotKeyHolder.append(key);
+          if (_this5.setFocusIndexStartsWith(hotKeys)) {
+            event.preventDefault();
+          }
+        }
     }
     _this5.props.onKeyDown(event);
   };

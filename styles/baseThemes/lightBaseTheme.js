@@ -19,7 +19,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  have all theme variables needed for every component. Variables not defined
  *  in a custom theme will default to these values.
  */
-
 exports.default = {
   spacing: _spacing2.default,
   fontFamily: 'Roboto, sans-serif',
@@ -31,6 +30,7 @@ exports.default = {
     accent2Color: _colors.grey100,
     accent3Color: _colors.grey500,
     textColor: _colors.darkBlack,
+    secondaryTextColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.54),
     alternateTextColor: _colors.white,
     canvasColor: _colors.white,
     borderColor: _colors.grey300,
@@ -39,4 +39,6 @@ exports.default = {
     clockCircleColor: (0, _colorManipulator.fade)(_colors.darkBlack, 0.07),
     shadowColor: _colors.fullBlack
   }
-};
+}; /**
+    * NB: If you update this file, please also update `docs/src/app/customization/Themes.js`
+    */

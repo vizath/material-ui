@@ -63,6 +63,7 @@ function getStyles(props, context) {
   var styles = {
     root: {
       color: props.disabled ? disabledColor : textColor,
+      cursor: props.disabled ? 'not-allowed' : 'inherit',
       lineHeight: props.desktop ? '32px' : '48px',
       fontSize: props.desktop ? 15 : 16,
       whiteSpace: 'nowrap'
@@ -158,8 +159,8 @@ var MenuItem = function (_Component) {
     }
   }, {
     key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(nextProps, nextState) {
-      return !(0, _shallowEqual2.default)(this.props, nextProps) || !(0, _shallowEqual2.default)(this.state, nextState);
+    value: function shouldComponentUpdate(nextProps, nextState, nextContext) {
+      return !(0, _shallowEqual2.default)(this.props, nextProps) || !(0, _shallowEqual2.default)(this.state, nextState) || !(0, _shallowEqual2.default)(this.context, nextContext);
     }
   }, {
     key: 'componentDidUpdate',
@@ -189,8 +190,7 @@ var MenuItem = function (_Component) {
       var desktop = _props.desktop;
       var disabled = _props.disabled;
       var focusState = _props.focusState;
-      var // eslint-disable-line no-unused-vars
-      innerDivStyle = _props.innerDivStyle;
+      var innerDivStyle = _props.innerDivStyle;
       var insetChildren = _props.insetChildren;
       var leftIcon = _props.leftIcon;
       var menuItems = _props.menuItems;
@@ -209,8 +209,8 @@ var MenuItem = function (_Component) {
 
       // Left Icon
       var leftIconElement = leftIcon ? leftIcon : checked ? _react2.default.createElement(_check2.default, null) : null;
-      if (leftIconElement && desktop) {
-        var mergedLeftIconStyles = (0, _simpleAssign2.default)(styles.leftIconDesktop, leftIconElement.props.style);
+      if (leftIconElement) {
+        var mergedLeftIconStyles = desktop ? (0, _simpleAssign2.default)(styles.leftIconDesktop, leftIconElement.props.style) : leftIconElement.props.style;
         leftIconElement = _react2.default.cloneElement(leftIconElement, { style: mergedLeftIconStyles });
       }
 

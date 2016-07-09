@@ -71,13 +71,13 @@ var Tabs = function (_Component) {
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Tabs)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = { selectedIndex: 0 }, _this.handleTabTouchTap = function (value, event, tab) {
       var valueLink = _this.getValueLink(_this.props);
-      var tabIndex = tab.props.tabIndex;
+      var index = tab.props.index;
 
-      if (valueLink.value && valueLink.value !== value || _this.state.selectedIndex !== tabIndex) {
+      if (valueLink.value && valueLink.value !== value || _this.state.selectedIndex !== index) {
         valueLink.requestChange(value, event, tab);
       }
 
-      _this.setState({ selectedIndex: tabIndex });
+      _this.setState({ selectedIndex: index });
 
       if (tab.props.onActive) {
         tab.props.onActive(tab);
@@ -170,8 +170,7 @@ var Tabs = function (_Component) {
       var contentContainerClassName = _props.contentContainerClassName;
       var contentContainerStyle = _props.contentContainerStyle;
       var initialSelectedIndex = _props.initialSelectedIndex;
-      var // eslint-disable-line no-unused-vars
-      inkBarStyle = _props.inkBarStyle;
+      var inkBarStyle = _props.inkBarStyle;
       var style = _props.style;
       var tabItemContainerStyle = _props.tabItemContainerStyle;
       var tabTemplate = _props.tabTemplate;
@@ -198,8 +197,8 @@ var Tabs = function (_Component) {
 
         return _react2.default.cloneElement(tab, {
           key: index,
+          index: index,
           selected: _this2.getSelected(tab, index),
-          tabIndex: index,
           width: width + '%',
           onTouchTap: _this2.handleTabTouchTap
         });
@@ -262,9 +261,9 @@ Tabs.propTypes = {
   contentContainerStyle: _react.PropTypes.object,
   /**
    * Specify initial visible tab index.
-   * Initial selected index is set by default to 0.
-   * If initialSelectedIndex is set but larger than the total amount of specified tabs,
-   * initialSelectedIndex will revert back to default.
+   * If `initialSelectedIndex` is set but larger than the total amount of specified tabs,
+   * `initialSelectedIndex` will revert back to default.
+   * If `initialSlectedIndex` is set to any negative value, no tab will be selected intially.
    */
   initialSelectedIndex: _react.PropTypes.number,
   /**

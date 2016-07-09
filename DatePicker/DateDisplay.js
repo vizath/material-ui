@@ -38,8 +38,8 @@ function getStyles(props, context, state) {
 
   var styles = {
     root: {
-      width: isLandscape ? 125 : 270,
-      height: isLandscape ? 290 : 'auto',
+      width: isLandscape ? 165 : '100%',
+      height: isLandscape ? 330 : 'auto',
       float: isLandscape ? 'left' : 'none',
       fontWeight: 700,
       display: 'inline-block',
@@ -77,7 +77,7 @@ function getStyles(props, context, state) {
       marginBottom: 10
     },
     yearTitle: {
-      cursor: !selectedYear && !props.disableYearSelection ? 'pointer' : 'default'
+      cursor: props.disableYearSelection ? 'not-allowed' : !selectedYear ? 'pointer' : 'default'
     }
   };
 
@@ -99,7 +99,7 @@ var DateDisplay = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(DateDisplay)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      selectedYear: !_this.props.monthDaySelected,
+      selectedYear: false,
       transitionDirection: 'up'
     }, _this.handleTouchTapMonthDay = function () {
       if (_this.props.onTouchTapMonthDay && _this.state.selectedYear) {
@@ -119,6 +119,13 @@ var DateDisplay = function (_Component) {
   }
 
   _createClass(DateDisplay, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      if (!this.props.monthDaySelected) {
+        this.setState({ selectedYear: true });
+      }
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.selectedDate !== this.props.selectedDate) {
@@ -139,11 +146,17 @@ var DateDisplay = function (_Component) {
     value: function render() {
       var _props = this.props;
       var DateTimeFormat = _props.DateTimeFormat;
+      var disableYearSelection = _props.disableYearSelection;
       var locale = _props.locale;
+      var mode = _props.mode;
+      var monthDaySelected = _props.monthDaySelected;
+      var onTouchTapMonthDay = _props.onTouchTapMonthDay;
+      var onTouchTapYear = _props.onTouchTapYear;
       var selectedDate = _props.selectedDate;
       var style = _props.style;
+      var weekCount = _props.weekCount;
 
-      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'locale', 'selectedDate', 'style']);
+      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'disableYearSelection', 'locale', 'mode', 'monthDaySelected', 'onTouchTapMonthDay', 'onTouchTapYear', 'selectedDate', 'style', 'weekCount']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 

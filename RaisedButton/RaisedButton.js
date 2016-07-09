@@ -43,8 +43,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function validateLabel(props, propName, componentName) {
-  if (!props.children && !props.label && !props.icon) {
-    return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
+  if (process.env.NODE_ENV !== 'production') {
+    if (!props.children && props.label !== 0 && !props.label && !props.icon) {
+      return new Error('Required prop label or children or icon was not specified in ' + componentName + '.');
+    }
   }
 }
 
@@ -94,11 +96,11 @@ function getStyles(props, context, state) {
   return {
     root: {
       display: 'inline-block',
-      transition: _transitions2.default.easeOut()
+      transition: _transitions2.default.easeOut(),
+      minWidth: fullWidth ? '100%' : button.minWidth
     },
     button: {
       position: 'relative',
-      minWidth: fullWidth ? '100%' : button.minWidth,
       height: buttonHeight,
       lineHeight: buttonHeight + 'px',
       width: '100%',
@@ -112,7 +114,7 @@ function getStyles(props, context, state) {
     label: {
       position: 'relative',
       opacity: 1,
-      fontSize: '14px',
+      fontSize: raisedButton.fontSize,
       letterSpacing: 0,
       textTransform: raisedButton.textTransform || button.textTransform || 'uppercase',
       fontWeight: raisedButton.fontWeight,
@@ -190,7 +192,9 @@ var RaisedButton = function (_Component) {
       }
     }, _this.handleMouseEnter = function (event) {
       if (!_this.state.keyboardFocused && !_this.state.touched) {
-        _this.setState({ hovered: true });
+        _this.setState({
+          hovered: true
+        });
       }
       if (_this.props.onMouseEnter) {
         _this.props.onMouseEnter(event);
@@ -235,28 +239,35 @@ var RaisedButton = function (_Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       var zDepth = nextProps.disabled ? 0 : 1;
-      this.setState({
+      var nextState = {
         zDepth: zDepth,
         initialZDepth: zDepth
-      });
+      };
+
+      if (nextProps.disabled && this.state.hovered) {
+        nextState.hovered = false;
+      }
+
+      this.setState(nextState);
     }
   }, {
     key: 'render',
     value: function render() {
       var _props = this.props;
+      var backgroundColor = _props.backgroundColor;
       var children = _props.children;
       var className = _props.className;
       var disabled = _props.disabled;
+      var fullWidth = _props.fullWidth;
       var icon = _props.icon;
       var label = _props.label;
       var labelPosition = _props.labelPosition;
       var labelStyle = _props.labelStyle;
       var primary = _props.primary;
-      var // eslint-disable-line no-unused-vars
-      rippleStyle = _props.rippleStyle;
+      var rippleStyle = _props.rippleStyle;
       var secondary = _props.secondary;
 
-      var other = _objectWithoutProperties(_props, ['children', 'className', 'disabled', 'icon', 'label', 'labelPosition', 'labelStyle', 'primary', 'rippleStyle', 'secondary']);
+      var other = _objectWithoutProperties(_props, ['backgroundColor', 'children', 'className', 'disabled', 'fullWidth', 'icon', 'label', 'labelPosition', 'labelStyle', 'primary', 'rippleStyle', 'secondary']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -280,7 +291,7 @@ var RaisedButton = function (_Component) {
       );
 
       var iconCloned = icon && _react2.default.cloneElement(icon, {
-        color: styles.label.color,
+        color: icon.props.color || styles.label.color,
         style: styles.icon
       });
 
@@ -367,8 +378,7 @@ RaisedButton.propTypes = {
    */
   fullWidth: _react.PropTypes.bool,
   /**
-   * If `linkButton` is true, the URL to link to when the button
-   * is clicked.
+   * The URL to link to when the button is clicked.
    */
   href: _react.PropTypes.string,
   /**
@@ -393,47 +403,17 @@ RaisedButton.propTypes = {
    * Override the inline-styles of the button's label element.
    */
   labelStyle: _react.PropTypes.object,
-  /**
-   * If true, enable the use of the `href` property to provide
-   * a URL to link to.
-   */
-  linkButton: _react.PropTypes.bool,
-  /**
-   * Callback function fired when a mouse button is pressed down on
-   * the element.
-   *
-   * @param {object} event `mousedown` event targeting the element.
-   */
+  /** @ignore */
   onMouseDown: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse enters the element.
-   *
-   * @param {object} event `mouseenter` event targeting the element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the element.
-   *
-   * @param {object} event `mouseleave` event targeting the element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
-  /**
-   * Callback function fired when a mouse button is released on the element.
-   *
-   * @param {object} event `mouseup` event targeting the element.
-   */
+  /** @ignore */
   onMouseUp: _react.PropTypes.func,
-  /**
-   * Callback function fired when a touch point is removed from the element.
-   *
-   * @param {object} event `touchend` event targeting the element.
-   */
+  /** @ignore */
   onTouchEnd: _react.PropTypes.func,
-  /**
-   * Callback function fired when the element is touched.
-   *
-   * @param {object} event `touchstart` event targeting the element.
-   */
+  /** @ignore */
   onTouchStart: _react.PropTypes.func,
   /**
    * If true, the button will use the theme's primary color.

@@ -8,13 +8,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _react = require('react');
 
-var _reactDom = require('react-dom');
+var _react2 = _interopRequireDefault(_react);
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _reactDom = require('react-dom');
 
 var _dom = require('../utils/dom');
 
 var _dom2 = _interopRequireDefault(_dom);
+
+var _MuiThemeProvider = require('../styles/MuiThemeProvider');
+
+var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -96,10 +100,18 @@ var RenderToLayer = function (_Component) {
         window.removeEventListener('click', this.onClickAway);
       }
 
-      _reactDom2.default.unmountComponentAtNode(this.layer);
+      (0, _reactDom.unmountComponentAtNode)(this.layer);
       document.body.removeChild(this.layer);
       this.layer = null;
     }
+
+    /**
+     * By calling this method in componentDidMount() and
+     * componentDidUpdate(), you're effectively creating a "wormhole" that
+     * funnels React's hierarchical updates through to a DOM node on an
+     * entirely different part of the page.
+     */
+
   }, {
     key: 'renderLayer',
     value: function renderLayer() {
@@ -132,18 +144,16 @@ var RenderToLayer = function (_Component) {
           }
         }
 
-        // By calling this method in componentDidMount() and
-        // componentDidUpdate(), you're effectively creating a "wormhole" that
-        // funnels React's hierarchical updates through to a DOM node on an
-        // entirely different part of the page.
-
-        var layerElement = render();
-
-        if (layerElement === null) {
-          this.layerElement = _reactDom2.default.unstable_renderSubtreeIntoContainer(this, null, this.layer);
-        } else {
-          this.layerElement = _reactDom2.default.unstable_renderSubtreeIntoContainer(this, layerElement, this.layer);
-        }
+        /**
+         * We use the <MuiThemeProvider /> component as a work around for
+         * https://github.com/facebook/react/issues/6599.
+         */
+        var layerElement = _react2.default.createElement(
+          _MuiThemeProvider2.default,
+          { muiTheme: this.context.muiTheme },
+          render()
+        );
+        this.layerElement = (0, _reactDom.unstable_renderSubtreeIntoContainer)(this, layerElement, this.layer);
       } else {
         this.unrenderLayer();
       }

@@ -133,7 +133,7 @@ var AutoComplete = function (_Component) {
 
       var index = parseInt(child.key, 10);
       var chosenRequest = dataSource[index];
-      var searchText = typeof chosenRequest === 'string' ? chosenRequest : chosenRequest.text;
+      var searchText = _this.chosenRequestText(chosenRequest);
 
       _this.props.onNewRequest(chosenRequest, index);
 
@@ -144,6 +144,12 @@ var AutoComplete = function (_Component) {
         _this.close();
         _this.timerTouchTapCloseId = null;
       }, _this.props.menuCloseDelay);
+    }, _this.chosenRequestText = function (chosenRequest) {
+      if (typeof chosenRequest === 'string') {
+        return chosenRequest;
+      } else {
+        return chosenRequest[_this.props.dataSourceConfig.text];
+      }
     }, _this.handleEscKeyDown = function () {
       _this.close();
     }, _this.handleKeyDown = function (event) {
@@ -251,7 +257,7 @@ var AutoComplete = function (_Component) {
   }, {
     key: 'setValue',
     value: function setValue(textValue) {
-      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'setValue() is deprecated, use the searchText property.') : void 0;
+      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'setValue() is deprecated, use the searchText property.\n      It will be removed with v0.16.0.') : void 0;
 
       this.setState({
         searchText: textValue
@@ -260,7 +266,7 @@ var AutoComplete = function (_Component) {
   }, {
     key: 'getValue',
     value: function getValue() {
-      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'getValue() is deprecated.') : void 0;
+      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'getValue() is deprecated. It will be removed with v0.16.0.') : void 0;
 
       return this.state.searchText;
     }
@@ -282,24 +288,28 @@ var AutoComplete = function (_Component) {
       var _props = this.props;
       var anchorOrigin = _props.anchorOrigin;
       var animated = _props.animated;
-      var style = _props.style;
+      var dataSource = _props.dataSource;
+      var dataSourceConfig = _props.dataSourceConfig;
+      var disableFocusRipple = _props.disableFocusRipple;
       var errorStyle = _props.errorStyle;
       var floatingLabelText = _props.floatingLabelText;
-      var hintText = _props.hintText;
+      var filter = _props.filter;
       var fullWidth = _props.fullWidth;
+      var style = _props.style;
+      var hintText = _props.hintText;
+      var maxSearchResults = _props.maxSearchResults;
+      var menuCloseDelay = _props.menuCloseDelay;
       var menuStyle = _props.menuStyle;
       var menuProps = _props.menuProps;
       var listStyle = _props.listStyle;
       var targetOrigin = _props.targetOrigin;
-      var disableFocusRipple = _props.disableFocusRipple;
       var triggerUpdateOnFocus = _props.triggerUpdateOnFocus;
-      var // eslint-disable-line no-unused-vars
-      openOnFocus = _props.openOnFocus;
-      var // eslint-disable-line no-unused-vars
-      maxSearchResults = _props.maxSearchResults;
-      var dataSource = _props.dataSource;
+      var onNewRequest = _props.onNewRequest;
+      var onUpdateInput = _props.onUpdateInput;
+      var openOnFocus = _props.openOnFocus;
+      var searchTextProp = _props.searchText;
 
-      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'animated', 'style', 'errorStyle', 'floatingLabelText', 'hintText', 'fullWidth', 'menuStyle', 'menuProps', 'listStyle', 'targetOrigin', 'disableFocusRipple', 'triggerUpdateOnFocus', 'openOnFocus', 'maxSearchResults', 'dataSource']);
+      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'animated', 'dataSource', 'dataSourceConfig', 'disableFocusRipple', 'errorStyle', 'floatingLabelText', 'filter', 'fullWidth', 'style', 'hintText', 'maxSearchResults', 'menuCloseDelay', 'menuStyle', 'menuProps', 'listStyle', 'targetOrigin', 'triggerUpdateOnFocus', 'onNewRequest', 'onUpdateInput', 'openOnFocus', 'searchText']);
 
       var _state = this.state;
       var open = _state.open;
@@ -315,7 +325,7 @@ var AutoComplete = function (_Component) {
       dataSource.every(function (item, index) {
         switch (typeof item === 'undefined' ? 'undefined' : _typeof(item)) {
           case 'string':
-            if (_this2.props.filter(searchText, item, item)) {
+            if (filter(searchText, item, item)) {
               requestsList.push({
                 text: item,
                 value: _react2.default.createElement(_MenuItem2.default, {
@@ -330,27 +340,29 @@ var AutoComplete = function (_Component) {
             break;
 
           case 'object':
-            if (item && typeof item.text === 'string') {
-              if (_this2.props.filter(searchText, item.text, item)) {
-                if (item.value.type && (item.value.type.muiName === _MenuItem2.default.muiName || item.value.type.muiName === _Divider2.default.muiName)) {
-                  requestsList.push({
-                    text: item.text,
-                    value: _react2.default.cloneElement(item.value, {
-                      key: index,
-                      disableFocusRipple: _this2.props.disableFocusRipple
-                    })
-                  });
-                } else {
-                  requestsList.push({
-                    text: item.text,
-                    value: _react2.default.createElement(_MenuItem2.default, {
-                      innerDivStyle: styles.innerDiv,
-                      primaryText: item.value,
-                      disableFocusRipple: disableFocusRipple,
-                      key: index
-                    })
-                  });
-                }
+            if (item && typeof item[_this2.props.dataSourceConfig.text] === 'string') {
+              var itemText = item[_this2.props.dataSourceConfig.text];
+              if (!_this2.props.filter(searchText, itemText, item)) break;
+
+              var itemValue = item[_this2.props.dataSourceConfig.value];
+              if (itemValue.type && (itemValue.type.muiName === _MenuItem2.default.muiName || itemValue.type.muiName === _Divider2.default.muiName)) {
+                requestsList.push({
+                  text: itemText,
+                  value: _react2.default.cloneElement(itemValue, {
+                    key: index,
+                    disableFocusRipple: disableFocusRipple
+                  })
+                });
+              } else {
+                requestsList.push({
+                  text: itemText,
+                  value: _react2.default.createElement(_MenuItem2.default, {
+                    innerDivStyle: styles.innerDiv,
+                    primaryText: itemText,
+                    disableFocusRipple: disableFocusRipple,
+                    key: index
+                  })
+                });
               }
             }
             break;
@@ -371,7 +383,7 @@ var AutoComplete = function (_Component) {
           autoWidth: false,
           disableAutoFocus: focusTextField,
           onEscKeyDown: this.handleEscKeyDown,
-          initiallyKeyboardFocused: false,
+          initiallyKeyboardFocused: true,
           onItemTouchTap: this.handleItemTouchTap,
           onMouseDown: this.handleMouseDown,
           style: (0, _simpleAssign2.default)(styles.menu, menuStyle),
@@ -435,6 +447,16 @@ AutoComplete.propTypes = {
    */
   dataSource: _react.PropTypes.array.isRequired,
   /**
+   * Config for objects list dataSource.
+   *
+   * @typedef {Object} dataSourceConfig
+   *
+   * @property {string} text `dataSource` element key used to find a string to be matched for search
+   * and shown as a `TextField` input value after choosing the result.
+   * @property {string} value `dataSource` element key used to find a string to be shown in search results.
+   */
+  dataSourceConfig: _react.PropTypes.object,
+  /**
    * Disables focus ripple when true.
    */
   disableFocusRipple: _react.PropTypes.bool,
@@ -487,21 +509,11 @@ AutoComplete.propTypes = {
    * Override style for menu.
    */
   menuStyle: _react.PropTypes.object,
-  /**
-   * Callback function that is fired when the `TextField` loses focus.
-   *
-   * @param {object} event `blur` event targeting the `TextField`.
-   */
+  /** @ignore */
   onBlur: _react.PropTypes.func,
-  /**
-   * Callback function that is fired when the `TextField` gains focus.
-   *
-   * @param {object} event `focus` event targeting the `TextField`.
-   */
+  /** @ignore */
   onFocus: _react.PropTypes.func,
-  /**
-   * Callback function that is fired when the `TextField` receives a keydown event.
-   */
+  /** @ignore */
   onKeyDown: _react.PropTypes.func,
   /**
    * Callback function that is fired when a list item is selected, or enter is pressed in the `TextField`.
@@ -542,7 +554,7 @@ AutoComplete.propTypes = {
   /**
    * If true, will update when focus event triggers.
    */
-  triggerUpdateOnFocus: (0, _deprecatedPropType2.default)(_react.PropTypes.bool, 'Instead, use openOnFocus')
+  triggerUpdateOnFocus: (0, _deprecatedPropType2.default)(_react.PropTypes.bool, 'Instead, use openOnFocus. It will be removed with v0.16.0.')
 };
 AutoComplete.defaultProps = {
   anchorOrigin: {
@@ -550,6 +562,10 @@ AutoComplete.defaultProps = {
     horizontal: 'left'
   },
   animated: true,
+  dataSourceConfig: {
+    text: 'text',
+    value: 'value'
+  },
   disableFocusRipple: true,
   filter: function filter(searchText, key) {
     return searchText !== '' && key.indexOf(searchText) !== -1;
@@ -615,14 +631,17 @@ AutoComplete.levenshteinDistanceFilter = function (distanceLessThan) {
 };
 
 AutoComplete.fuzzyFilter = function (searchText, key) {
-  if (searchText.length === 0) {
-    return false;
+  var compareString = key.toLowerCase();
+  searchText = searchText.toLowerCase();
+
+  var searchTextIndex = 0;
+  for (var index = 0; index < key.length; index++) {
+    if (compareString[index] === searchText[searchTextIndex]) {
+      searchTextIndex += 1;
+    }
   }
 
-  var subMatchKey = key.substring(0, searchText.length);
-  var distance = AutoComplete.levenshteinDistance(searchText.toLowerCase(), subMatchKey.toLowerCase());
-
-  return searchText.length > 3 ? distance < 2 : distance === 0;
+  return searchTextIndex === searchText.length;
 };
 
 AutoComplete.Item = _MenuItem2.default;

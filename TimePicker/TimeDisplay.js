@@ -76,22 +76,18 @@ var TimeDisplay = function (_Component) {
       return [hour, min];
     }
   }, {
-    key: 'getTheme',
-    value: function getTheme() {
-      return this.context.muiTheme.timePicker;
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       var _props = this.props;
-      var selectedTime = _props.selectedTime;
-      var // eslint-disable-line no-unused-vars
-      mode = _props.mode;
       var affix = _props.affix;
+      var format = _props.format;
+      var mode = _props.mode;
+      var onSelectAffix = _props.onSelectAffix;
+      var onSelectHour = _props.onSelectHour;
+      var onSelectMin = _props.onSelectMin;
+      var selectedTime = _props.selectedTime;
 
-      var other = _objectWithoutProperties(_props, ['selectedTime', 'mode', 'affix']);
+      var other = _objectWithoutProperties(_props, ['affix', 'format', 'mode', 'onSelectAffix', 'onSelectHour', 'onSelectMin', 'selectedTime']);
 
       var _context$muiTheme = this.context.muiTheme;
       var prepareStyles = _context$muiTheme.prepareStyles;
@@ -106,7 +102,6 @@ var TimeDisplay = function (_Component) {
           backgroundColor: timePicker.headerColor,
           color: 'white'
         },
-
         text: {
           margin: '6px 0',
           lineHeight: '58px',
@@ -116,11 +111,9 @@ var TimeDisplay = function (_Component) {
           justifyContent: 'center',
           alignItems: 'baseline'
         },
-
         time: {
           margin: '0 10px'
         },
-
         affix: {
           flex: 1,
           position: 'relative',
@@ -128,17 +121,14 @@ var TimeDisplay = function (_Component) {
           height: 17,
           fontSize: 17
         },
-
         affixTop: {
           position: 'absolute',
           top: -20,
           left: 0
         },
-
         clickable: {
           cursor: 'pointer'
         },
-
         inactive: {
           opacity: 0.7
         }
@@ -153,27 +143,27 @@ var TimeDisplay = function (_Component) {
 
 
       var buttons = [];
-      if (this.props.format === 'ampm') {
+      if (format === 'ampm') {
         buttons = [_react2.default.createElement(
           'div',
           {
             key: 'pm',
             style: prepareStyles((0, _simpleAssign2.default)({}, styles.clickable, affix === 'pm' ? {} : styles.inactive)),
             onTouchTap: function onTouchTap() {
-              return _this2.props.onSelectAffix('pm');
+              return onSelectAffix('pm');
             }
           },
-          "PM"
+          'PM'
         ), _react2.default.createElement(
           'div',
           {
             key: 'am',
             style: prepareStyles((0, _simpleAssign2.default)({}, styles.affixTop, styles.clickable, affix === 'am' ? {} : styles.inactive)),
             onTouchTap: function onTouchTap() {
-              return _this2.props.onSelectAffix('am');
+              return onSelectAffix('am');
             }
           },
-          "AM"
+          'AM'
         )];
       }
 
@@ -191,7 +181,7 @@ var TimeDisplay = function (_Component) {
               'span',
               {
                 style: prepareStyles((0, _simpleAssign2.default)({}, styles.clickable, mode === 'hour' ? {} : styles.inactive)),
-                onTouchTap: this.props.onSelectHour
+                onTouchTap: onSelectHour
               },
               hour
             ),
@@ -204,7 +194,7 @@ var TimeDisplay = function (_Component) {
               'span',
               {
                 style: prepareStyles((0, _simpleAssign2.default)({}, styles.clickable, mode === 'minute' ? {} : styles.inactive)),
-                onTouchTap: this.props.onSelectMin
+                onTouchTap: onSelectMin
               },
               min
             )
@@ -232,8 +222,8 @@ TimeDisplay.propTypes = {
   selectedTime: _react.PropTypes.object.isRequired
 };
 TimeDisplay.defaultProps = {
-  mode: 'hour',
-  affix: ''
+  affix: '',
+  mode: 'hour'
 };
 TimeDisplay.contextTypes = {
   muiTheme: _react.PropTypes.object.isRequired

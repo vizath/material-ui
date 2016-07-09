@@ -151,22 +151,24 @@ var IconMenu = function (_Component) {
       var _props = this.props;
       var anchorOrigin = _props.anchorOrigin;
       var className = _props.className;
+      var animated = _props.animated;
       var iconButtonElement = _props.iconButtonElement;
       var iconStyle = _props.iconStyle;
       var onItemTouchTap = _props.onItemTouchTap;
-      var // eslint-disable-line no-unused-vars
-      onKeyboardFocus = _props.onKeyboardFocus;
+      var onKeyboardFocus = _props.onKeyboardFocus;
       var onMouseDown = _props.onMouseDown;
       var onMouseLeave = _props.onMouseLeave;
       var onMouseEnter = _props.onMouseEnter;
       var onMouseUp = _props.onMouseUp;
+      var onRequestChange = _props.onRequestChange;
       var onTouchTap = _props.onTouchTap;
       var menuStyle = _props.menuStyle;
       var style = _props.style;
       var targetOrigin = _props.targetOrigin;
+      var touchTapCloseDelay = _props.touchTapCloseDelay;
       var useLayerForClickAway = _props.useLayerForClickAway;
 
-      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'className', 'iconButtonElement', 'iconStyle', 'onItemTouchTap', 'onKeyboardFocus', 'onMouseDown', 'onMouseLeave', 'onMouseEnter', 'onMouseUp', 'onTouchTap', 'menuStyle', 'style', 'targetOrigin', 'useLayerForClickAway']);
+      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'className', 'animated', 'iconButtonElement', 'iconStyle', 'onItemTouchTap', 'onKeyboardFocus', 'onMouseDown', 'onMouseLeave', 'onMouseEnter', 'onMouseUp', 'onRequestChange', 'onTouchTap', 'menuStyle', 'style', 'targetOrigin', 'touchTapCloseDelay', 'useLayerForClickAway']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
       var _state = this.state;
@@ -200,7 +202,6 @@ var IconMenu = function (_Component) {
       var menu = _react2.default.createElement(
         _Menu2.default,
         _extends({}, other, {
-          animateOpen: true,
           initiallyKeyboardFocused: this.state.menuInitiallyKeyboardFocused,
           onEscKeyDown: this.handleEscKeyDownMenu,
           onItemTouchTap: this.handleItemTouchTap,
@@ -232,6 +233,7 @@ var IconMenu = function (_Component) {
             childContextTypes: this.constructor.childContextTypes,
             useLayerForClickAway: useLayerForClickAway,
             onRequestClose: this.handleRequestClose,
+            animated: animated,
             context: this.context
           },
           menu
@@ -253,6 +255,11 @@ IconMenu.propTypes = {
    * horizontal: [left, center, right].
    */
   anchorOrigin: _propTypes2.default.origin,
+  /**
+   * If true, the popover will apply transitions when
+   * it gets added to the DOM.
+   */
+  animated: _react.PropTypes.bool,
   /**
    * Should be used to pass `MenuItem` components.
    */
@@ -291,29 +298,13 @@ IconMenu.propTypes = {
    * @param {boolean} keyboardFocused If true, the `IconButton` element is focused.
    */
   onKeyboardFocus: _react.PropTypes.func,
-  /**
-   * Callback function fired when a mouse button is pressed down on the `IconButton` element.
-   *
-   * @param {object} event `mousedown` event targeting the `IconButton` element.
-   */
+  /** @ignore */
   onMouseDown: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse enters the `IconButton` element.
-   *
-   * @param {object} event `mouseenter` event targeting the `IconButton` element.
-   */
+  /** @ignore */
   onMouseEnter: _react.PropTypes.func,
-  /**
-   * Callback function fired when the mouse leaves the `IconButton` element.
-   *
-   * @param {object} event `mouseleave` event targeting the `IconButton` element.
-   */
+  /** @ignore */
   onMouseLeave: _react.PropTypes.func,
-  /**
-   * Callback function fired when a mouse button is released on the `IconButton` element.
-   *
-   * @param {object} event `mouseup` event targeting the `IconButton` element.
-   */
+  /** @ignore */
   onMouseUp: _react.PropTypes.func,
   /**
    * Callback function fired when the `open` state of the menu is requested to be changed.
@@ -364,6 +355,7 @@ IconMenu.defaultProps = {
     vertical: 'top',
     horizontal: 'left'
   },
+  animated: true,
   multiple: false,
   open: null,
   onItemTouchTap: function onItemTouchTap() {},
@@ -372,8 +364,8 @@ IconMenu.defaultProps = {
   onMouseLeave: function onMouseLeave() {},
   onMouseEnter: function onMouseEnter() {},
   onMouseUp: function onMouseUp() {},
-  onTouchTap: function onTouchTap() {},
   onRequestChange: function onRequestChange() {},
+  onTouchTap: function onTouchTap() {},
   targetOrigin: {
     vertical: 'top',
     horizontal: 'left'

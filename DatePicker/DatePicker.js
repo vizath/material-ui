@@ -62,16 +62,24 @@ var DatePicker = function (_Component) {
           date: date
         });
       }
-      if (_this.props.onChange) _this.props.onChange(null, date);
+      if (_this.props.onChange) {
+        _this.props.onChange(null, date);
+      }
     }, _this.handleFocus = function (event) {
       event.target.blur();
-      if (_this.props.onFocus) _this.props.onFocus(event);
+      if (_this.props.onFocus) {
+        _this.props.onFocus(event);
+      }
     }, _this.handleTouchTap = function (event) {
-      if (_this.props.onTouchTap) _this.props.onTouchTap(event);
+      if (_this.props.onTouchTap) {
+        _this.props.onTouchTap(event);
+      }
 
-      if (!_this.props.disabled) setTimeout(function () {
-        _this.openDialog();
-      }, 0);
+      if (!_this.props.disabled) {
+        setTimeout(function () {
+          _this.openDialog();
+        }, 0);
+      }
     }, _this.formatDate = function (date) {
       if (_this.props.locale) {
         var DateTimeFormat = _this.props.DateTimeFormat || _dateUtils.dateTimeFormat;
@@ -164,11 +172,13 @@ var DatePicker = function (_Component) {
       var DateTimeFormat = _props.DateTimeFormat;
       var autoOk = _props.autoOk;
       var cancelLabel = _props.cancelLabel;
+      var className = _props.className;
       var container = _props.container;
       var defaultDate = _props.defaultDate;
-      var // eslint-disable-line no-unused-vars
-      disableYearSelection = _props.disableYearSelection;
+      var dialogContainerStyle = _props.dialogContainerStyle;
+      var disableYearSelection = _props.disableYearSelection;
       var firstDayOfWeek = _props.firstDayOfWeek;
+      var formatDateProp = _props.formatDate;
       var locale = _props.locale;
       var maxDate = _props.maxDate;
       var minDate = _props.minDate;
@@ -176,24 +186,22 @@ var DatePicker = function (_Component) {
       var okLabel = _props.okLabel;
       var onDismiss = _props.onDismiss;
       var onFocus = _props.onFocus;
-      var // eslint-disable-line no-unused-vars
-      onShow = _props.onShow;
+      var onShow = _props.onShow;
       var onTouchTap = _props.onTouchTap;
-      var // eslint-disable-line no-unused-vars
-      shouldDisableDate = _props.shouldDisableDate;
+      var shouldDisableDate = _props.shouldDisableDate;
       var style = _props.style;
       var textFieldStyle = _props.textFieldStyle;
       var wordings = _props.wordings;
 
-      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'autoOk', 'cancelLabel', 'container', 'defaultDate', 'disableYearSelection', 'firstDayOfWeek', 'locale', 'maxDate', 'minDate', 'mode', 'okLabel', 'onDismiss', 'onFocus', 'onShow', 'onTouchTap', 'shouldDisableDate', 'style', 'textFieldStyle', 'wordings']);
+      var other = _objectWithoutProperties(_props, ['DateTimeFormat', 'autoOk', 'cancelLabel', 'className', 'container', 'defaultDate', 'dialogContainerStyle', 'disableYearSelection', 'firstDayOfWeek', 'formatDate', 'locale', 'maxDate', 'minDate', 'mode', 'okLabel', 'onDismiss', 'onFocus', 'onShow', 'onTouchTap', 'shouldDisableDate', 'style', 'textFieldStyle', 'wordings']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
-      var formatDate = this.props.formatDate || this.formatDate;
+      var formatDate = formatDateProp || this.formatDate;
 
       return _react2.default.createElement(
         'div',
-        { style: prepareStyles((0, _simpleAssign2.default)({}, style)) },
+        { className: className, style: prepareStyles((0, _simpleAssign2.default)({}, style)) },
         _react2.default.createElement(_TextField2.default, _extends({}, other, {
           onFocus: this.handleFocus,
           onTouchTap: this.handleTouchTap,
@@ -206,6 +214,7 @@ var DatePicker = function (_Component) {
           autoOk: autoOk,
           cancelLabel: cancelLabel,
           container: container,
+          containerStyle: dialogContainerStyle,
           disableYearSelection: disableYearSelection,
           firstDayOfWeek: firstDayOfWeek,
           initialDate: this.state.dialogDate,
@@ -247,6 +256,10 @@ DatePicker.propTypes = {
    */
   cancelLabel: _react.PropTypes.node,
   /**
+   * The css class name of the root element.
+   */
+  className: _react.PropTypes.string,
+  /**
    * Used to control how the Date Picker will be displayed when the input field is focused.
    * `dialog` (default) displays the DatePicker as a dialog with a modal.
    * `inline` displays the DatePicker below the input field (similar to auto complete).
@@ -258,6 +271,10 @@ DatePicker.propTypes = {
    * prop with `value` taking precedence.
    */
   defaultDate: _react.PropTypes.object,
+  /**
+   * Override the inline-styles of DatePickerDialog's Container element.
+   */
+  dialogContainerStyle: _react.PropTypes.object,
   /**
    * Disables the year selection in the date picker.
    */
@@ -318,8 +335,6 @@ DatePicker.propTypes = {
   onDismiss: _react.PropTypes.func,
   /**
    * Callback function that is fired when the Date Picker's `TextField` gains focus.
-   *
-   * @param {object} event `focus` event targeting the `TextField`.
    */
   onFocus: _react.PropTypes.func,
   /**
@@ -350,11 +365,11 @@ DatePicker.propTypes = {
   /**
    * Sets the date for the Date Picker programmatically.
    */
-  value: _react.PropTypes.any,
+  value: _react.PropTypes.object,
   /**
    * Wordings used inside the button of the dialog.
    */
-  wordings: (0, _deprecatedPropType2.default)(_react.PropTypes.object, 'Instead, use `cancelLabel` and `okLabel`.')
+  wordings: (0, _deprecatedPropType2.default)(_react.PropTypes.object, 'Instead, use `cancelLabel` and `okLabel`.\n      It will be removed with v0.16.0.')
 };
 DatePicker.defaultProps = {
   autoOk: false,

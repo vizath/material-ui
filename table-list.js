@@ -120,7 +120,6 @@ var TableItem = _react2.default.createClass({
     return _react2.default.createElement(
       _EnhancedButton2.default,
       _extends({}, other, {
-        linkButton: true,
         containerElement: 'div',
         onKeyboardFocus: this._handleKeyboardFocus,
         onMouseLeave: this._handleMouseLeave,
@@ -205,8 +204,10 @@ var TableList = _react2.default.createClass({
     var data = _props2.data;
     var headers = _props2.headers;
     var style = _props2.style;
+    var onHeaderClick = _props2.onHeaderClick;
+    var onItemClick = _props2.onItemClick;
 
-    var other = _objectWithoutProperties(_props2, ['data', 'headers', 'style']);
+    var other = _objectWithoutProperties(_props2, ['data', 'headers', 'style', 'onHeaderClick', 'onItemClick']);
 
     var prepareStyles = this.context.muiTheme.prepareStyles;
 

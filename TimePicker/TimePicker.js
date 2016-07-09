@@ -61,7 +61,7 @@ var TimePicker = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TimePicker)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-      time: _this.isControlled() ? _this.getControlledTime() : _this.props.defaultTime,
+      time: null,
       dialogTime: new Date()
     }, _this.handleAcceptDialog = function (time) {
       _this.setState({
@@ -70,17 +70,30 @@ var TimePicker = function (_Component) {
       if (_this.props.onChange) _this.props.onChange(null, time);
     }, _this.handleFocusInput = function (event) {
       event.target.blur();
-      if (_this.props.onFocus) _this.props.onFocus(event);
+      if (_this.props.onFocus) {
+        _this.props.onFocus(event);
+      }
     }, _this.handleTouchTapInput = function (event) {
       event.preventDefault();
 
-      if (!_this.props.disabled) _this.openDialog();
+      if (!_this.props.disabled) {
+        _this.openDialog();
+      }
 
-      if (_this.props.onTouchTap) _this.props.onTouchTap(event);
+      if (_this.props.onTouchTap) {
+        _this.props.onTouchTap(event);
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(TimePicker, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({
+        time: this.isControlled() ? this.getControlledTime() : this.props.defaultTime
+      });
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.value !== this.props.value) {
@@ -98,7 +111,7 @@ var TimePicker = function (_Component) {
   }, {
     key: 'getTime',
     value: function getTime() {
-      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'getTime() method is deprecated. Use the defaultTime property\n    instead. Or use the TimePicker as a controlled component with the value\n    property.') : void 0;
+      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'getTime() method is deprecated. Use the defaultTime property\n    instead. Or use the TimePicker as a controlled component with the value\n    property. It will be removed with v0.16.0.') : void 0;
       return this.state.time;
     }
 
@@ -110,7 +123,7 @@ var TimePicker = function (_Component) {
   }, {
     key: 'setTime',
     value: function setTime(time) {
-      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'setTime() method is deprecated. Use the defaultTime property\n    instead. Or use the TimePicker as a controlled component with the value\n    property.') : void 0;
+      process.env.NODE_ENV !== "production" ? (0, _warning2.default)(false, 'setTime() method is deprecated. Use the defaultTime property\n    instead. Or use the TimePicker as a controlled component with the value\n    property. It will be removed with v0.16.0.') : void 0;
       this.setState({ time: time ? time : emptyTime });
     }
 
@@ -153,19 +166,20 @@ var TimePicker = function (_Component) {
       var _props = this.props;
       var autoOk = _props.autoOk;
       var cancelLabel = _props.cancelLabel;
+      var defaultTime = _props.defaultTime;
+      var dialogBodyStyle = _props.dialogBodyStyle;
+      var dialogStyle = _props.dialogStyle;
       var format = _props.format;
       var okLabel = _props.okLabel;
       var onFocus = _props.onFocus;
-      var // eslint-disable-line no-unused-vars
-      onTouchTap = _props.onTouchTap;
-      var // eslint-disable-line no-unused-vars
-      onShow = _props.onShow;
+      var onTouchTap = _props.onTouchTap;
+      var onShow = _props.onShow;
       var onDismiss = _props.onDismiss;
       var pedantic = _props.pedantic;
       var style = _props.style;
       var textFieldStyle = _props.textFieldStyle;
 
-      var other = _objectWithoutProperties(_props, ['autoOk', 'cancelLabel', 'format', 'okLabel', 'onFocus', 'onTouchTap', 'onShow', 'onDismiss', 'pedantic', 'style', 'textFieldStyle']);
+      var other = _objectWithoutProperties(_props, ['autoOk', 'cancelLabel', 'defaultTime', 'dialogBodyStyle', 'dialogStyle', 'format', 'okLabel', 'onFocus', 'onTouchTap', 'onShow', 'onDismiss', 'pedantic', 'style', 'textFieldStyle']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
       var time = this.state.time;
@@ -183,6 +197,7 @@ var TimePicker = function (_Component) {
         })),
         _react2.default.createElement(_TimePickerDialog2.default, {
           ref: 'dialogWindow',
+          bodyStyle: dialogBodyStyle,
           initialTime: this.state.dialogTime,
           onAccept: this.handleAcceptDialog,
           onShow: onShow,
@@ -190,7 +205,8 @@ var TimePicker = function (_Component) {
           format: format,
           okLabel: okLabel,
           cancelLabel: cancelLabel,
-          autoOk: autoOk
+          autoOk: autoOk,
+          style: dialogStyle
         })
       );
     }
@@ -212,6 +228,14 @@ TimePicker.propTypes = {
    * The initial time value of the TimePicker.
    */
   defaultTime: _react.PropTypes.object,
+  /**
+   * Override the inline-styles of TimePickerDialog's body element.
+   */
+  dialogBodyStyle: _react.PropTypes.object,
+  /**
+   * Override the inline-styles of TimePickerDialog's root element.
+   */
+  dialogStyle: _react.PropTypes.object,
   /**
    * If true, the TimePicker is disabled.
    */
@@ -266,17 +290,16 @@ TimePicker.propTypes = {
    * Sets the time for the Time Picker programmatically.
    */
   value: _react.PropTypes.object
-
 };
 TimePicker.defaultProps = {
+  autoOk: false,
+  cancelLabel: 'Cancel',
   defaultTime: null,
   disabled: false,
   format: 'ampm',
-  pedantic: false,
-  autoOk: false,
-  style: {},
   okLabel: 'OK',
-  cancelLabel: 'Cancel',
+  pedantic: false,
+  style: {},
   value: null
 };
 TimePicker.contextTypes = {
