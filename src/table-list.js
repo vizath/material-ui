@@ -101,7 +101,6 @@ const TableItem = React.createClass({
     return (
       <EnhancedButton
         {...other}
-        linkButton={true}
         containerElement="div"
         onKeyboardFocus={this._handleKeyboardFocus}
         onMouseLeave={this._handleMouseLeave}
@@ -186,6 +185,8 @@ const TableList = React.createClass({
       data,
       headers,
       style,
+      onHeaderClick,
+      onItemClick,
       ...other,
     } = this.props;
     const {prepareStyles} = this.context.muiTheme;
