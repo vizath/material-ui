@@ -49,7 +49,7 @@ function getStyles(props, context, state) {
       borderBottomLeftRadius: isLandscape ? 2 : 0,
       color: datePicker.textColor,
       padding: 20,
-      boxSizing: 'initial'
+      boxSizing: 'border-box'
     },
     monthDay: {
       display: 'block',
