@@ -16,6 +16,7 @@ function getStyles(props, context) {
           desktopGutter,
           desktopSubheaderHeight,
         },
+        fontFamily,
       },
       snackbar: {
         backgroundColor,
@@ -29,6 +30,7 @@ function getStyles(props, context) {
 
   const styles = {
     root: {
+      fontFamily: fontFamily,
       backgroundColor: backgroundColor,
       padding: `0 ${desktopGutter}px`,
       height: desktopSubheaderHeight,
@@ -95,7 +97,7 @@ SnackbarBody.propTypes = {
   /**
    * The label for the action on the snackbar.
    */
-  action: PropTypes.string,
+  action: PropTypes.node,
   /**
    * The message to be displayed.
    *
