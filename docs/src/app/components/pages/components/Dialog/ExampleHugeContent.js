@@ -30,7 +30,7 @@ export default class DialogExampleModal extends React.Component {
 
     return (
       <div>
-        <RaisedButton label="Huge Content Dialog" overflowInBody onTouchTap={this.handleOpen} />
+        <RaisedButton label="Huge Content Dialog" onTouchTap={this.handleOpen} />
         <Dialog
           title="Dialog With Huge Content"
           actions={actions}
