@@ -45,7 +45,7 @@ var TableHeader = function (_Component) {
   _inherits(TableHeader, _Component);
 
   function TableHeader() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -55,7 +55,7 @@ var TableHeader = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TableHeader)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleCheckAll = function (event, checked) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TableHeader.__proto__ || Object.getPrototypeOf(TableHeader)).call.apply(_ref, [this].concat(args))), _this), _this.handleCheckAll = function (event, checked) {
       if (_this.props.onSelectAll) _this.props.onSelectAll(checked);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

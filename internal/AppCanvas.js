@@ -28,7 +28,7 @@ var AppCanvas = function (_Component) {
   function AppCanvas() {
     _classCallCheck(this, AppCanvas);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(AppCanvas).apply(this, arguments));
+    return _possibleConstructorReturn(this, (AppCanvas.__proto__ || Object.getPrototypeOf(AppCanvas)).apply(this, arguments));
   }
 
   _createClass(AppCanvas, [{

@@ -54,7 +54,7 @@ var FlatButton = function (_Component) {
   _inherits(FlatButton, _Component);
 
   function FlatButton() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -64,7 +64,7 @@ var FlatButton = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(FlatButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FlatButton.__proto__ || Object.getPrototypeOf(FlatButton)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hovered: false,
       isKeyboardFocused: false,
       touch: false
@@ -158,13 +158,14 @@ var FlatButton = function (_Component) {
       var labelStyleIcon = {};
 
       if (icon) {
+        var iconStyles = (0, _simpleAssign2.default)({
+          verticalAlign: 'middle',
+          marginLeft: label && labelPosition !== 'before' ? 12 : 0,
+          marginRight: label && labelPosition === 'before' ? 12 : 0
+        }, icon.props.style);
         iconCloned = _react2.default.cloneElement(icon, {
           color: icon.props.color || mergedRootStyles.color,
-          style: {
-            verticalAlign: 'middle',
-            marginLeft: label && labelPosition !== 'before' ? 12 : 0,
-            marginRight: label && labelPosition === 'before' ? 12 : 0
-          }
+          style: iconStyles
         });
 
         if (labelPosition === 'before') {

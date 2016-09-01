@@ -44,7 +44,7 @@ var ExpandTransitionChild = function (_Component) {
   function ExpandTransitionChild() {
     _classCallCheck(this, ExpandTransitionChild);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ExpandTransitionChild).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ExpandTransitionChild.__proto__ || Object.getPrototypeOf(ExpandTransitionChild)).apply(this, arguments));
   }
 
   _createClass(ExpandTransitionChild, [{

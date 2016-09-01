@@ -61,8 +61,7 @@ var TouchRipple = function (_Component) {
     // showing ripples twice we skip showing a ripple for the first mouse down
     // after a touch start. Note we don't store ignoreNextMouseDown in this.state
     // to avoid re-rendering when we change it.
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TouchRipple).call(this, props, context));
+    var _this = _possibleConstructorReturn(this, (TouchRipple.__proto__ || Object.getPrototypeOf(TouchRipple)).call(this, props, context));
 
     _this.handleMouseDown = function (event) {
       // only listen to left clicks

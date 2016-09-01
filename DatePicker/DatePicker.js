@@ -44,7 +44,7 @@ var DatePicker = function (_Component) {
   _inherits(DatePicker, _Component);
 
   function DatePicker() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -54,7 +54,7 @@ var DatePicker = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(DatePicker)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       date: undefined
     }, _this.handleAccept = function (date) {
       if (!_this.isControlled()) {

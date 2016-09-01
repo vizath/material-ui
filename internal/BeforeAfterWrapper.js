@@ -70,7 +70,7 @@ var BeforeAfterWrapper = function (_Component) {
   function BeforeAfterWrapper() {
     _classCallCheck(this, BeforeAfterWrapper);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(BeforeAfterWrapper).apply(this, arguments));
+    return _possibleConstructorReturn(this, (BeforeAfterWrapper.__proto__ || Object.getPrototypeOf(BeforeAfterWrapper)).apply(this, arguments));
   }
 
   _createClass(BeforeAfterWrapper, [{

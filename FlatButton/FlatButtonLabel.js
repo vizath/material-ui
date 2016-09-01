@@ -42,7 +42,7 @@ var FlatButtonLabel = function (_Component) {
   function FlatButtonLabel() {
     _classCallCheck(this, FlatButtonLabel);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(FlatButtonLabel).apply(this, arguments));
+    return _possibleConstructorReturn(this, (FlatButtonLabel.__proto__ || Object.getPrototypeOf(FlatButtonLabel)).apply(this, arguments));
   }
 
   _createClass(FlatButtonLabel, [{

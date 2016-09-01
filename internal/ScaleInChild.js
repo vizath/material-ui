@@ -44,7 +44,7 @@ var ScaleInChild = function (_Component) {
   function ScaleInChild() {
     _classCallCheck(this, ScaleInChild);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ScaleInChild).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ScaleInChild.__proto__ || Object.getPrototypeOf(ScaleInChild)).apply(this, arguments));
   }
 
   _createClass(ScaleInChild, [{

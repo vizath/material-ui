@@ -50,7 +50,7 @@ var TimePickerDialog = function (_Component) {
   _inherits(TimePickerDialog, _Component);
 
   function TimePickerDialog() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -60,7 +60,7 @@ var TimePickerDialog = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TimePickerDialog)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TimePickerDialog.__proto__ || Object.getPrototypeOf(TimePickerDialog)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       open: false
     }, _this.handleRequestClose = function () {
       _this.dismiss();

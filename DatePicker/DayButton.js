@@ -88,7 +88,7 @@ var DayButton = function (_Component) {
   _inherits(DayButton, _Component);
 
   function DayButton() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -98,7 +98,7 @@ var DayButton = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(DayButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DayButton.__proto__ || Object.getPrototypeOf(DayButton)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hover: false
     }, _this.handleMouseEnter = function () {
       if (!_this.props.disabled) _this.setState({ hover: true });

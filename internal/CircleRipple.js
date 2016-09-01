@@ -48,7 +48,7 @@ var CircleRipple = function (_Component) {
   function CircleRipple() {
     _classCallCheck(this, CircleRipple);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CircleRipple).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CircleRipple.__proto__ || Object.getPrototypeOf(CircleRipple)).apply(this, arguments));
   }
 
   _createClass(CircleRipple, [{

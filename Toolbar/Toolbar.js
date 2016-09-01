@@ -52,7 +52,7 @@ var Toolbar = function (_Component) {
   function Toolbar() {
     _classCallCheck(this, Toolbar);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Toolbar).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));
   }
 
   _createClass(Toolbar, [{

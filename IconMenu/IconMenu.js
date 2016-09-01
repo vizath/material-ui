@@ -50,7 +50,7 @@ var IconMenu = function (_Component) {
   _inherits(IconMenu, _Component);
 
   function IconMenu() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -60,7 +60,7 @@ var IconMenu = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(IconMenu)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = IconMenu.__proto__ || Object.getPrototypeOf(IconMenu)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       menuInitiallyKeyboardFocused: false,
       open: false
     }, _this.handleItemTouchTap = function (event, child) {
@@ -152,6 +152,7 @@ var IconMenu = function (_Component) {
       var anchorOrigin = _props.anchorOrigin;
       var className = _props.className;
       var animated = _props.animated;
+      var animation = _props.animation;
       var iconButtonElement = _props.iconButtonElement;
       var iconStyle = _props.iconStyle;
       var onItemTouchTap = _props.onItemTouchTap;
@@ -168,7 +169,7 @@ var IconMenu = function (_Component) {
       var touchTapCloseDelay = _props.touchTapCloseDelay;
       var useLayerForClickAway = _props.useLayerForClickAway;
 
-      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'className', 'animated', 'iconButtonElement', 'iconStyle', 'onItemTouchTap', 'onKeyboardFocus', 'onMouseDown', 'onMouseLeave', 'onMouseEnter', 'onMouseUp', 'onRequestChange', 'onTouchTap', 'menuStyle', 'style', 'targetOrigin', 'touchTapCloseDelay', 'useLayerForClickAway']);
+      var other = _objectWithoutProperties(_props, ['anchorOrigin', 'className', 'animated', 'animation', 'iconButtonElement', 'iconStyle', 'onItemTouchTap', 'onKeyboardFocus', 'onMouseDown', 'onMouseLeave', 'onMouseEnter', 'onMouseUp', 'onRequestChange', 'onTouchTap', 'menuStyle', 'style', 'targetOrigin', 'touchTapCloseDelay', 'useLayerForClickAway']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
       var _state = this.state;
@@ -194,7 +195,9 @@ var IconMenu = function (_Component) {
         iconStyle: (0, _simpleAssign2.default)({}, iconStyle, iconButtonElement.props.iconStyle),
         onTouchTap: function onTouchTap(event) {
           _this3.open(_events2.default.isKeyboard(event) ? 'keyboard' : 'iconTap', event);
-          if (iconButtonElement.props.onTouchTap) iconButtonElement.props.onTouchTap(event);
+          if (iconButtonElement.props.onTouchTap) {
+            iconButtonElement.props.onTouchTap(event);
+          }
         },
         ref: 'iconButton'
       });
@@ -234,6 +237,7 @@ var IconMenu = function (_Component) {
             useLayerForClickAway: useLayerForClickAway,
             onRequestClose: this.handleRequestClose,
             animated: animated,
+            animation: animation,
             context: this.context
           },
           menu
@@ -260,6 +264,10 @@ IconMenu.propTypes = {
    * it gets added to the DOM.
    */
   animated: _react.PropTypes.bool,
+  /**
+   * Override the default animation component used.
+   */
+  animation: _react.PropTypes.func,
   /**
    * Should be used to pass `MenuItem` components.
    */

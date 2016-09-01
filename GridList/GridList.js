@@ -46,7 +46,7 @@ var GridList = function (_Component) {
   function GridList() {
     _classCallCheck(this, GridList);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(GridList).apply(this, arguments));
+    return _possibleConstructorReturn(this, (GridList.__proto__ || Object.getPrototypeOf(GridList)).apply(this, arguments));
   }
 
   _createClass(GridList, [{

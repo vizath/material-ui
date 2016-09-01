@@ -40,7 +40,7 @@ var ExpandTransition = function (_Component) {
   function ExpandTransition() {
     _classCallCheck(this, ExpandTransition);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ExpandTransition).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ExpandTransition.__proto__ || Object.getPrototypeOf(ExpandTransition)).apply(this, arguments));
   }
 
   _createClass(ExpandTransition, [{

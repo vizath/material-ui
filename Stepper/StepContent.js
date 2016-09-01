@@ -62,7 +62,7 @@ var StepContent = function (_Component) {
   function StepContent() {
     _classCallCheck(this, StepContent);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(StepContent).apply(this, arguments));
+    return _possibleConstructorReturn(this, (StepContent.__proto__ || Object.getPrototypeOf(StepContent)).apply(this, arguments));
   }
 
   _createClass(StepContent, [{

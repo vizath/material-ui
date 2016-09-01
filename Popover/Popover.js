@@ -56,7 +56,7 @@ var Popover = function (_Component) {
   function Popover(props, context) {
     _classCallCheck(this, Popover);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Popover).call(this, props, context));
+    var _this = _possibleConstructorReturn(this, (Popover.__proto__ || Object.getPrototypeOf(Popover)).call(this, props, context));
 
     _this.renderLayer = function () {
       var _this$props = _this.props;

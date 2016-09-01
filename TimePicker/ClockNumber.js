@@ -89,7 +89,7 @@ var ClockNumber = function (_Component) {
   function ClockNumber() {
     _classCallCheck(this, ClockNumber);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ClockNumber).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ClockNumber.__proto__ || Object.getPrototypeOf(ClockNumber)).apply(this, arguments));
   }
 
   _createClass(ClockNumber, [{

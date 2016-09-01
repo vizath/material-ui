@@ -129,7 +129,7 @@ var Menu = function (_Component) {
   function Menu(props, context) {
     _classCallCheck(this, Menu);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Menu).call(this, props, context));
+    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props, context));
 
     _initialiseProps.call(_this);
 
@@ -705,7 +705,7 @@ var _initialiseProps = function _initialiseProps() {
         _this5.decrementKeyboardFocusIndex();
         break;
       default:
-        if (key.length === 1) {
+        if (key && key.length === 1) {
           var hotKeys = _this5.hotKeyHolder.append(key);
           if (_this5.setFocusIndexStartsWith(hotKeys)) {
             event.preventDefault();

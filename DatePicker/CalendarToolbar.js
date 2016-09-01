@@ -57,7 +57,7 @@ var CalendarToolbar = function (_Component) {
   _inherits(CalendarToolbar, _Component);
 
   function CalendarToolbar() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -67,7 +67,7 @@ var CalendarToolbar = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(CalendarToolbar)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarToolbar.__proto__ || Object.getPrototypeOf(CalendarToolbar)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       transitionDirection: 'up'
     }, _this.handleTouchTapPrevMonth = function () {
       if (_this.props.onMonthChange && _this.props.prevMonth) _this.props.onMonthChange(-1);

@@ -38,7 +38,7 @@ var RadioButtonGroup = function (_Component) {
   _inherits(RadioButtonGroup, _Component);
 
   function RadioButtonGroup() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -48,7 +48,7 @@ var RadioButtonGroup = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(RadioButtonGroup)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RadioButtonGroup.__proto__ || Object.getPrototypeOf(RadioButtonGroup)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       numberCheckedRadioButtons: 0,
       selected: ''
     }, _this.handleChange = function (event, newSelection) {
@@ -168,11 +168,11 @@ RadioButtonGroup.propTypes = {
    */
   className: _react.PropTypes.string,
   /**
-   * The `value` property (case-sensitive) of the radio button that will be
+   * The `value` property of the radio button that will be
    * selected by default. This takes precedence over the `checked` property
    * of the `RadioButton` elements.
    */
-  defaultSelected: _react.PropTypes.string,
+  defaultSelected: _react.PropTypes.any,
   /**
    * Where the label will be placed for all child radio buttons.
    * This takes precedence over the `labelPosition` property of the
@@ -189,7 +189,7 @@ RadioButtonGroup.propTypes = {
    *
    * @param {object} event `change` event targeting the selected
    * radio button.
-   * @param {string} value The `value` of the selected radio button.
+   * @param {*} value The `value` of the selected radio button.
    */
   onChange: _react.PropTypes.func,
   /**
@@ -199,7 +199,7 @@ RadioButtonGroup.propTypes = {
   /**
    * The `value` of the currently selected radio button.
    */
-  valueSelected: _react.PropTypes.string
+  valueSelected: _react.PropTypes.any
 };
 RadioButtonGroup.defaultProps = {
   style: {}

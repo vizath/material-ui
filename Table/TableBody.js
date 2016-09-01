@@ -44,7 +44,7 @@ var TableBody = function (_Component) {
   _inherits(TableBody, _Component);
 
   function TableBody() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -54,7 +54,7 @@ var TableBody = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TableBody)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TableBody.__proto__ || Object.getPrototypeOf(TableBody)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       selectedRows: []
     }, _this.handleClickAway = function () {
       if (_this.props.deselectOnClickaway && _this.state.selectedRows.length) {

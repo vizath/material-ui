@@ -28,7 +28,7 @@ var CalendarActionButton = function (_Component) {
   function CalendarActionButton() {
     _classCallCheck(this, CalendarActionButton);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CalendarActionButton).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CalendarActionButton.__proto__ || Object.getPrototypeOf(CalendarActionButton)).apply(this, arguments));
   }
 
   _createClass(CalendarActionButton, [{

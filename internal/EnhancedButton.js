@@ -76,7 +76,7 @@ var EnhancedButton = function (_Component) {
   _inherits(EnhancedButton, _Component);
 
   function EnhancedButton() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -86,7 +86,7 @@ var EnhancedButton = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(EnhancedButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = { isKeyboardFocused: false }, _this.handleKeyDown = function (event) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EnhancedButton.__proto__ || Object.getPrototypeOf(EnhancedButton)).call.apply(_ref, [this].concat(args))), _this), _this.state = { isKeyboardFocused: false }, _this.handleKeyDown = function (event) {
       if (!_this.props.disabled && !_this.props.disableKeyboardFocus) {
         if ((0, _keycode2.default)(event) === 'enter' && _this.state.isKeyboardFocused) {
           _this.handleTouchTap(event);
@@ -299,7 +299,7 @@ var EnhancedButton = function (_Component) {
          * See: http://stackoverflow.com/questions/17298739/
          * css-overflow-hidden-not-working-in-chrome-when-parent-has-border-radius-and-chil
          */
-        transform: disableTouchRipple && disableFocusRipple ? null : 'translate3d(0, 0, 0)',
+        transform: disableTouchRipple && disableFocusRipple ? null : 'translate(0, 0)',
         verticalAlign: href ? 'middle' : null
       }, style);
 

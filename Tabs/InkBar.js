@@ -51,7 +51,7 @@ var InkBar = function (_Component) {
   function InkBar() {
     _classCallCheck(this, InkBar);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(InkBar).apply(this, arguments));
+    return _possibleConstructorReturn(this, (InkBar.__proto__ || Object.getPrototypeOf(InkBar)).apply(this, arguments));
   }
 
   _createClass(InkBar, [{

@@ -77,7 +77,7 @@ function getStyles(props, context, state) {
     rootWhenShown: {
       top: verticalPosition === 'top' ? touchOffsetTop : 36,
       opacity: 0.9,
-      transform: 'translate3d(0px, ' + offset + 'px, 0px)',
+      transform: 'translate(0px, ' + offset + 'px)',
       transition: _transitions2.default.easeOut('0ms', 'top', '0ms') + ', ' + _transitions2.default.easeOut('450ms', 'transform', '0ms') + ', ' + _transitions2.default.easeOut('450ms', 'opacity', '0ms')
     },
     rootWhenTouched: {
@@ -98,7 +98,7 @@ var Tooltip = function (_Component) {
   _inherits(Tooltip, _Component);
 
   function Tooltip() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -108,7 +108,7 @@ var Tooltip = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Tooltip)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       offsetWidth: null
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

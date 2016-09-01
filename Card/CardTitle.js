@@ -55,7 +55,7 @@ var CardTitle = function (_Component) {
   function CardTitle() {
     _classCallCheck(this, CardTitle);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CardTitle).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CardTitle.__proto__ || Object.getPrototypeOf(CardTitle)).apply(this, arguments));
   }
 
   _createClass(CardTitle, [{

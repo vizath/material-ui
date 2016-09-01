@@ -87,7 +87,7 @@ var ToolbarGroup = function (_Component) {
   function ToolbarGroup() {
     _classCallCheck(this, ToolbarGroup);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ToolbarGroup).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ToolbarGroup.__proto__ || Object.getPrototypeOf(ToolbarGroup)).apply(this, arguments));
   }
 
   _createClass(ToolbarGroup, [{

@@ -52,7 +52,7 @@ var Step = function (_Component) {
   _inherits(Step, _Component);
 
   function Step() {
-    var _Object$getPrototypeO;
+    var _ref3;
 
     var _temp, _this, _ret;
 
@@ -62,7 +62,7 @@ var Step = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Step)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.renderChild = function (child) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref3 = Step.__proto__ || Object.getPrototypeOf(Step)).call.apply(_ref3, [this].concat(args))), _this), _this.renderChild = function (child) {
       var _this$props = _this.props;
       var active = _this$props.active;
       var completed = _this$props.completed;

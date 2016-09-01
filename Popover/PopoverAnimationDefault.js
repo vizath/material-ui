@@ -72,7 +72,7 @@ var PopoverDefaultAnimation = function (_Component) {
   _inherits(PopoverDefaultAnimation, _Component);
 
   function PopoverDefaultAnimation() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -82,7 +82,7 @@ var PopoverDefaultAnimation = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(PopoverDefaultAnimation)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PopoverDefaultAnimation.__proto__ || Object.getPrototypeOf(PopoverDefaultAnimation)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       open: false
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

@@ -64,7 +64,7 @@ var Avatar = function (_Component) {
   function Avatar() {
     _classCallCheck(this, Avatar);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Avatar).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Avatar.__proto__ || Object.getPrototypeOf(Avatar)).apply(this, arguments));
   }
 
   _createClass(Avatar, [{

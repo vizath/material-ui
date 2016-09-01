@@ -54,7 +54,7 @@ function getStyles(props, context, state) {
       bottom: 0,
       zIndex: zIndex.snackbar,
       visibility: open ? 'visible' : 'hidden',
-      transform: open ? 'translate3d(0, 0, 0)' : 'translate3d(0, ' + desktopSubheaderHeight + 'px, 0)',
+      transform: open ? 'translate(0, 0)' : 'translate(0, ' + desktopSubheaderHeight + 'px)',
       transition: _transitions2.default.easeOut('400ms', 'transform') + ', ' + _transitions2.default.easeOut('400ms', 'visibility')
     }
   };
@@ -66,7 +66,7 @@ var Snackbar = function (_Component) {
   _inherits(Snackbar, _Component);
 
   function Snackbar() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -76,7 +76,7 @@ var Snackbar = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Snackbar)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.componentClickAway = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Snackbar.__proto__ || Object.getPrototypeOf(Snackbar)).call.apply(_ref, [this].concat(args))), _this), _this.componentClickAway = function () {
       if (_this.timerTransitionId) {
         // If transitioning, don't close the snackbar.
         return;
@@ -233,7 +233,7 @@ Snackbar.propTypes = {
   /**
    * The label for the action on the snackbar.
    */
-  action: _react.PropTypes.string,
+  action: _react.PropTypes.node,
   /**
    * The number of milliseconds to wait before automatically dismissing.
    * If no value is specified the snackbar will dismiss normally.

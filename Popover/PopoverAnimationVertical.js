@@ -58,7 +58,7 @@ var PopoverAnimationVertical = function (_Component) {
   _inherits(PopoverAnimationVertical, _Component);
 
   function PopoverAnimationVertical() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -68,7 +68,7 @@ var PopoverAnimationVertical = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(PopoverAnimationVertical)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PopoverAnimationVertical.__proto__ || Object.getPrototypeOf(PopoverAnimationVertical)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       open: false
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

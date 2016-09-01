@@ -67,7 +67,7 @@ var ClockPointer = function (_Component) {
   _inherits(ClockPointer, _Component);
 
   function ClockPointer() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -77,7 +77,7 @@ var ClockPointer = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(ClockPointer)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ClockPointer.__proto__ || Object.getPrototypeOf(ClockPointer)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       inner: false
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

@@ -63,7 +63,7 @@ var SelectField = function (_Component) {
   function SelectField() {
     _classCallCheck(this, SelectField);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(SelectField).apply(this, arguments));
+    return _possibleConstructorReturn(this, (SelectField.__proto__ || Object.getPrototypeOf(SelectField)).apply(this, arguments));
   }
 
   _createClass(SelectField, [{

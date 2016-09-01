@@ -34,7 +34,7 @@ var SvgIcon = function (_Component) {
   _inherits(SvgIcon, _Component);
 
   function SvgIcon() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -44,7 +44,7 @@ var SvgIcon = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(SvgIcon)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SvgIcon.__proto__ || Object.getPrototypeOf(SvgIcon)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hovered: false
     }, _this.handleMouseLeave = function (event) {
       _this.setState({ hovered: false });

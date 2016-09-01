@@ -83,7 +83,7 @@ var Chip = function (_Component) {
   _inherits(Chip, _Component);
 
   function Chip() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -93,7 +93,7 @@ var Chip = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Chip)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Chip.__proto__ || Object.getPrototypeOf(Chip)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       clicked: false,
       deleteHovered: false,
       focused: false,
@@ -191,10 +191,11 @@ var Chip = function (_Component) {
       var style = _props.style;
       var className = _props.className;
       var labelStyle = _props.labelStyle;
+      var labelColor = _props.labelColor;
       var backgroundColor = _props.backgroundColor;
       var onRequestDelete = _props.onRequestDelete;
 
-      var other = _objectWithoutProperties(_props, ['children', 'style', 'className', 'labelStyle', 'backgroundColor', 'onRequestDelete']);
+      var other = _objectWithoutProperties(_props, ['children', 'style', 'className', 'labelStyle', 'labelColor', 'backgroundColor', 'onRequestDelete']);
 
       var deletable = this.props.onRequestDelete;
       var avatar = null;

@@ -32,7 +32,7 @@ var NestedList = function (_Component) {
   function NestedList() {
     _classCallCheck(this, NestedList);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(NestedList).apply(this, arguments));
+    return _possibleConstructorReturn(this, (NestedList.__proto__ || Object.getPrototypeOf(NestedList)).apply(this, arguments));
   }
 
   _createClass(NestedList, [{
@@ -68,7 +68,7 @@ var NestedList = function (_Component) {
 
 NestedList.propTypes = {
   children: _react.PropTypes.node,
-  nestedLevel: _react.PropTypes.number,
+  nestedLevel: _react.PropTypes.number.isRequired,
   open: _react.PropTypes.bool,
   /**
    * Override the inline-styles of the root element.
@@ -76,7 +76,6 @@ NestedList.propTypes = {
   style: _react.PropTypes.object
 };
 NestedList.defaultProps = {
-  nestedLevel: 1,
   open: false
 };
 exports.default = NestedList;

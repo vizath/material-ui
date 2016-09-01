@@ -44,7 +44,7 @@ var CardActions = function (_Component) {
   function CardActions() {
     _classCallCheck(this, CardActions);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CardActions).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CardActions.__proto__ || Object.getPrototypeOf(CardActions)).apply(this, arguments));
   }
 
   _createClass(CardActions, [{

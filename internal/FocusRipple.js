@@ -48,7 +48,7 @@ var FocusRipple = function (_Component) {
   _inherits(FocusRipple, _Component);
 
   function FocusRipple() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -58,7 +58,7 @@ var FocusRipple = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(FocusRipple)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.pulsate = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FocusRipple.__proto__ || Object.getPrototypeOf(FocusRipple)).call.apply(_ref, [this].concat(args))), _this), _this.pulsate = function () {
       var innerCircle = _reactDom2.default.findDOMNode(_this.refs.innerCircle);
       if (!innerCircle) return;
 

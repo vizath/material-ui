@@ -54,7 +54,7 @@ var TableRowColumn = function (_Component) {
   _inherits(TableRowColumn, _Component);
 
   function TableRowColumn() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -64,7 +64,7 @@ var TableRowColumn = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TableRowColumn)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TableRowColumn.__proto__ || Object.getPrototypeOf(TableRowColumn)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hovered: false
     }, _this.onClick = function (event) {
       if (_this.props.onClick) {

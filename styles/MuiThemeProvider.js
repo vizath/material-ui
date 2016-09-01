@@ -26,7 +26,7 @@ var MuiThemeProvider = function (_Component) {
   function MuiThemeProvider() {
     _classCallCheck(this, MuiThemeProvider);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(MuiThemeProvider).apply(this, arguments));
+    return _possibleConstructorReturn(this, (MuiThemeProvider.__proto__ || Object.getPrototypeOf(MuiThemeProvider)).apply(this, arguments));
   }
 
   _createClass(MuiThemeProvider, [{

@@ -98,7 +98,7 @@ var StepLabel = function (_Component) {
   function StepLabel() {
     _classCallCheck(this, StepLabel);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(StepLabel).apply(this, arguments));
+    return _possibleConstructorReturn(this, (StepLabel.__proto__ || Object.getPrototypeOf(StepLabel)).apply(this, arguments));
   }
 
   _createClass(StepLabel, [{

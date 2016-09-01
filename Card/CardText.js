@@ -45,7 +45,7 @@ var CardText = function (_Component) {
   function CardText() {
     _classCallCheck(this, CardText);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CardText).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CardText.__proto__ || Object.getPrototypeOf(CardText)).apply(this, arguments));
   }
 
   _createClass(CardText, [{

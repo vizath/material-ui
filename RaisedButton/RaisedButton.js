@@ -147,7 +147,7 @@ var RaisedButton = function (_Component) {
   _inherits(RaisedButton, _Component);
 
   function RaisedButton() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -157,7 +157,7 @@ var RaisedButton = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(RaisedButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RaisedButton.__proto__ || Object.getPrototypeOf(RaisedButton)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hovered: false,
       keyboardFocused: false,
       touched: false,
@@ -261,13 +261,14 @@ var RaisedButton = function (_Component) {
       var fullWidth = _props.fullWidth;
       var icon = _props.icon;
       var label = _props.label;
+      var labelColor = _props.labelColor;
       var labelPosition = _props.labelPosition;
       var labelStyle = _props.labelStyle;
       var primary = _props.primary;
       var rippleStyle = _props.rippleStyle;
       var secondary = _props.secondary;
 
-      var other = _objectWithoutProperties(_props, ['backgroundColor', 'children', 'className', 'disabled', 'fullWidth', 'icon', 'label', 'labelPosition', 'labelStyle', 'primary', 'rippleStyle', 'secondary']);
+      var other = _objectWithoutProperties(_props, ['backgroundColor', 'children', 'className', 'disabled', 'fullWidth', 'icon', 'label', 'labelColor', 'labelPosition', 'labelStyle', 'primary', 'rippleStyle', 'secondary']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -290,9 +291,9 @@ var RaisedButton = function (_Component) {
         label
       );
 
-      var iconCloned = icon && _react2.default.cloneElement(icon, {
+      var iconCloned = icon && (0, _react.cloneElement)(icon, {
         color: icon.props.color || styles.label.color,
-        style: styles.icon
+        style: (0, _simpleAssign2.default)(styles.icon, icon.props.style)
       });
 
       // Place label before or after children.

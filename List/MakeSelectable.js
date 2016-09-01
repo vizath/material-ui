@@ -25,6 +25,8 @@ var _deprecatedPropType2 = _interopRequireDefault(_deprecatedPropType);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -38,7 +40,7 @@ var MakeSelectable = exports.MakeSelectable = function MakeSelectable(Component)
     _inherits(_class, _Component);
 
     function _class() {
-      var _Object$getPrototypeO;
+      var _ref;
 
       var _temp, _this, _ret;
 
@@ -48,7 +50,7 @@ var MakeSelectable = exports.MakeSelectable = function MakeSelectable(Component)
         args[_key] = arguments[_key];
       }
 
-      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(_class)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.hasSelectedDescendant = function (previousValue, child) {
+      return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this.hasSelectedDescendant = function (previousValue, child) {
         if (_react2.default.isValidElement(child) && child.props.nestedItems && child.props.nestedItems.length > 0) {
           return child.props.nestedItems.reduce(_this.hasSelectedDescendant, previousValue);
         }
@@ -127,6 +129,7 @@ var MakeSelectable = exports.MakeSelectable = function MakeSelectable(Component)
         var children = _props.children;
         var selectedItemStyle = _props.selectedItemStyle;
 
+        var other = _objectWithoutProperties(_props, ['children', 'selectedItemStyle']);
 
         this.keyIndex = 0;
         var styles = {};
@@ -138,7 +141,7 @@ var MakeSelectable = exports.MakeSelectable = function MakeSelectable(Component)
 
         return _react2.default.createElement(
           Component,
-          _extends({}, this.props, this.state),
+          _extends({}, other, this.state),
           _react2.default.Children.map(children, function (child) {
             return _this3.extendChild(child, styles, selectedItemStyle);
           })

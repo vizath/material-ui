@@ -95,7 +95,7 @@ var RadioButton = function (_Component) {
   _inherits(RadioButton, _Component);
 
   function RadioButton() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -105,8 +105,10 @@ var RadioButton = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(RadioButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleStateChange = function () {}, _this.handleSwitch = function (event) {
-      if (_this.props.onCheck) _this.props.onCheck(event, _this.props.value);
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = RadioButton.__proto__ || Object.getPrototypeOf(RadioButton)).call.apply(_ref, [this].concat(args))), _this), _this.handleSwitch = function (event) {
+      if (_this.props.onCheck) {
+        _this.props.onCheck(event, _this.props.value);
+      }
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -174,7 +176,6 @@ var RadioButton = function (_Component) {
         iconStyle: mergedIconStyle,
         labelStyle: mergedLabelStyle,
         labelPosition: labelPosition,
-        onParentShouldUpdate: this.handleStateChange,
         onSwitch: this.handleSwitch,
         switchElement: _react2.default.createElement(
           'div',

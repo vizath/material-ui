@@ -61,7 +61,7 @@ var EnhancedTextarea = function (_Component) {
   _inherits(EnhancedTextarea, _Component);
 
   function EnhancedTextarea() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -71,7 +71,7 @@ var EnhancedTextarea = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(EnhancedTextarea)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EnhancedTextarea.__proto__ || Object.getPrototypeOf(EnhancedTextarea)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       height: null
     }, _this.handleResize = function (event) {
       _this.syncHeightWithShadow(undefined, event);

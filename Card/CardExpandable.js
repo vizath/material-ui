@@ -52,7 +52,7 @@ var CardExpandable = function (_Component) {
   function CardExpandable() {
     _classCallCheck(this, CardExpandable);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CardExpandable).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CardExpandable.__proto__ || Object.getPrototypeOf(CardExpandable)).apply(this, arguments));
   }
 
   _createClass(CardExpandable, [{

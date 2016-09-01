@@ -54,7 +54,7 @@ var Table = function (_Component) {
   _inherits(Table, _Component);
 
   function Table() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -64,7 +64,7 @@ var Table = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Table)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Table.__proto__ || Object.getPrototypeOf(Table)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       allRowsSelected: false
     }, _this.onCellClick = function (rowNumber, columnNumber, event) {
       if (_this.props.onCellClick) _this.props.onCellClick(rowNumber, columnNumber, event);

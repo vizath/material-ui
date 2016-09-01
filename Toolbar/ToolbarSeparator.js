@@ -51,7 +51,7 @@ var ToolbarSeparator = function (_Component) {
   function ToolbarSeparator() {
     _classCallCheck(this, ToolbarSeparator);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ToolbarSeparator).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ToolbarSeparator.__proto__ || Object.getPrototypeOf(ToolbarSeparator)).apply(this, arguments));
   }
 
   _createClass(ToolbarSeparator, [{

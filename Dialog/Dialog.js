@@ -62,7 +62,7 @@ var TransitionItem = function (_Component) {
   _inherits(TransitionItem, _Component);
 
   function TransitionItem() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -72,7 +72,7 @@ var TransitionItem = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(TransitionItem)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TransitionItem.__proto__ || Object.getPrototypeOf(TransitionItem)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       style: {}
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
@@ -96,7 +96,7 @@ var TransitionItem = function (_Component) {
       this.setState({
         style: {
           opacity: 1,
-          transform: 'translate3d(0, ' + spacing.desktopKeylineIncrement + 'px, 0)'
+          transform: 'translate(0, ' + spacing.desktopKeylineIncrement + 'px)'
         }
       });
 
@@ -108,7 +108,7 @@ var TransitionItem = function (_Component) {
       this.setState({
         style: {
           opacity: 0,
-          transform: 'translate3d(0, 0, 0)'
+          transform: 'translate(0, 0)'
         }
       });
 
@@ -224,7 +224,7 @@ var DialogInline = function (_Component2) {
   _inherits(DialogInline, _Component2);
 
   function DialogInline() {
-    var _Object$getPrototypeO2;
+    var _ref2;
 
     var _temp2, _this2, _ret2;
 
@@ -234,7 +234,7 @@ var DialogInline = function (_Component2) {
       args[_key2] = arguments[_key2];
     }
 
-    return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_Object$getPrototypeO2 = Object.getPrototypeOf(DialogInline)).call.apply(_Object$getPrototypeO2, [this].concat(args))), _this2), _this2.handleTouchTapOverlay = function () {
+    return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = DialogInline.__proto__ || Object.getPrototypeOf(DialogInline)).call.apply(_ref2, [this].concat(args))), _this2), _this2.handleTouchTapOverlay = function () {
       _this2.requestClose(false);
     }, _this2.handleKeyUp = function (event) {
       if ((0, _keycode2.default)(event) === 'esc') {
@@ -455,7 +455,7 @@ var Dialog = function (_Component3) {
   _inherits(Dialog, _Component3);
 
   function Dialog() {
-    var _Object$getPrototypeO3;
+    var _ref3;
 
     var _temp3, _this3, _ret3;
 
@@ -465,7 +465,7 @@ var Dialog = function (_Component3) {
       args[_key3] = arguments[_key3];
     }
 
-    return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, (_Object$getPrototypeO3 = Object.getPrototypeOf(Dialog)).call.apply(_Object$getPrototypeO3, [this].concat(args))), _this3), _this3.renderLayer = function () {
+    return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, (_ref3 = Dialog.__proto__ || Object.getPrototypeOf(Dialog)).call.apply(_ref3, [this].concat(args))), _this3), _this3.renderLayer = function () {
       return _react2.default.createElement(DialogInline, _this3.props);
     }, _temp3), _possibleConstructorReturn(_this3, _ret3);
   }

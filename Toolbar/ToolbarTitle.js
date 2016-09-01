@@ -51,7 +51,7 @@ var ToolbarTitle = function (_Component) {
   function ToolbarTitle() {
     _classCallCheck(this, ToolbarTitle);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ToolbarTitle).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ToolbarTitle.__proto__ || Object.getPrototypeOf(ToolbarTitle)).apply(this, arguments));
   }
 
   _createClass(ToolbarTitle, [{

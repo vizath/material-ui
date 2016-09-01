@@ -63,7 +63,7 @@ function getStyles(props, context) {
   var styles = {
     root: {
       color: props.disabled ? disabledColor : textColor,
-      cursor: props.disabled ? 'not-allowed' : 'inherit',
+      cursor: props.disabled ? 'not-allowed' : 'pointer',
       lineHeight: props.desktop ? '32px' : '48px',
       fontSize: props.desktop ? 15 : 16,
       whiteSpace: 'nowrap'
@@ -101,7 +101,7 @@ var MenuItem = function (_Component) {
   _inherits(MenuItem, _Component);
 
   function MenuItem() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -111,7 +111,7 @@ var MenuItem = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(MenuItem)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MenuItem.__proto__ || Object.getPrototypeOf(MenuItem)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       open: false
     }, _this.cloneMenuItem = function (item) {
       return _react2.default.cloneElement(item, {
@@ -123,8 +123,7 @@ var MenuItem = function (_Component) {
           if (item.props.onTouchTap) {
             item.props.onTouchTap(event);
           }
-        },
-        onRequestClose: _this.handleRequestClose
+        }
       });
     }, _this.handleTouchTap = function (event) {
       event.preventDefault();
@@ -197,9 +196,10 @@ var MenuItem = function (_Component) {
       var rightIcon = _props.rightIcon;
       var secondaryText = _props.secondaryText;
       var style = _props.style;
+      var animation = _props.animation;
       var value = _props.value;
 
-      var other = _objectWithoutProperties(_props, ['checked', 'children', 'desktop', 'disabled', 'focusState', 'innerDivStyle', 'insetChildren', 'leftIcon', 'menuItems', 'rightIcon', 'secondaryText', 'style', 'value']);
+      var other = _objectWithoutProperties(_props, ['checked', 'children', 'desktop', 'disabled', 'focusState', 'innerDivStyle', 'insetChildren', 'leftIcon', 'menuItems', 'rightIcon', 'secondaryText', 'style', 'animation', 'value']);
 
       var prepareStyles = this.context.muiTheme.prepareStyles;
 
@@ -238,6 +238,7 @@ var MenuItem = function (_Component) {
         childMenuPopover = _react2.default.createElement(
           _Popover2.default,
           {
+            animation: animation,
             anchorOrigin: { horizontal: 'right', vertical: 'top' },
             anchorEl: this.state.anchorEl,
             open: this.state.open,
@@ -276,6 +277,10 @@ var MenuItem = function (_Component) {
 
 MenuItem.muiName = 'MenuItem';
 MenuItem.propTypes = {
+  /**
+   * Override the default animation component used.
+   */
+  animation: _react.PropTypes.func,
   /**
    * If true, a left check mark will be rendered.
    */

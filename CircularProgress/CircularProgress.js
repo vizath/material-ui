@@ -99,7 +99,7 @@ var CircularProgress = function (_Component) {
   function CircularProgress() {
     _classCallCheck(this, CircularProgress);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CircularProgress).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CircularProgress.__proto__ || Object.getPrototypeOf(CircularProgress)).apply(this, arguments));
   }
 
   _createClass(CircularProgress, [{

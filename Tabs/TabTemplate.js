@@ -24,7 +24,7 @@ var TabTemplate = function (_Component) {
   function TabTemplate() {
     _classCallCheck(this, TabTemplate);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(TabTemplate).apply(this, arguments));
+    return _possibleConstructorReturn(this, (TabTemplate.__proto__ || Object.getPrototypeOf(TabTemplate)).apply(this, arguments));
   }
 
   _createClass(TabTemplate, [{

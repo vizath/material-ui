@@ -118,7 +118,7 @@ var EnhancedSwitch = function (_Component) {
   _inherits(EnhancedSwitch, _Component);
 
   function EnhancedSwitch() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -128,7 +128,7 @@ var EnhancedSwitch = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(EnhancedSwitch)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = EnhancedSwitch.__proto__ || Object.getPrototypeOf(EnhancedSwitch)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       isKeyboardFocused: false
     }, _this.handleChange = function (event) {
       _this.tabPressed = false;
@@ -141,6 +141,7 @@ var EnhancedSwitch = function (_Component) {
       if (!_this.props.hasOwnProperty('checked') && _this.props.onParentShouldUpdate) {
         _this.props.onParentShouldUpdate(isInputChecked);
       }
+
       if (_this.props.onSwitch) {
         _this.props.onSwitch(event, isInputChecked);
       }

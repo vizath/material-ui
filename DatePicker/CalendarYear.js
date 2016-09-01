@@ -34,7 +34,7 @@ var CalendarYear = function (_Component) {
   _inherits(CalendarYear, _Component);
 
   function CalendarYear() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -44,7 +44,7 @@ var CalendarYear = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(CalendarYear)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleTouchTapYear = function (event, year) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CalendarYear.__proto__ || Object.getPrototypeOf(CalendarYear)).call.apply(_ref, [this].concat(args))), _this), _this.handleTouchTapYear = function (event, year) {
       if (_this.props.onTouchTapYear) _this.props.onTouchTapYear(event, year);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

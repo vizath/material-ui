@@ -64,7 +64,7 @@ var Paper = function (_Component) {
   function Paper() {
     _classCallCheck(this, Paper);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Paper).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Paper.__proto__ || Object.getPrototypeOf(Paper)).apply(this, arguments));
   }
 
   _createClass(Paper, [{

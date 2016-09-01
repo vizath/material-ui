@@ -51,7 +51,7 @@ function getStyles(props) {
       padding: padding,
       top: -10000,
       left: -10000,
-      transform: 'translate3d(' + (10000 + props.left) + 'px, ' + (10000 + props.top) + 'px, 0)',
+      transform: 'translate(' + (10000 + props.left) + 'px, ' + (10000 + props.top) + 'px)',
       opacity: props.status === 'hide' ? 0 : 1,
       transition: props.status === 'hide' ? _transitions2.default.create('all', '.3s', 'ease-out') : 'none'
     }
@@ -64,7 +64,7 @@ var RefreshIndicator = function (_Component) {
   function RefreshIndicator() {
     _classCallCheck(this, RefreshIndicator);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(RefreshIndicator).apply(this, arguments));
+    return _possibleConstructorReturn(this, (RefreshIndicator.__proto__ || Object.getPrototypeOf(RefreshIndicator)).apply(this, arguments));
   }
 
   _createClass(RefreshIndicator, [{

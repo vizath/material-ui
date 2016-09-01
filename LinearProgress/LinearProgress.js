@@ -95,7 +95,7 @@ var LinearProgress = function (_Component) {
   function LinearProgress() {
     _classCallCheck(this, LinearProgress);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(LinearProgress).apply(this, arguments));
+    return _possibleConstructorReturn(this, (LinearProgress.__proto__ || Object.getPrototypeOf(LinearProgress)).apply(this, arguments));
   }
 
   _createClass(LinearProgress, [{

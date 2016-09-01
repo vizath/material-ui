@@ -70,7 +70,7 @@ var CardHeader = function (_Component) {
   function CardHeader() {
     _classCallCheck(this, CardHeader);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CardHeader).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CardHeader.__proto__ || Object.getPrototypeOf(CardHeader)).apply(this, arguments));
   }
 
   _createClass(CardHeader, [{

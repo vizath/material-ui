@@ -46,7 +46,7 @@ var Stepper = function (_Component) {
   function Stepper() {
     _classCallCheck(this, Stepper);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Stepper).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Stepper.__proto__ || Object.getPrototypeOf(Stepper)).apply(this, arguments));
   }
 
   _createClass(Stepper, [{

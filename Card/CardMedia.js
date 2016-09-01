@@ -69,7 +69,7 @@ var CardMedia = function (_Component) {
   function CardMedia() {
     _classCallCheck(this, CardMedia);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CardMedia).apply(this, arguments));
+    return _possibleConstructorReturn(this, (CardMedia.__proto__ || Object.getPrototypeOf(CardMedia)).apply(this, arguments));
   }
 
   _createClass(CardMedia, [{

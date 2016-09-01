@@ -38,7 +38,7 @@ var SlideIn = function (_Component) {
   _inherits(SlideIn, _Component);
 
   function SlideIn() {
-    var _Object$getPrototypeO;
+    var _ref;
 
     var _temp, _this, _ret;
 
@@ -48,7 +48,7 @@ var SlideIn = function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(SlideIn)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.getLeaveDirection = function () {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SlideIn.__proto__ || Object.getPrototypeOf(SlideIn)).call.apply(_ref, [this].concat(args))), _this), _this.getLeaveDirection = function () {
       return _this.props.direction;
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }

@@ -53,7 +53,7 @@ var TableFooter = function (_Component) {
   function TableFooter() {
     _classCallCheck(this, TableFooter);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableFooter).apply(this, arguments));
+    return _possibleConstructorReturn(this, (TableFooter.__proto__ || Object.getPrototypeOf(TableFooter)).apply(this, arguments));
   }
 
   _createClass(TableFooter, [{
