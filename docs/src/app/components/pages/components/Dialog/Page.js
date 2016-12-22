@@ -14,6 +14,8 @@ import DialogExampleCustomWidth from './ExampleCustomWidth';
 import dialogExampleCustomWidthCode from '!raw!./ExampleCustomWidth';
 import DialogExampleDialogDatePicker from './ExampleDialogDatePicker';
 import dialogExampleDialogDatePickerCode from '!raw!./ExampleDialogDatePicker';
+import DialogExampleHugeContent from './ExampleHugeContent';
+import dialogExampleDialogHudeContentCode from '!raw!./ExampleHugeContent';
 import DialogExampleScrollable from './ExampleScrollable';
 import DialogExampleScrollableCode from '!raw!./ExampleScrollable';
 import DialogExampleAlert from './ExampleAlert';
@@ -47,6 +49,12 @@ const DialogPage = () => (
       code={dialogExampleDialogDatePickerCode}
     >
       <DialogExampleDialogDatePicker />
+    </CodeExample>
+    <CodeExample
+      title="Huge Content"
+      code={dialogExampleDialogHudeContentCode}
+    >
+      <DialogExampleHugeContent />
     </CodeExample>
     <CodeExample
       title="Scrollable dialog"

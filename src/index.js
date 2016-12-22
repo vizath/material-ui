@@ -1,4 +1,5 @@
 export AppBar from './AppBar';
+export AppBarNew from './app-bar-new';
 export AutoComplete from './AutoComplete';
 export Avatar from './Avatar';
 export Badge from './Badge';
@@ -57,6 +58,7 @@ export TableHeader from './Table/TableHeader';
 export TableHeaderColumn from './Table/TableHeaderColumn';
 export TableRow from './Table/TableRow';
 export TableRowColumn from './Table/TableRowColumn';
+export TableList from './table-list';
 export TextField from './TextField';
 export TimePicker from './TimePicker';
 export Toggle from './Toggle';

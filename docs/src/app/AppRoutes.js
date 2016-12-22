@@ -20,6 +20,7 @@ import Themes from './components/pages/customization/Themes';
 import Styles from './components/pages/customization/Styles';
 
 import AppBarPage from './components/pages/components/AppBar/Page';
+import AppBarNewPage from './components/pages/components/AppBarNew/Page';
 import AutoCompletePage from './components/pages/components/AutoComplete/Page';
 import AvatarPage from './components/pages/components/Avatar/Page';
 import BadgePage from './components/pages/components/Badge/Page';
@@ -53,6 +54,7 @@ import SnackbarPage from './components/pages/components/Snackbar/Page';
 import SvgIconPage from './components/pages/components/SvgIcon/Page';
 import SubheaderPage from './components/pages/components/Subheader/Page';
 import TablePage from './components/pages/components/Table/Page';
+import TableListPage from './components/pages/components/TableList/Page';
 import TabsPage from './components/pages/components/Tabs/Page';
 import TextFieldPage from './components/pages/components/TextField/Page';
 import TimePickerPage from './components/pages/components/TimePicker/Page';
@@ -96,6 +98,7 @@ const AppRoutes = (
     <Redirect from="components" to="/components/app-bar" />
     <Route path="components">
       <Route path="app-bar" component={AppBarPage} />
+			<Route path="app-bar-new" component={AppBarNewPage} />
       <Route path="auto-complete" component={AutoCompletePage} />
       <Route path="avatar" component={AvatarPage} />
       <Route path="bottom-navigation" component={BottomNavigationPage} />
@@ -130,6 +133,7 @@ const AppRoutes = (
       <Route path="stepper" component={StepperPage} />
       <Route path="subheader" component={SubheaderPage} />
       <Route path="table" component={TablePage} />
+			<Route path="table-list" component={TableListPage} />
       <Route path="tabs" component={TabsPage} />
       <Route path="text-field" component={TextFieldPage} />
       <Route path="time-picker" component={TimePickerPage} />

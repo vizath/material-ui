@@ -76,6 +76,7 @@ class TransitionItem extends Component {
 function getStyles(props, context) {
   const {
     autoScrollBodyContent,
+    overflowInBody,
     open,
   } = props;
 
@@ -91,14 +92,19 @@ function getStyles(props, context) {
   const gutter = spacing.desktopGutter;
   const borderScroll = `1px solid ${palette.borderColor}`;
 
+  const doc = document.documentElement;
+  const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+  const top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+
   return {
     root: {
-      position: 'fixed',
+      position: overflowInBody ? 'absolute' : 'fixed',
+      overflow: overflowInBody ? 'auto' : 'inherit',
       boxSizing: 'border-box',
       WebkitTapHighlightColor: 'rgba(0,0,0,0)', // Remove mobile color flashing (deprecated)
       zIndex: zIndex.dialog,
-      top: 0,
-      left: open ? 0 : -10000,
+      top: overflowInBody ? top : 0,
+      left: open ? (overflowInBody ? left : 0) : -10000,
       width: '100%',
       height: '100%',
       transition: open ?
@@ -163,6 +169,7 @@ class DialogInline extends Component {
     modal: PropTypes.bool,
     onRequestClose: PropTypes.func,
     open: PropTypes.bool.isRequired,
+    overflowInBody: React.PropTypes.bool,
     overlayClassName: PropTypes.string,
     overlayStyle: PropTypes.object,
     repositionOnUpdate: PropTypes.bool,
@@ -420,6 +427,10 @@ class Dialog extends Component {
      */
     open: PropTypes.bool.isRequired,
     /**
+     * When the content of the dialog overflow, the body is scrollable.
+     */
+    overflowInBody: React.PropTypes.bool,
+    /**
      * The `className` to add to the `Overlay` component that is rendered behind the `Dialog`.
      */
     overlayClassName: PropTypes.string,
@@ -458,6 +469,7 @@ class Dialog extends Component {
     autoScrollBodyContent: false,
     modal: false,
     repositionOnUpdate: true,
+    overflowInBody: false,
   };
 
   renderLayer = () => {

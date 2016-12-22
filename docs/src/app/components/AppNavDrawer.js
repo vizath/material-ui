@@ -172,6 +172,11 @@ class AppNavDrawer extends Component {
                 href="#/components/app-bar"
               />,
               <ListItem
+                primaryText="App Bar New"
+                value="/components/app-bar-new"
+                href="/#/components/app-bar-new"
+              />,
+              <ListItem
                 primaryText="Auto Complete"
                 value="/components/auto-complete"
                 href="#/components/auto-complete"
@@ -375,6 +380,11 @@ class AppNavDrawer extends Component {
                 primaryText="Table"
                 value="/components/table"
                 href="#/components/table"
+              />,
+              <ListItem
+                primaryText="Table List"
+                value="/components/table-list"
+                href="/#/components/table-list"
               />,
               <ListItem
                 primaryText="Tabs"
